@@ -49,7 +49,7 @@ namespace Vsm.Editor.Graph
 		{
 			var elements = _graphView.graphElements.ToList();
 
-			return elements.FirstOrDefault(node => (node as BaseNode).GUID == guid) as Node;
+			return elements.FirstOrDefault(node => (node as BaseNode).Guid == guid) as Node;
 		}
 
 		private Port GetOutputPortByName(Node node, string portName)

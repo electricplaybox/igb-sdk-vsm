@@ -5,20 +5,19 @@ namespace Vsm
 {
 	public class StateMachineController : MonoBehaviour
 	{
-		[SerializeField] private VsmGraphData _graphData;
-
-		public VsmGraphData GraphData => _graphData;
-
-		public void Start()
+		public VsmGraphData GraphData
 		{
+			get => _graphData;
+			set => _graphData = value;
 		}
+		
+		private VsmGraphData _graphDataInstance;
+		private StateNodeData _currentNode;
+		private VsmGraphData _graphData;
 
-		public void Update()
+		private void Awake()
 		{
-		}
-
-		public void OnDestroy()
-		{
+			
 		}
 	}
 }

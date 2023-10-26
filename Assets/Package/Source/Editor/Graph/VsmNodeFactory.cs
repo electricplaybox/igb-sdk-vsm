@@ -22,7 +22,7 @@ namespace Vsm.Editor.Graph
 		public void CreateNode(Type state, Vector2 position)
 		{
 			var node = new StateNode();
-			node.GUID = Guid.NewGuid().ToString();
+			node.Guid = Guid.NewGuid().ToString();
 			node.styleSheets.Add(Resources.Load<StyleSheet>("BaseNode"));
 			node.title = state.Name;
 			node.State = Activator.CreateInstance(state) as State;
@@ -43,7 +43,7 @@ namespace Vsm.Editor.Graph
 			if (state == null) return;
 
 			var node = new StateNode();
-			node.GUID = data.GUID;
+			node.Guid = data.Guid;
 			node.styleSheets.Add(Resources.Load<StyleSheet>("BaseNode"));
 			node.title = data.Title;
 			node.State = Activator.CreateInstance(state) as State;
@@ -63,7 +63,7 @@ namespace Vsm.Editor.Graph
 			var elements = _graphView.graphElements.ToList();
 			var baseNodes = elements.OfType<BaseNode>();
 
-			foreach (var baseNode in baseNodes) baseNode.SetAsEntryPoint(baseNode.GUID == entryNode.GUID);
+			foreach (var baseNode in baseNodes) baseNode.SetAsEntryPoint(baseNode.Guid == entryNode.Guid);
 		}
 	}
 }

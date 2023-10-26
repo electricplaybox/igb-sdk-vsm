@@ -21,10 +21,12 @@ namespace Vsm.Editor.Graph
 		public event Action<EdgeData> OnConnectPorts;
 		public event Action OnClearGraph;
 		public event Action<VsmGraphData> OnSaved;
+		public event Action<VsmGraphData> OnLoaded;
 
 		public void LoadData(VsmGraphData graphData)
 		{
 			_graphData = graphData;
+			
 			LoadData();
 		}
 
@@ -37,18 +39,21 @@ namespace Vsm.Editor.Graph
 
 			foreach (var node in _graphData.nodes) OnCreateNode.Invoke(node);
 			foreach (var edge in _graphData.edges) OnConnectPorts.Invoke(edge);
+			
+			OnLoaded?.Invoke(_graphData);
 		}
 
 		public void SaveData()
 		{
 			if (_graphData == null) return;
 
-			var assetPath = AssetDatabase.GetAssetPath(_graphData);
-			var graphData = ScriptableObject.CreateInstance<VsmGraphData>();
-			var nodes = _graphView.nodes;
-			var edges = _graphView.edges;
+			var nodes = _graphView.nodes.ToList();
+			var edges = _graphView.edges.ToList();
+			
+			_graphData.nodes.Clear();
+			_graphData.edges.Clear();
 
-			foreach (var node in nodes.ToList())
+			foreach (var node in nodes)
 			{
 				if (node is not StateNode) continue;
 				var stateNode = node as StateNode;
@@ -58,13 +63,14 @@ namespace Vsm.Editor.Graph
 					Title = stateNode.title,
 					Position = stateNode.GetPosition().position,
 					State = stateNode.State.GetType().AssemblyQualifiedName,
-					GUID = stateNode.GUID
+					Guid = stateNode.Guid,
+					EntyPoint = stateNode.EntyPoint
 				};
 
-				graphData.nodes.Add(nodeData);
+				_graphData.nodes.Add(nodeData);
 			}
 
-			foreach (var edge in edges.ToList())
+			foreach (var edge in edges)
 			{
 				var inputNode = edge.input.node as BaseNode;
 				var inputPort = edge.input;
@@ -74,17 +80,17 @@ namespace Vsm.Editor.Graph
 
 				var edgeData = new EdgeData
 				{
-					OutputNode = outputNode?.GUID,
+					OutputNode = outputNode?.Guid,
 					OutputPort = outputPort?.portName,
-					InputNode = inputNode?.GUID,
+					InputNode = inputNode?.Guid,
 					InputPort = inputPort?.portName
 				};
 
-				graphData.edges.Add(edgeData);
+				_graphData.edges.Add(edgeData);
 			}
-
-			_graphData = graphData;
-			AssetDatabase.CreateAsset(graphData, assetPath);
+			
+			EditorUtility.SetDirty(_graphData);
+			AssetDatabase.SaveAssets();
 
 			OnSaved.Invoke(_graphData);
 		}

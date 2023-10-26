@@ -16,6 +16,7 @@ namespace Vsm.Editor.Graph
 			_graphView = graphView;
 			_dataManager = dataManager;
 			_dataManager.OnSaved += HandleDataSaved;
+			_dataManager.OnLoaded += HandleDataLoaded;
 
 			_graphDataField = new ObjectField("Graph Data:");
 			_graphDataField.objectType = typeof(VsmGraphData);
@@ -36,6 +37,11 @@ namespace Vsm.Editor.Graph
 		}
 
 		private void HandleDataSaved(VsmGraphData graphData)
+		{
+			_graphDataField.SetValueWithoutNotify(graphData);
+		}
+		
+		private void HandleDataLoaded(VsmGraphData graphData)
 		{
 			_graphDataField.SetValueWithoutNotify(graphData);
 		}

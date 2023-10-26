@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -28,7 +29,8 @@ namespace Vsm.Editor.Graph
 		{
 			var window = GetWindow<VsmWindow>();
 			window.titleContent = new GUIContent("Visual State Machine");
-
+			window.Populate(null);
+			
 			return window;
 		}
 
@@ -41,13 +43,13 @@ namespace Vsm.Editor.Graph
 		private void Populate(VsmGraphData graphData)
 		{
 			_graphData = graphData;
-
+			
 			if (_vsm != null)
 			{
 				rootVisualElement.Remove(_vsm);
 				_vsm.Dispose();
 			}
-
+			
 			_vsm = new VsmGraphView(_graphData);
 			_vsm.StretchToParentSize();
 			rootVisualElement.Add(_vsm);

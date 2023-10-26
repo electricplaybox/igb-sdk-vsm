@@ -14,17 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - Title: EntryState
-    Position: {x: 331, y: 259}
+    Position: {x: 476, y: 273}
     State: Samples.VSMExample.Source.States.EntryState, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-    GUID: c1c3ad61-cf63-42ea-8ff6-86481bece25c
+    Guid: f3ff921f-2152-4973-948a-4e4d73396df2
+    EntyPoint: 0
   - Title: EndState
-    Position: {x: 713, y: 387}
+    Position: {x: 685, y: 419}
     State: Samples.VSMExample.Source.States.EndState, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-    GUID: 361e4c33-ed59-42aa-9aed-cebb23629bf8
+    Guid: 6489554b-546c-4d1a-ac30-64bf6a3090d1
+    EntyPoint: 0
+  - Title: SomeOtherState
+    Position: {x: 699, y: 165}
+    State: Samples.VSMExample.Source.States.SomeOtherState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: d73f1da1-e452-4cfd-8332-ad36e5041e1e
+    EntyPoint: 0
+  - Title: CoreLoopState
+    Position: {x: 871, y: 242}
+    State: Samples.VSMExample.Source.States.CoreLoopState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: 228583bc-a77c-4dda-826d-775b450089e3
+    EntyPoint: 0
   edges:
-  - OutputNode: c1c3ad61-cf63-42ea-8ff6-86481bece25c
+  - OutputNode: f3ff921f-2152-4973-948a-4e4d73396df2
     OutputPort: Continue
-    InputNode: 361e4c33-ed59-42aa-9aed-cebb23629bf8
+    InputNode: 6489554b-546c-4d1a-ac30-64bf6a3090d1
+    InputPort: Enter
+  - OutputNode: f3ff921f-2152-4973-948a-4e4d73396df2
+    OutputPort: Exit
+    InputNode: d73f1da1-e452-4cfd-8332-ad36e5041e1e
+    InputPort: Enter
+  - OutputNode: d73f1da1-e452-4cfd-8332-ad36e5041e1e
+    OutputPort: Foo
+    InputNode: 228583bc-a77c-4dda-826d-775b450089e3
     InputPort: Enter

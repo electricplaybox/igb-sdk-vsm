@@ -20,11 +20,8 @@ namespace Vsm.Editor.Graph
 
 		public VsmGraphView(VsmGraphData graphData)
 		{
-			_graphData = graphData;
-			if (_graphData == null) return;
-
 			CreateGrid();
-
+			
 			_portConnector = new VsmPortConnector(this);
 			_nodeFactory = new VsmNodeFactory(this);
 
@@ -38,12 +35,18 @@ namespace Vsm.Editor.Graph
 			_dataManager.OnCreateNode += _nodeFactory.CreateNode;
 			_dataManager.OnConnectPorts += _portConnector.ConnectPorts;
 			_dataManager.OnSaved += HandleDataSaved;
+			_dataManager.OnLoaded += HandleDataLoaded;
 			_dataManager.LoadData(graphData);
 
 			_vsmEffects = new VsmEffects(this);
 			_toolbar = new VsmToolBar(_dataManager, _graphData, this);
 
 			graphViewChanged += HandleGraphChanged;
+		}
+
+		private void HandleDataLoaded(VsmGraphData graphData)
+		{
+			_graphData = graphData;
 		}
 
 		private void HandleDataSaved(VsmGraphData graphData)
@@ -106,6 +109,8 @@ namespace Vsm.Editor.Graph
 			_dataManager.OnClearGraph -= HandleClearGraph;
 			_dataManager.OnCreateNode -= _nodeFactory.CreateNode;
 			_dataManager.OnConnectPorts -= _portConnector.ConnectPorts;
+			_dataManager.OnSaved -= HandleDataSaved;
+			_dataManager.OnLoaded -= HandleDataLoaded;
 		}
 
 		public void SaveData()

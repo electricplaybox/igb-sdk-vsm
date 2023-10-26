@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine.Serialization;
 
 namespace Vsm.Serialization
 {
@@ -6,6 +7,7 @@ namespace Vsm.Serialization
 	public class StateNodeData : BaseNodeData
 	{
 		public string State;
-		public string GUID;
+		public string Guid;
+		public bool EntyPoint;
 	}
 }
