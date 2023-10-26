@@ -1,0 +1,26 @@
+﻿{
+  "name": "com.nonatomic.visualstatemachine",
+  "version": "0.1.0-alpha",
+  "displayName": "Visual StateMachine",
+  "description": "Visual StateMachine",
+  "unity": "2022.3.10",
+  "unityRelease": "1f1",
+  "keywords": [
+  ],
+  "author": {
+    "name": "Electric Gamebox",
+    "email": "tech@electricgamebox.com",
+    "url": "https://electricgamebox.com/"
+  },
+  "type": "library",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PaulNonatomic/VisualStateMachine.git"
+  },
+  "samples": {
+    "displayName": "Visual State Machine Example",
+    "description": "A simple visual state machine example",
+    "path": "Samples/VSMExample"
+  }
+}
+  
