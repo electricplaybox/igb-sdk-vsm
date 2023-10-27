@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,18 +9,49 @@ namespace Vsm.Editor.Graph
 	public class VsmWindow : GraphViewEditorWindow
 	{
 		private VsmGraphData _graphData;
-		private VsmGraphView _vsm;
+		private VsmGraphView _graphView;
+		private StateMachineController _stateMachineController;
 
 		private void Update()
 		{
 			HandleSaveKeyboardShortcut();
 		}
 
+		private void OnEnable()
+		{
+			EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
+		}
+
 		private void OnDisable()
 		{
-			if (_vsm == null) return;
+			EditorApplication.playModeStateChanged -= HandlePlayModeStateChanged;
 
-			_vsm.Dispose();
+			CleanUpGraphView();
+		}
+
+		private void CleanUpGraphView()
+		{
+			if(_graphView == null) return;
+			
+			rootVisualElement.Remove(_graphView);
+			_graphView?.Dispose();
+			_graphView = null;
+		}
+
+		private void HandlePlayModeStateChanged(PlayModeStateChange playModeState)
+		{
+			if(_stateMachineController == null) return;
+			
+			if (playModeState != PlayModeStateChange.EnteredPlayMode)
+			{
+				_graphData = _stateMachineController.LiveGraphData;
+				Draw();
+			}
+			else if (playModeState != PlayModeStateChange.ExitingPlayMode)
+			{
+				_graphData = _stateMachineController.GraphData;
+				Draw();
+			}
 		}
 
 		[MenuItem("Tools/Visual State Machine")]
@@ -29,30 +59,46 @@ namespace Vsm.Editor.Graph
 		{
 			var window = GetWindow<VsmWindow>();
 			window.titleContent = new GUIContent("Visual State Machine");
-			window.Populate(null);
+			window.Populate(graphData: null);
 			
 			return window;
 		}
-
+		
 		public static void OpenWindowWithGraphData(VsmGraphData graphData)
 		{
 			var window = OpenWindow();
 			window.Populate(graphData);
 		}
+		
+		public static void OpenWindowWithController(StateMachineController stateMachineController)
+		{
+			var window = OpenWindow();
+			window.Populate(stateMachineController);
+		}
 
 		private void Populate(VsmGraphData graphData)
 		{
+			_stateMachineController = null;
 			_graphData = graphData;
 			
-			if (_vsm != null)
-			{
-				rootVisualElement.Remove(_vsm);
-				_vsm.Dispose();
-			}
+			Draw();
+		}
+
+		private void Populate(StateMachineController stateMachineController)
+		{
+			_stateMachineController = stateMachineController;
+			_graphData = _stateMachineController.LiveGraphData;
 			
-			_vsm = new VsmGraphView(_graphData);
-			_vsm.StretchToParentSize();
-			rootVisualElement.Add(_vsm);
+			Draw();
+		}
+		
+		private void Draw()
+		{
+			CleanUpGraphView();
+			
+			_graphView = new VsmGraphView(_graphData);
+			_graphView.StretchToParentSize();
+			rootVisualElement.Add(_graphView);
 		}
 
 		private void HandleSaveKeyboardShortcut()
@@ -63,7 +109,7 @@ namespace Vsm.Editor.Graph
 			if (Event.current.type != EventType.KeyDown) return;
 			if (Event.current.keyCode != KeyCode.S) return;
 
-			_vsm.SaveData();
+			_graphView.SaveData();
 			Event.current.Use();
 		}
 	}

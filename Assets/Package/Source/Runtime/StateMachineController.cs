@@ -11,6 +11,8 @@ namespace Vsm
 			set => _graphData = value;
 		}
 
+		public VsmGraphData LiveGraphData => _graphDataInstance != null ? _graphDataInstance : _graphData;
+
 		private VsmGraphData _graphDataInstance;
 		private StateNodeData _currentNode;
 		
@@ -19,7 +21,8 @@ namespace Vsm
 
 		private void Awake()
 		{
-			
+			_graphDataInstance = ScriptableObject.Instantiate<VsmGraphData>(_graphData);
+			_graphDataInstance.name = _graphData.name + _graphDataInstance.GetInstanceID();
 		}
 	}
 }

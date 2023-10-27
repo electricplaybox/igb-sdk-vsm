@@ -6,13 +6,13 @@ namespace Vsm.Editor.Nodes
 	public class BaseNode : Node
 	{
 		public string Guid;
-		public bool EntyPoint { get; private set; }
+		public bool EntryPoint;
 
 		public void SetAsEntryPoint(bool entryPoint)
 		{
-			EntyPoint = entryPoint;
+			EntryPoint = entryPoint;
 
-			if (EntyPoint)
+			if (EntryPoint)
 			{
 				AddToClassList("entry-node");
 			}

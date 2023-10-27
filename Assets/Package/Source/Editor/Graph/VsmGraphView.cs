@@ -24,12 +24,12 @@ namespace Vsm.Editor.Graph
 			
 			_portConnector = new VsmPortConnector(this);
 			_nodeFactory = new VsmNodeFactory(this);
-
+		
 			_contextMenu = new VsmContextMenu(this);
 			_contextMenu.OnDeleteSelection += HandleDeleteSelection;
 			_contextMenu.OnSetAsEntryNode += _nodeFactory.SetAsEntryNode;
 			_contextMenu.OnCreateNewStateNode += _nodeFactory.CreateNode;
-
+		
 			_dataManager = new VsmDataManager(this);
 			_dataManager.OnClearGraph += HandleClearGraph;
 			_dataManager.OnCreateNode += _nodeFactory.CreateNode;
@@ -37,55 +37,55 @@ namespace Vsm.Editor.Graph
 			_dataManager.OnSaved += HandleDataSaved;
 			_dataManager.OnLoaded += HandleDataLoaded;
 			_dataManager.LoadData(graphData);
-
+		
 			_vsmEffects = new VsmEffects(this);
 			_toolbar = new VsmToolBar(_dataManager, _graphData, this);
-
+		
 			graphViewChanged += HandleGraphChanged;
 		}
-
+		
 		private void HandleDataLoaded(VsmGraphData graphData)
 		{
 			_graphData = graphData;
 		}
-
+		
 		private void HandleDataSaved(VsmGraphData graphData)
 		{
 			_graphData = graphData;
 		}
-
+		
 		private void HandleClearGraph()
 		{
 			DeleteElements(graphElements);
 		}
-
+		
 		private void HandleDeleteSelection()
 		{
 			DeleteSelection();
 		}
-
+		
 		private GraphViewChange HandleGraphChanged(GraphViewChange graphViewChange)
 		{
 			_dataManager.SaveData();
-
+		
 			return graphViewChange;
 		}
-
+		
 		private void CreateGrid()
 		{
 			styleSheets.Add(Resources.Load<StyleSheet>("VsmGraph"));
 			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
-
+		
 			this.AddManipulator(new ContentDragger());
 			this.AddManipulator(new SelectionDragger());
 			this.AddManipulator(new RectangleSelector());
 			this.AddManipulator(new FreehandSelector());
-
+		
 			var grid = new GridBackground();
 			Insert(0, grid);
 			grid.StretchToParentSize();
 		}
-
+		
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
 		{
 			var compatiblePorts = new List<Port>();
@@ -95,24 +95,24 @@ namespace Vsm.Editor.Graph
 			});
 			return compatiblePorts;
 		}
-
+		
 		public void Dispose()
 		{
 			if (_graphData == null) return;
-
+		
 			_dataManager.SaveData();
-
+		
 			_contextMenu.OnDeleteSelection -= HandleDeleteSelection;
 			_contextMenu.OnSetAsEntryNode -= _nodeFactory.SetAsEntryNode;
 			_contextMenu.OnCreateNewStateNode -= _nodeFactory.CreateNode;
-
+		
 			_dataManager.OnClearGraph -= HandleClearGraph;
 			_dataManager.OnCreateNode -= _nodeFactory.CreateNode;
 			_dataManager.OnConnectPorts -= _portConnector.ConnectPorts;
 			_dataManager.OnSaved -= HandleDataSaved;
 			_dataManager.OnLoaded -= HandleDataLoaded;
 		}
-
+		
 		public void SaveData()
 		{
 			_dataManager.SaveData();

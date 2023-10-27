@@ -54,6 +54,7 @@ namespace Vsm.Editor.Graph
 			node.RefreshPorts();
 			node.RefreshExpandedState();
 			node.SetPosition(new Rect(data.Position, Vector2.one));
+			node.SetAsEntryPoint(data.EntryPoint);
 
 			_graphView.AddElement(node);
 		}

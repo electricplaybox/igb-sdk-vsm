@@ -64,7 +64,7 @@ namespace Vsm.Editor.Graph
 					Position = stateNode.GetPosition().position,
 					State = stateNode.State.GetType().AssemblyQualifiedName,
 					Guid = stateNode.Guid,
-					EntyPoint = stateNode.EntyPoint
+					EntryPoint = stateNode.EntryPoint
 				};
 
 				_graphData.nodes.Add(nodeData);

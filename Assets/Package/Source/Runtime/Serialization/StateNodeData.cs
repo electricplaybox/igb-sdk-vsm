@@ -8,6 +8,6 @@ namespace Vsm.Serialization
 	{
 		public string State;
 		public string Guid;
-		public bool EntyPoint;
+		public bool EntryPoint;
 	}
 }

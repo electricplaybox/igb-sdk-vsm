@@ -15,10 +15,10 @@ namespace Vsm.Editor.Graph
 		private static void OnProjectWindowItemGUI(string guid, Rect selectionRect)
 		{
 			if (Event.current.type != EventType.MouseDown || Event.current.clickCount != 2) return;
-
+			
 			var selectedObject = Selection.activeObject;
 			if (selectedObject is not VsmGraphData) return;
-
+			
 			VsmWindow.OpenWindowWithGraphData((VsmGraphData)selectedObject);
 			Event.current.Use();
 		}
