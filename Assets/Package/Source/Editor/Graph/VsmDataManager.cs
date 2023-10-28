@@ -26,7 +26,6 @@ namespace Vsm.Editor.Graph
 		public void LoadData(VsmGraphData graphData)
 		{
 			_graphData = graphData;
-			
 			LoadData();
 		}
 
@@ -35,7 +34,6 @@ namespace Vsm.Editor.Graph
 			OnClearGraph?.Invoke();
 
 			if (_graphData == null) return;
-			if (_graphData.Nodes.Count == 0) return;
 
 			foreach (var node in _graphData.Nodes) OnCreateNode.Invoke(node);
 			foreach (var edge in _graphData.Edges) OnConnectPorts.Invoke(edge);
