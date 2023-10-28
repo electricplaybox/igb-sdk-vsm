@@ -12,8 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78f68fe19804ecaa95daaad8d130162, type: 3}
   m_Name: VsmGraphData
   m_EditorClassIdentifier: 
-  Nodes: []
-  Edges: []
+  Nodes:
+  - Title: EndState
+    Position: {x: 411, y: 296}
+    State: Samples.VSMExample.Source.States.EndState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: f8398d04-4570-457b-826d-bc53ef344525
+    EntryPoint: 0
+  - Title: EntryState
+    Position: {x: 219, y: 164}
+    State: Samples.VSMExample.Source.States.EntryState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: f613ac27-0393-4f08-a1e1-4df15d59a5b4
+    EntryPoint: 1
+  Edges:
+  - OutputNode: f613ac27-0393-4f08-a1e1-4df15d59a5b4
+    OutputPort: Continue
+    InputNode: f8398d04-4570-457b-826d-bc53ef344525
+    InputPort: Enter
   CurrentState:
     Title: 
     Position: {x: 0, y: 0}

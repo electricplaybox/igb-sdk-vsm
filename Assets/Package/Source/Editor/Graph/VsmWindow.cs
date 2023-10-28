@@ -12,23 +12,26 @@ namespace Vsm.Editor.Graph
 		private VsmGraphView _graphView;
 		private StateMachineController _stateMachineController;
 
+		static VsmWindow()
+		{
+			EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
+		}
+		
+		[MenuItem("Tools/Visual State Machine")]
+		public static VsmWindow OpenWindow()
+		{
+			var window = GetWindow<VsmWindow>();
+			window.titleContent = new GUIContent("Visual State Machine");
+			window.Populate(graphData: null);
+			
+			return window;
+		}
+		
 		private void Update()
 		{
 			HandleSaveKeyboardShortcut();
 		}
-
-		private void OnEnable()
-		{
-			EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
-		}
-
-		private void OnDisable()
-		{
-			EditorApplication.playModeStateChanged -= HandlePlayModeStateChanged;
-
-			CleanUpGraphView();
-		}
-
+		
 		private void CleanUpGraphView()
 		{
 			if(_graphView == null) return;
@@ -38,30 +41,32 @@ namespace Vsm.Editor.Graph
 			_graphView = null;
 		}
 
-		private void HandlePlayModeStateChanged(PlayModeStateChange playModeState)
+		private static void HandlePlayModeStateChanged(PlayModeStateChange playModeState)
 		{
-			if(_stateMachineController == null) return;
+			var window = GetWindow<VsmWindow>();
 			
 			if (playModeState != PlayModeStateChange.EnteredPlayMode)
 			{
-				_graphData = _stateMachineController.LiveGraphData;
-				Draw();
+				window.RedrawLiveData();
 			}
 			else if (playModeState != PlayModeStateChange.ExitingPlayMode)
 			{
-				_graphData = _stateMachineController.GraphData;
-				Draw();
+				window.RedrawGraphData();
 			}
 		}
 
-		[MenuItem("Tools/Visual State Machine")]
-		public static VsmWindow OpenWindow()
+		public void RedrawLiveData()
 		{
-			var window = GetWindow<VsmWindow>();
-			window.titleContent = new GUIContent("Visual State Machine");
-			window.Populate(graphData: null);
+			if(_stateMachineController == null) return;
 			
-			return window;
+			_graphData = _stateMachineController.LiveGraphData;
+			Draw();
+		}
+		
+		public void RedrawGraphData()
+		{
+			_graphData = _stateMachineController.GraphData;
+			Draw();
 		}
 		
 		public static void OpenWindowWithGraphData(VsmGraphData graphData)
