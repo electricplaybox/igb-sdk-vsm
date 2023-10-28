@@ -9,5 +9,10 @@ namespace Vsm.Serialization
 		public string State;
 		public string Guid;
 		public bool EntryPoint;
+
+		public void Enter()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

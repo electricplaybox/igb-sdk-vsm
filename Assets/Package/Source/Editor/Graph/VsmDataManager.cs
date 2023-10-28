@@ -35,10 +35,10 @@ namespace Vsm.Editor.Graph
 			OnClearGraph?.Invoke();
 
 			if (_graphData == null) return;
-			if (_graphData.nodes.Count == 0) return;
+			if (_graphData.Nodes.Count == 0) return;
 
-			foreach (var node in _graphData.nodes) OnCreateNode.Invoke(node);
-			foreach (var edge in _graphData.edges) OnConnectPorts.Invoke(edge);
+			foreach (var node in _graphData.Nodes) OnCreateNode.Invoke(node);
+			foreach (var edge in _graphData.Edges) OnConnectPorts.Invoke(edge);
 			
 			OnLoaded?.Invoke(_graphData);
 		}
@@ -50,8 +50,8 @@ namespace Vsm.Editor.Graph
 			var nodes = _graphView.nodes.ToList();
 			var edges = _graphView.edges.ToList();
 			
-			_graphData.nodes.Clear();
-			_graphData.edges.Clear();
+			_graphData.Nodes.Clear();
+			_graphData.Edges.Clear();
 
 			foreach (var node in nodes)
 			{
@@ -67,7 +67,7 @@ namespace Vsm.Editor.Graph
 					EntryPoint = stateNode.EntryPoint
 				};
 
-				_graphData.nodes.Add(nodeData);
+				_graphData.Nodes.Add(nodeData);
 			}
 
 			foreach (var edge in edges)
@@ -86,7 +86,7 @@ namespace Vsm.Editor.Graph
 					InputPort = inputPort?.portName
 				};
 
-				_graphData.edges.Add(edgeData);
+				_graphData.Edges.Add(edgeData);
 			}
 			
 			EditorUtility.SetDirty(_graphData);

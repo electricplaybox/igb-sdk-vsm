@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Vsm.Serialization
 {
 	[CreateAssetMenu(fileName = "VsmGraphData", menuName = "StateMachine/VsmGraphData")]
 	public class VsmGraphData : ScriptableObject
 	{
-		public List<StateNodeData> nodes = new();
-		public List<EdgeData> edges = new();
+		[FormerlySerializedAs("nodes")] public List<StateNodeData> Nodes = new();
+		[FormerlySerializedAs("edges")] public List<EdgeData> Edges = new();
+
+		public StateNodeData CurrentState;
 	}
 }

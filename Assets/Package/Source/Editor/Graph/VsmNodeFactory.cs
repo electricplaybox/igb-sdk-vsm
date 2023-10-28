@@ -47,7 +47,7 @@ namespace Vsm.Editor.Graph
 			node.styleSheets.Add(Resources.Load<StyleSheet>("BaseNode"));
 			node.title = data.Title;
 			node.State = Activator.CreateInstance(state) as State;
-
+			
 			_portConnector.CreateInputPort(node);
 			_portConnector.AddOutputPorts(node);
 

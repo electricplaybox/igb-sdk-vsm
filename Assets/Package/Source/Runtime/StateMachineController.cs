@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Vsm.Serialization;
 
 namespace Vsm
@@ -19,10 +20,14 @@ namespace Vsm
 		[SerializeField, HideInInspector]
 		private VsmGraphData _graphData;
 
+		private StateNodeData _entryNode;
+
 		private void Awake()
 		{
 			_graphDataInstance = ScriptableObject.Instantiate<VsmGraphData>(_graphData);
 			_graphDataInstance.name = _graphData.name + _graphDataInstance.GetInstanceID();
+
+			_graphDataInstance.CurrentState = _graphDataInstance.Nodes.FirstOrDefault(node => node.EntryPoint);
 		}
 	}
 }
