@@ -3,6 +3,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Vsm.Editor.Nodes;
 using Vsm.Serialization;
 
 namespace Vsm.Editor.Graph
@@ -116,6 +117,19 @@ namespace Vsm.Editor.Graph
 		public void SaveData()
 		{
 			_dataManager.SaveData();
+		}
+
+		public void Update()
+		{
+			if (_graphData == null) return;
+
+			foreach (var node in nodes)
+			{
+				if (node is not StateNode) continue;
+			
+				var stateNode = node as StateNode;
+				stateNode.Update();
+			}
 		}
 	}
 }

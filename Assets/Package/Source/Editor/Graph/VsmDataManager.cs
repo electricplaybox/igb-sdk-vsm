@@ -60,9 +60,9 @@ namespace Vsm.Editor.Graph
 				{
 					Title = stateNode.title,
 					Position = stateNode.GetPosition().position,
-					State = stateNode.State.GetType().AssemblyQualifiedName,
-					Guid = stateNode.Guid,
-					EntryPoint = stateNode.EntryPoint
+					State = stateNode.Data.State,
+					Guid = stateNode.Data.Guid,
+					EntryPoint = stateNode.Data.EntryPoint
 				};
 
 				_graphData.Nodes.Add(nodeData);

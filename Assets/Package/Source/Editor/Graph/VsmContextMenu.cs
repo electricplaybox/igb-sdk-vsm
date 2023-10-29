@@ -29,14 +29,17 @@ namespace Vsm.Editor.Graph
 		}
 
 		public event Action OnDeleteSelection;
-		public event Action<BaseNode> OnSetAsEntryNode;
+		public event Action<StateNode> OnSetAsEntryNode;
 		public event Action<Type, Vector2> OnCreateNewStateNode;
 
 		private void BuildNodeContext(ContextualMenuPopulateEvent evt)
 		{
 			var node = evt.target as BaseNode;
 
-			evt.menu.AppendAction("Set as Entry Node", x => { OnSetAsEntryNode.Invoke(node); });
+			evt.menu.AppendAction("Set as Entry Node", x =>
+			{
+				OnSetAsEntryNode.Invoke(node as StateNode);
+			});
 
 			evt.menu.AppendAction("Delete", x => { OnDeleteSelection.Invoke(); });
 		}

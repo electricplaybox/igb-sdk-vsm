@@ -80,7 +80,7 @@ namespace Vsm.Editor.Graph
 
 		public void AddOutputPorts(StateNode node)
 		{
-			var type = node.State.GetType();
+			var type = Type.GetType(node.Data.State);
 
 			// Loop through all public events declared in the type
 			foreach (var eventInfo in type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))

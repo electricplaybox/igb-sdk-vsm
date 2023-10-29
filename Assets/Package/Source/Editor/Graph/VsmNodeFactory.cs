@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Vsm.Editor.Nodes;
@@ -25,8 +27,10 @@ namespace Vsm.Editor.Graph
 			node.Guid = Guid.NewGuid().ToString();
 			node.styleSheets.Add(Resources.Load<StyleSheet>("BaseNode"));
 			node.title = state.Name;
-			node.State = Activator.CreateInstance(state) as State;
 
+			node.Data = new StateNodeData();
+			node.Data.State = state.AssemblyQualifiedName;
+			
 			_portConnector.CreateInputPort(node);
 			_portConnector.AddOutputPorts(node);
 
@@ -39,14 +43,11 @@ namespace Vsm.Editor.Graph
 
 		public void CreateNode(StateNodeData data)
 		{
-			var state = Type.GetType(data.State);
-			if (state == null) return;
-
 			var node = new StateNode();
 			node.Guid = data.Guid;
 			node.styleSheets.Add(Resources.Load<StyleSheet>("BaseNode"));
 			node.title = data.Title;
-			node.State = Activator.CreateInstance(state) as State;
+			node.Data = data;
 			
 			_portConnector.CreateInputPort(node);
 			_portConnector.AddOutputPorts(node);
@@ -54,17 +55,16 @@ namespace Vsm.Editor.Graph
 			node.RefreshPorts();
 			node.RefreshExpandedState();
 			node.SetPosition(new Rect(data.Position, Vector2.one));
-			node.SetAsEntryPoint(data.EntryPoint);
-
+			
 			_graphView.AddElement(node);
 		}
 
-		public void SetAsEntryNode(BaseNode entryNode)
+		public void SetAsEntryNode(StateNode entryNode)
 		{
 			var elements = _graphView.graphElements.ToList();
-			var baseNodes = elements.OfType<BaseNode>();
+			var nodes = elements.OfType<StateNode>();
 
-			foreach (var baseNode in baseNodes) baseNode.SetAsEntryPoint(baseNode.Guid == entryNode.Guid);
+			foreach (var node in nodes) node.Data.EntryPoint = (node.Guid == entryNode.Guid);
 		}
 	}
 }

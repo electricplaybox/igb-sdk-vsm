@@ -16,6 +16,11 @@
     border-color: #00ff00;
 }
 
+.node.active-node #input {
+    background-color: #00FF00;
+    color: #ffffff;
+}
+
 /*.node {*/
 /*    background-color: #444444;*/
 /*    border-color: #666666;*/

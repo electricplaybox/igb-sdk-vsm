@@ -1,11 +1,42 @@
 ﻿using Vsm.Serialization;
-using Vsm.States;
 
 namespace Vsm.Editor.Nodes
 {
 	public class StateNode : BaseNode
 	{
-		public State State;
 		public StateNodeData Data;
+		public string StateType;
+
+		public void Update()
+		{
+			if (Data == null) return;
+
+			DrawEntryPoint();
+			DrawActiveNode();
+		}
+
+		private void DrawActiveNode()
+		{
+			if (Data.IsActive)
+			{
+				AddToClassList("active-node");
+			}
+			else
+			{
+				RemoveFromClassList("active-node");
+			}
+		}
+
+		private void DrawEntryPoint()
+		{
+			if (Data.EntryPoint)
+			{
+				AddToClassList("entry-node");
+			}
+			else
+			{
+				RemoveFromClassList("entry-node");
+			}
+		}
 	}
 }

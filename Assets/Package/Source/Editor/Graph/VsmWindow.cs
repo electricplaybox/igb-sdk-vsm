@@ -30,6 +30,9 @@ namespace Vsm.Editor.Graph
 		private void Update()
 		{
 			HandleSaveKeyboardShortcut();
+
+			if (_graphView == null) return;
+			_graphView.Update();
 		}
 		
 		private void CleanUpGraphView()
@@ -65,7 +68,7 @@ namespace Vsm.Editor.Graph
 		
 		public void RedrawGraphData()
 		{
-			_graphData = _stateMachineController.GraphData;
+			if(_stateMachineController) _graphData = _stateMachineController.GraphData;
 			Draw();
 		}
 		
