@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -43,15 +44,10 @@ namespace Vsm.Editor.Graph
 
 		public void SaveData()
 		{
-			//Todo work out why saving after exiting runtime casues a loss of edge and position data
-			if (_graphView.edges.ToList().Count == 0)
-			{
-				Debug.LogError("Attempted to save with no edges");
-				return;
-			}
-			
 			if (Application.isPlaying) return;
 			if (_graphData == null) return;
+			
+			Debug.Log($"SaveData: Attempted to save Name:{_graphData.name}, Running:{Application.isPlaying}, Edges:{_graphView.edges.ToList().Count}, Nodes:Edges:{_graphView.nodes.ToList().Count}");
 
 			var nodes = _graphView.nodes.ToList();
 			var edges = _graphView.edges.ToList();

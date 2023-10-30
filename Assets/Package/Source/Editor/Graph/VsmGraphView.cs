@@ -99,9 +99,18 @@ namespace Vsm.Editor.Graph
 		
 		public void Dispose()
 		{
-			if (_graphData == null) return;
-		
-			_dataManager.SaveData();
+			Debug.Log(
+				$"Dispose:{_graphData?.name}, Running:{Application.isPlaying}, Edges:{this.edges.ToList().Count}");
+			
+			if (this.edges.ToList().Count == 0)
+			{
+				Debug.LogError($"Dispose: Attempted to save with no edges");
+				return;
+			}
+			else
+			{
+				_dataManager.SaveData();
+			}
 		
 			_contextMenu.OnDeleteSelection -= HandleDeleteSelection;
 			_contextMenu.OnSetAsEntryNode -= _nodeFactory.SetAsEntryNode;
@@ -112,6 +121,8 @@ namespace Vsm.Editor.Graph
 			_dataManager.OnConnectPorts -= _portConnector.ConnectPorts;
 			_dataManager.OnSaved -= HandleDataSaved;
 			_dataManager.OnLoaded -= HandleDataLoaded;
+			
+			this.Clear();
 		}
 		
 		public void SaveData()

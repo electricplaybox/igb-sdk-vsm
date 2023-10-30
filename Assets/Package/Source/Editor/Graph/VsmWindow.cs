@@ -38,8 +38,8 @@ namespace Vsm.Editor.Graph
 		{
 			if(_graphView == null) return;
 			
-			rootVisualElement.Remove(_graphView);
 			_graphView?.Dispose();
+			rootVisualElement.Remove(_graphView);
 			_graphView = null;
 		}
 
@@ -77,7 +77,7 @@ namespace Vsm.Editor.Graph
 			if (!Event.current.control) return;
 			if (Event.current.type != EventType.KeyDown) return;
 			if (Event.current.keyCode != KeyCode.S) return;
-
+			
 			_graphView.SaveData();
 			Event.current.Use();
 		}
