@@ -10,7 +10,6 @@ namespace Vsm.Editor.Graph
 	{
 		private VsmGraphData _graphData;
 		private VsmGraphView _graphView;
-		private StateMachineController _stateMachineController;
 
 		static VsmWindow()
 		{
@@ -47,29 +46,7 @@ namespace Vsm.Editor.Graph
 		private static void HandlePlayModeStateChanged(PlayModeStateChange playModeState)
 		{
 			var window = GetWindow<VsmWindow>();
-			
-			if (playModeState != PlayModeStateChange.EnteredPlayMode)
-			{
-				window.RedrawLiveData();
-			}
-			else if (playModeState != PlayModeStateChange.ExitingPlayMode)
-			{
-				window.RedrawGraphData();
-			}
-		}
-
-		public void RedrawLiveData()
-		{
-			if(_stateMachineController == null) return;
-			
-			_graphData = _stateMachineController.LiveGraphData;
-			Draw();
-		}
-		
-		public void RedrawGraphData()
-		{
-			if(_stateMachineController) _graphData = _stateMachineController.GraphData;
-			Draw();
+			window.Draw();
 		}
 		
 		public static void OpenWindowWithGraphData(VsmGraphData graphData)
@@ -78,25 +55,9 @@ namespace Vsm.Editor.Graph
 			window.Populate(graphData);
 		}
 		
-		public static void OpenWindowWithController(StateMachineController stateMachineController)
-		{
-			var window = OpenWindow();
-			window.Populate(stateMachineController);
-		}
-
 		private void Populate(VsmGraphData graphData)
 		{
-			_stateMachineController = null;
 			_graphData = graphData;
-			
-			Draw();
-		}
-
-		private void Populate(StateMachineController stateMachineController)
-		{
-			_stateMachineController = stateMachineController;
-			_graphData = _stateMachineController.LiveGraphData;
-			
 			Draw();
 		}
 		
@@ -119,6 +80,32 @@ namespace Vsm.Editor.Graph
 
 			_graphView.SaveData();
 			Event.current.Use();
+		}
+
+		private void OnGUI()
+		{
+			var selectedGameObject = Selection.activeGameObject;
+			if (selectedGameObject == null) return;
+
+			var stateMachine = selectedGameObject.GetComponent<StateMachineController>();
+			if (stateMachine == null) return;
+			
+			VsmGraphData newGraphData = null;
+
+			if (Application.isPlaying)
+			{
+				newGraphData = stateMachine.LiveGraphData;
+			}
+			else
+			{
+				newGraphData = stateMachine.GraphData;
+			}
+
+			if (newGraphData == null) return;
+			if (newGraphData == _graphData) return;
+
+			_graphData = newGraphData;
+			Draw();
 		}
 	}
 }

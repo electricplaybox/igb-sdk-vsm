@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d78f68fe19804ecaa95daaad8d130162, type: 3}
+  m_Name: VsmGraphData
+  m_EditorClassIdentifier: 
+  Nodes:
+  - Title: EntryState
+    Position: {x: 116, y: 121}
+    State: Samples.VSMExample.Source.States.EntryState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: 0c03ad4a-fa2c-414a-bcbe-02cbbb527261
+    EntryPoint: 1
+  - Title: EndState
+    Position: {x: 299, y: 205}
+    State: Samples.VSMExample.Source.States.EndState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: f5e64e71-714e-4282-b97b-9a45ab062bb7
+    EntryPoint: 0
+  - Title: MyThingyState
+    Position: {x: 299, y: 81}
+    State: Samples.VSMExample.Source.States.MyThingyState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: b6ecc9cc-8617-441b-a891-f46779c88172
+    EntryPoint: 0
+  Edges:
+  - OutputNode: 0c03ad4a-fa2c-414a-bcbe-02cbbb527261
+    OutputPort: Continue
+    InputNode: f5e64e71-714e-4282-b97b-9a45ab062bb7
+    InputPort: Enter
+  - OutputNode: 0c03ad4a-fa2c-414a-bcbe-02cbbb527261
+    OutputPort: Exit
+    InputNode: b6ecc9cc-8617-441b-a891-f46779c88172
+    InputPort: Enter
+  CurrentState:
+    Title: 
+    Position: {x: 0, y: 0}
+    State: 
+    Guid: 
+    EntryPoint: 0

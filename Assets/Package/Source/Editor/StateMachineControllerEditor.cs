@@ -26,7 +26,7 @@ namespace Vsm.Editor
 				GUI.enabled = isButtonEnabled;
 				if (GUILayout.Button("Edit", GUILayout.Width(50)))
 				{
-					VsmWindow.OpenWindowWithController(stateMachineController);
+					VsmWindow.OpenWindow();
 				}
 				GUI.enabled = true;
 			}

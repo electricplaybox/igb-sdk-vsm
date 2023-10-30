@@ -34,7 +34,7 @@ namespace Vsm.Editor.Graph
 			OnClearGraph?.Invoke();
 
 			if (_graphData == null) return;
-
+			
 			foreach (var node in _graphData.Nodes) OnCreateNode.Invoke(node);
 			foreach (var edge in _graphData.Edges) OnConnectPorts.Invoke(edge);
 			
@@ -43,6 +43,14 @@ namespace Vsm.Editor.Graph
 
 		public void SaveData()
 		{
+			//Todo work out why saving after exiting runtime casues a loss of edge and position data
+			if (_graphView.edges.ToList().Count == 0)
+			{
+				Debug.LogError("Attempted to save with no edges");
+				return;
+			}
+			
+			if (Application.isPlaying) return;
 			if (_graphData == null) return;
 
 			var nodes = _graphView.nodes.ToList();
@@ -70,17 +78,17 @@ namespace Vsm.Editor.Graph
 
 			foreach (var edge in edges)
 			{
-				var inputNode = edge.input.node as BaseNode;
+				var inputNode = edge.input.node as StateNode;
 				var inputPort = edge.input;
 
-				var outputNode = edge.output.node as BaseNode;
+				var outputNode = edge.output.node as StateNode;
 				var outputPort = edge.output;
 
 				var edgeData = new EdgeData
 				{
-					OutputNode = outputNode?.Guid,
+					OutputNode = outputNode?.Data.Guid,
 					OutputPort = outputPort?.portName,
-					InputNode = inputNode?.Guid,
+					InputNode = inputNode?.Data.Guid,
 					InputPort = inputPort?.portName
 				};
 

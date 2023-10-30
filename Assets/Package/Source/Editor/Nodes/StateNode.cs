@@ -5,12 +5,11 @@ namespace Vsm.Editor.Nodes
 	public class StateNode : BaseNode
 	{
 		public StateNodeData Data;
-		public string StateType;
 
 		public void Update()
 		{
 			if (Data == null) return;
-
+			
 			DrawEntryPoint();
 			DrawActiveNode();
 		}

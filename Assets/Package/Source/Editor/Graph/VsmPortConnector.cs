@@ -21,9 +21,12 @@ namespace Vsm.Editor.Graph
 		public void ConnectPorts(EdgeData edge)
 		{
 			var outputNode = GetNodeByGUID(edge.OutputNode);
-			var outputPort = GetOutputPortByName(outputNode, edge.OutputPort);
-
+			if (outputNode == null) return;
+			
 			var inputNode = GetNodeByGUID(edge.InputNode);
+			if (inputNode == null) return;
+			
+			var outputPort = GetOutputPortByName(outputNode, edge.OutputPort);
 			var inputPort = GetInputPortByName(inputNode, edge.InputPort);
 
 			ConnectPorts(outputPort, inputPort);
@@ -49,7 +52,7 @@ namespace Vsm.Editor.Graph
 		{
 			var elements = _graphView.graphElements.ToList();
 
-			return elements.FirstOrDefault(node => (node as BaseNode).Guid == guid) as Node;
+			return elements.FirstOrDefault(node => (node as StateNode).Data.Guid == guid) as Node;
 		}
 
 		private Port GetOutputPortByName(Node node, string portName)

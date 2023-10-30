@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: VsmGraphData
   m_EditorClassIdentifier: 
   Nodes:
-  - Title: EntryState
-    Position: {x: 219, y: 164}
-    State: Samples.VSMExample.Source.States.EntryState, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-    Guid: f613ac27-0393-4f08-a1e1-4df15d59a5b4
-    EntryPoint: 0
   - Title: EndState
-    Position: {x: 411, y: 296}
+    Position: {x: 331, y: 179}
     State: Samples.VSMExample.Source.States.EndState, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     Guid: f8398d04-4570-457b-826d-bc53ef344525
     EntryPoint: 1
+  - Title: EntryState
+    Position: {x: 115, y: 143}
+    State: Samples.VSMExample.Source.States.EntryState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: f613ac27-0393-4f08-a1e1-4df15d59a5b4
+    EntryPoint: 0
   Edges:
   - OutputNode: f613ac27-0393-4f08-a1e1-4df15d59a5b4
     OutputPort: Continue

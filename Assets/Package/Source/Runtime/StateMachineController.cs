@@ -27,6 +27,7 @@ namespace Vsm
 			_graphDataInstance = ScriptableObject.Instantiate<VsmGraphData>(_graphData);
 			_graphDataInstance.name = _graphData.name + _graphDataInstance.GetInstanceID();
 			_graphDataInstance.Initialize();
+			Debug.Log($"new:{_graphDataInstance.GetInstanceID()}, old:{_graphData.GetInstanceID()}");
 
 			_entryNode = _graphDataInstance.Nodes.FirstOrDefault(node => node.EntryPoint);
 		}

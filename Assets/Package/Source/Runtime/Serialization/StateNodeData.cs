@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Vsm.Serialization
 {
@@ -14,6 +15,7 @@ namespace Vsm.Serialization
 
 		public void Enter()
 		{
+			Debug.Log($"Enter: {this.GetHashCode()}");
 			IsActive = true;
 			_state?.Enter();
 		}

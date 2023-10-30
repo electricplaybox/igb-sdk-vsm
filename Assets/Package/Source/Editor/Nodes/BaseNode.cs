@@ -4,6 +4,6 @@ namespace Vsm.Editor.Nodes
 {
 	public class BaseNode : Node
 	{
-		public string Guid;
+		
 	}
 }
