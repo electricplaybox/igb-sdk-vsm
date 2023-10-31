@@ -2,11 +2,21 @@
 .node #title {
     background-color: #444444;
     color: #ffffff;
+    height: 30px;
+    flex-direction: column;
+    margin-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
 }
 
-.node.entry-node #title {
-    background-color: #006600;
-    color: #ffffff;
+.node #title-container
+{
+    
+}
+
+.node.active-node #title {
+    height: 40px;
 }
 
 .node.expanded #selection-border {
@@ -16,10 +26,25 @@
     border-color: #00ff00;
 }
 
-.node.active-node #input {
-    background-color: #00FF00;
+.node.entry-node #title {
+    background-color: #116F1C;
     color: #ffffff;
 }
+
+.node #progress-bar {
+    visibility: hidden;
+}
+
+.node.active-node #progress-bar {
+    visibility: visible;
+}
+
+
+/*.active-node.node.entry-node #title {*/
+/*    background-color: #006600;*/
+/*    color: #ffffff;*/
+/*}*/
+
 
 /*.node {*/
 /*    background-color: #444444;*/

@@ -1,4 +1,6 @@
-﻿using Vsm.Serialization;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
+using Vsm.Serialization;
 
 namespace Vsm.Editor.Nodes
 {
@@ -16,9 +18,12 @@ namespace Vsm.Editor.Nodes
 
 		private void DrawActiveNode()
 		{
+			if (!Application.isPlaying) return;
+			
 			if (Data.IsActive)
 			{
 				AddToClassList("active-node");
+				this.Query<ProgressBar>("progress-bar").First().value = (Time.time % 1f) * 100f;
 			}
 			else
 			{

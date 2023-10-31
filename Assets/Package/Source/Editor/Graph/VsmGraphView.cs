@@ -99,19 +99,21 @@ namespace Vsm.Editor.Graph
 		
 		public void Dispose()
 		{
-			Debug.Log(
-				$"Dispose:{_graphData?.name}, Running:{Application.isPlaying}, Edges:{this.edges.ToList().Count}");
+			if (_graphData != null)
+			{
+				Debug.Log($"Dispose:{_graphData?.name}, Running:{Application.isPlaying}, Edges:{this.edges.ToList().Count}");
 			
-			if (this.edges.ToList().Count == 0)
-			{
-				Debug.LogError($"Dispose: Attempted to save with no edges");
-				return;
+				if (this.edges.ToList().Count == 0)
+				{
+					Debug.LogError($"Dispose: Attempted to save with no edges");
+					return;
+				}
+				else
+				{
+					_dataManager.SaveData();
+				}
 			}
-			else
-			{
-				_dataManager.SaveData();
-			}
-		
+			
 			_contextMenu.OnDeleteSelection -= HandleDeleteSelection;
 			_contextMenu.OnSetAsEntryNode -= _nodeFactory.SetAsEntryNode;
 			_contextMenu.OnCreateNewStateNode -= _nodeFactory.CreateNode;

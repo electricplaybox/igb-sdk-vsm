@@ -24,7 +24,7 @@ namespace Vsm.Editor.Graph
 		public void CreateNode(Type state, Vector2 position)
 		{
 			var node = new StateNode();
-			node.styleSheets.Add(Resources.Load<StyleSheet>("BaseNode"));
+			node.styleSheets.Add(Resources.Load<StyleSheet>("StateNode"));
 			node.title = state.Name;
 
 			node.Data = new StateNodeData();
@@ -44,7 +44,7 @@ namespace Vsm.Editor.Graph
 		public void CreateNode(StateNodeData data)
 		{
 			var node = new StateNode();
-			node.styleSheets.Add(Resources.Load<StyleSheet>("BaseNode"));
+			node.styleSheets.Add(Resources.Load<StyleSheet>("StateNode"));
 			node.title = data.Title;
 			node.Data = data;
 			
@@ -54,10 +54,29 @@ namespace Vsm.Editor.Graph
 			node.RefreshPorts();
 			node.RefreshExpandedState();
 			node.SetPosition(new Rect(data.Position, Vector2.one));
+
+			var container = new VisualElement();
+			container.name = "title-container";
+			container.style.alignItems = Align.Center;
+			container.style.marginTop = 6;
+			container.style.marginBottom = 6;
+			
+			var title = node.Query<VisualElement>("title").First();
+			var titleLabel = title.Query<VisualElement>("title-label").First();
+			var titleButton = title.Query<VisualElement>("title-button-container").First();
+
+			title.Add(container);
+			container.Add(titleLabel);
+			container.Add(titleButton);
+
+			var progressBar = new ProgressBar();
+			progressBar.name = "progress-bar";
+			progressBar.styleSheets.Add(Resources.Load<StyleSheet>("ProgressBar"));
+			title.Add(progressBar);
 			
 			_graphView.AddElement(node);
 		}
-
+		
 		public void SetAsEntryNode(StateNode entryNode)
 		{
 			var elements = _graphView.graphElements.ToList();
