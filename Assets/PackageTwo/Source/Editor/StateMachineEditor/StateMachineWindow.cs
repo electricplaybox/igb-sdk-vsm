@@ -1,4 +1,5 @@
-﻿using StateMachine;
+﻿using System.Linq;
+using StateMachine;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -9,23 +10,53 @@ namespace Editor.StateMachineEditor
 	[InitializeOnLoad]
 	public class StateMachineWindow : GraphViewEditorWindow
 	{
-		private static StateMachineGraph _stateMachineGraph;
-		
+		private static StateMachineWindowData _windowData;
+
 		[MenuItem("Tools/State Machine Editor")]
 		public static StateMachineWindow OpenWindow()
 		{
+			var windowData = GetWindowData();
+			var graph = windowData.StateMachineGraph;
+			
 			var window = GetWindow<StateMachineWindow>();
 			window.titleContent = new GUIContent("State Machine Editor");
 			window.rootVisualElement.styleSheets.Add(Resources.Load<StyleSheet>("StateMachineEditor"));
-			window.Draw(_stateMachineGraph);
+			window.Draw(graph);
 			
 			return window;
 		}
-
+		
+		public static StateMachineWindow OpenWindow(StateMachineController controller)
+		{
+			GetWindowData().SetStateMachineController(controller);
+			
+			return OpenWindow();
+		}
+		
 		public static StateMachineWindow OpenWindow(StateMachineGraph graph)
 		{
-			_stateMachineGraph = graph;
+			GetWindowData().SetStateMachineGraph(graph);
+			
 			return OpenWindow();
+		}
+
+		public static bool HasGraph(StateMachineGraph graph)
+		{
+			return GetWindowData().StateMachineGraph == graph;
+		}
+
+		private static StateMachineWindowData GetWindowData()
+		{
+			if (_windowData != null) return _windowData;
+			
+			var guids = AssetDatabase.FindAssets("t:StateMachineWindowData", new[] {"Assets", "Packages"});
+			if (guids.Length > 0)
+			{
+				var assetPath = AssetDatabase.GUIDToAssetPath(guids[0]);
+				_windowData = AssetDatabase.LoadAssetAtPath<StateMachineWindowData>(assetPath);
+			}
+
+			return _windowData;
 		}
 		
 		static StateMachineWindow()
@@ -41,7 +72,7 @@ namespace Editor.StateMachineEditor
 			var selectedObject = Selection.activeObject;
 			if (selectedObject is not StateMachineGraph) return;
 			
-			_stateMachineGraph = selectedObject as StateMachineGraph;
+			GetWindowData().SetStateMachineGraph(selectedObject as StateMachineGraph);
 
 			OpenWindow();
 			Event.current.Use();
@@ -51,11 +82,44 @@ namespace Editor.StateMachineEditor
 		{
 			OpenWindow();
 		}
-
-		private void Draw(StateMachineGraph stateMachineGraph)
+		
+		private void Draw(StateMachineGraph graph)
 		{
-			var graphView = new StateMachineGraphView(stateMachineGraph);
+			var graphView = new StateMachineGraphView(graph);
 			rootVisualElement.Add(graphView);
+		}
+		
+		private void OnGUI()
+		{
+			HandleSelectedGameObject();
+			HandleSelectedObject();
+		}
+
+		private void HandleSelectedObject()
+		{
+			var selectedObject = Selection.activeObject;
+			if (selectedObject == null) return;
+			if (selectedObject is not StateMachineGraph) return;
+			
+			var graph = selectedObject as StateMachineGraph;
+			if (HasGraph(graph)) return;
+			
+			OpenWindow(graph);
+		}
+
+		private void HandleSelectedGameObject()
+		{
+			var selectedObject = Selection.activeGameObject;
+			if (selectedObject == null) return;
+
+			var selectedGameObject = selectedObject as GameObject;
+			var stateMachine = selectedGameObject.GetComponent<StateMachineController>();
+			if (stateMachine == null) return;
+			
+			var graph = stateMachine.GraphData;
+			if (HasGraph(graph)) return;
+			
+			OpenWindow(stateMachine);
 		}
 	}
 }
