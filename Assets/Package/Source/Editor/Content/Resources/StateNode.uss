@@ -1,18 +1,27 @@
-/* Styles for the entire node */
+:root, * {
+    --active-highlight: #00ff00;
+    --active-background: #116F1C;
+    --inactive-highlight: #00FFFF;
+    --node-title-color: #444444;
+    --node-text-color: #ffffff;
+}
+
 .node #title {
-    background-color: #444444;
-    color: #ffffff;
+    background-color: var(--node-title-color);
+    color: var(--node-text-color);
     height: 30px;
     flex-direction: column;
     margin-bottom: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
     padding-top: 3px;
 }
 
-.node #title-container
-{
-    
+.node #title-container {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.node.entry-node #title {
+    background-color: var(--active-background);
 }
 
 .node.active-node #title {
@@ -20,19 +29,20 @@
 }
 
 .node.expanded #selection-border {
-    border-color: #00FFFF;
-}
-.node.expanded.entry-node #selection-border {
-    border-color: #00ff00;
+    border-color: var(--inactive-highlight);
 }
 
-.node.entry-node #title {
-    background-color: #116F1C;
-    color: #ffffff;
+.node.expanded.entry-node #selection-border {
+    border-color: var(--active-highlight);
 }
+
 
 .node #progress-bar {
     visibility: hidden;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    translate: 0px 2px;
 }
 
 .node.active-node #progress-bar {

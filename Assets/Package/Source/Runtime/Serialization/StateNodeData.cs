@@ -17,17 +17,17 @@ namespace Vsm.Serialization
 		{
 			Debug.Log($"Enter: {this.GetHashCode()}");
 			IsActive = true;
-			_state?.Enter();
+			_state?.OnEnter();
 		}
 
 		public void Update()
 		{
-			_state?.Update();
+			_state?.OnUpdate();
 		}
 
 		public void Exit()
 		{
-			_state?.Exit();
+			_state?.OnExit();
 			IsActive = false;
 		}
 

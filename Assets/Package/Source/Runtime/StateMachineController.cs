@@ -36,5 +36,10 @@ namespace Vsm
 		{
 			_entryNode.Enter();
 		}
+
+		private void Update()
+		{
+			
+		}
 	}
 }

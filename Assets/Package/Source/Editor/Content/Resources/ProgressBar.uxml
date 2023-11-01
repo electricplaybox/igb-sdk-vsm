@@ -9,4 +9,5 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:ProgressBar>
+    <ui:ProgressBar value="25.1" title="my-progress" />
 </ui:UXML>

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Vsm.States;
 
 namespace Vsm.Serialization
 {
@@ -16,6 +14,7 @@ namespace Vsm.Serialization
 
 		public void Initialize()
 		{
+			//Initialize nodes
 			foreach (var node in Nodes)
 			{
 				node.Initialize();

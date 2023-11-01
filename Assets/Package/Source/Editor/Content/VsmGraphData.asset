@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: VsmGraphData
   m_EditorClassIdentifier: 
   Nodes:
+  - Title: EntryState
+    Position: {x: 12, y: 214}
+    State: Samples.VSMExample.Source.States.EntryState, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    Guid: 0c03ad4a-fa2c-414a-bcbe-02cbbb527261
+    EntryPoint: 1
   - Title: MyThingyState
     Position: {x: 225, y: 177}
     State: Samples.VSMExample.Source.States.MyThingyState, Assembly-CSharp, Version=0.0.0.0,
@@ -20,17 +26,11 @@ MonoBehaviour:
     Guid: b6ecc9cc-8617-441b-a891-f46779c88172
     EntryPoint: 0
   - Title: EndState
-    Position: {x: 233, y: 315}
+    Position: {x: 225, y: 335}
     State: Samples.VSMExample.Source.States.EndState, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     Guid: f5e64e71-714e-4282-b97b-9a45ab062bb7
     EntryPoint: 0
-  - Title: EntryState
-    Position: {x: 12, y: 214}
-    State: Samples.VSMExample.Source.States.EntryState, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-    Guid: 0c03ad4a-fa2c-414a-bcbe-02cbbb527261
-    EntryPoint: 1
   Edges:
   - OutputNode: 0c03ad4a-fa2c-414a-bcbe-02cbbb527261
     OutputPort: Continue
