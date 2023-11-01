@@ -17,6 +17,7 @@ namespace Editor.StateMachineEditor
 		{
 			var windowData = GetWindowData();
 			var graph = windowData.StateMachineGraph;
+			Debug.Log($"OpenWindow: {graph.name}");
 			
 			var window = GetWindow<StateMachineWindow>();
 			window.titleContent = new GUIContent("State Machine Editor");
@@ -40,9 +41,14 @@ namespace Editor.StateMachineEditor
 			return OpenWindow();
 		}
 
-		public static bool HasGraph(StateMachineGraph graph)
+		private static bool HasGraph(StateMachineGraph graph)
 		{
 			return GetWindowData().StateMachineGraph == graph;
+		}
+		
+		private bool HasController(StateMachineController stateMachine)
+		{
+			return GetWindowData().StateMachineController == stateMachine;
 		}
 
 		private static StateMachineWindowData GetWindowData()
@@ -85,6 +91,8 @@ namespace Editor.StateMachineEditor
 		
 		private void Draw(StateMachineGraph graph)
 		{
+			rootVisualElement.Clear();
+			
 			var graphView = new StateMachineGraphView(graph);
 			rootVisualElement.Add(graphView);
 		}
@@ -116,8 +124,7 @@ namespace Editor.StateMachineEditor
 			var stateMachine = selectedGameObject.GetComponent<StateMachineController>();
 			if (stateMachine == null) return;
 			
-			var graph = stateMachine.GraphData;
-			if (HasGraph(graph)) return;
+			if (HasController(stateMachine)) return;
 			
 			OpenWindow(stateMachine);
 		}
