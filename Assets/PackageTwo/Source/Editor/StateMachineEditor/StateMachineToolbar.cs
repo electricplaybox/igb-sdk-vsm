@@ -27,8 +27,13 @@ namespace Editor.StateMachineEditor
 			
 			_saveButton = new Button();
 			_saveButton.text = "Save";
-			_saveButton.clicked += OnSave;
+			_saveButton.clicked += HandleSave;
 			Add(_saveButton);
+		}
+
+		private void HandleSave()
+		{
+			OnSave?.Invoke();
 		}
 
 		private void HandleGraphChanged(ChangeEvent<Object> evt)
@@ -39,7 +44,7 @@ namespace Editor.StateMachineEditor
 		private void OnDestroy()
 		{
 			_graphDataField.UnregisterValueChangedCallback(HandleGraphChanged);
-			_saveButton.clicked -= OnSave;
+			_saveButton.clicked -= HandleSave;
 		}
 	}
 }

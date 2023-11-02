@@ -1,9 +1,14 @@
-﻿using StateMachine;
+﻿using System;
+using StateMachine;
+using StateMachine.Attributes;
 
-namespace Samples.Example.Source.States
+namespace Example.States
 {
 	public class EntryState : State
 	{
+		[Transition]
+		public event Action Continue;
+		
 		public override void Enter()
 		{
 			

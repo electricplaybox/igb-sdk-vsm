@@ -2,10 +2,12 @@
 
 namespace StateMachine
 {
+	[Serializable]
 	public class StateConnection
 	{
-		public string FromPortId;
-		public string ToPortId;
+		public string FromEventName;
+		public string FromNodeId;
+		public string ToNodeId;
 		
 		public event Action<StateConnection> OnTransition;
 		
