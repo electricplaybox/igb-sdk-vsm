@@ -6,7 +6,6 @@ using StateMachine;
 using StateMachine.Attributes;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,14 +22,28 @@ namespace Editor.StateMachineEditor
 		{
 			_graph = graph;
 			
-			this.AddToClassList("stretch-to-parent-size");
-			this.RegisterCallback<DetachFromPanelEvent>(evt => OnDestroy());
+			AddToClassList("stretch-to-parent-size");
+			RegisterCallback<DetachFromPanelEvent>(evt => OnDestroy());
 			
 			CreateGrid();
 			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 			AddManipulators();
 			CreateToolbar(graph);
 			CreateContextMenu();
+			LoadGraph(graph);
+		}
+		
+		public void Update()
+		{
+			if (_graph == null) return;
+
+			foreach (var node in nodes)
+			{
+				if (node is not StateNodeView) continue;
+			
+				var stateNodeView = node as StateNodeView;
+				stateNodeView.Update();
+			}
 		}
 		
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -49,7 +62,7 @@ namespace Editor.StateMachineEditor
 				Direction.Input, 
 				Port.Capacity.Multi,
 				typeof(Node));
-			inputPort.portName = "Enter";
+			inputPort.name = inputPort.portName = "Enter";
 			node.inputContainer.Add(inputPort);
 		}
 		
@@ -73,7 +86,7 @@ namespace Editor.StateMachineEditor
 				Direction.Output, 
 				Port.Capacity.Single,
 				typeof(Node));
-			outputPort.portName = portName;
+			outputPort.name = outputPort.portName = portName;
 			node.outputContainer.Add(outputPort);
 		}
 
@@ -85,27 +98,20 @@ namespace Editor.StateMachineEditor
 
 		private void OnCreateNewStateNode(Type state, Vector2 position)
 		{
-			Debug.Log($"Create Node: {state.Name}");
+			var id = Guid.NewGuid().ToString();
 			
-			var node = new StateNodeView();
-			node.Data = new StateNode()
+			var stateNode = new StateNode()
 			{
-				Id = Guid.NewGuid().ToString(),
+				Id = id,
 				StateType = state.AssemblyQualifiedName,
-				EntryPoint = this.nodes.ToList().Count == 0
+				EntryPoint = this.nodes.ToList().Count == 0,
+				Position = position,
+				Title = state.Name
 			};
-			node.title = state.Name;
 			
-			CreateInputPort(node);
-			CreateOutputPorts(node);
-			
-			node.RefreshPorts();
-			node.RefreshExpandedState();
-			node.SetPosition(new Rect(position, Vector2.one));
-			
-			AddElement(node);
+			CreateStateNode(stateNode);
 		}
-
+		
 		private void OnDestroy()
 		{
 			_toolbar.OnSave -= HandleSaveGraph;
@@ -127,6 +133,78 @@ namespace Editor.StateMachineEditor
 			Debug.Log("Graph Changed");
 		}
 
+		private void LoadGraph(StateMachineGraph graph)
+		{
+			foreach (var kvp in graph.Nodes)
+			{
+				CreateStateNode(kvp.Value);
+			}
+
+			foreach (var kvp in graph.Nodes)
+			{
+				ConnectStateNode(kvp.Value);
+			}
+		}
+
+		private void ConnectStateNode(StateNode stateNode)
+		{
+			var nodeView = this.Q<StateNodeView>(stateNode.Id);
+
+			foreach (var connection in stateNode.Connections)
+			{
+				var connectedNodeView = this.Q<StateNodeView>(connection.ToNodeId);
+				var outputPort = nodeView.outputContainer.Q<Port>(connection.FromPortName);
+				var inputPort = connectedNodeView.inputContainer.Q<Port>(connection.ToPortName);
+				
+				var edge = new Edge
+				{
+					input = inputPort,
+					output = outputPort
+				};
+				
+				inputPort.Connect(edge);
+				outputPort.Connect(edge);
+				
+				Add(edge);
+			}
+		}
+		
+		private void CreateStateNode(StateNode stateNode)
+		{
+			var node = new StateNodeView();
+			node.Data = stateNode;
+			node.title = stateNode.Title;
+			node.name = stateNode.Id;
+			
+			CreateInputPort(node);
+			CreateOutputPorts(node);
+			
+			node.RefreshPorts();
+			node.RefreshExpandedState();
+			node.SetPosition(new Rect(stateNode.Position, Vector2.one));
+			
+			var container = new VisualElement();
+			container.name = "title-container";
+			container.style.alignItems = Align.Center;
+			container.style.marginTop = 6;
+			container.style.marginBottom = 6;
+			
+			var title = node.Query<VisualElement>("title").First();
+			var titleLabel = title.Query<VisualElement>("title-label").First();
+			var titleButton = title.Query<VisualElement>("title-button-container").First();
+			
+			title.Add(container);
+			container.Add(titleLabel);
+			container.Add(titleButton);
+
+			var progressBar = new ProgressBar();
+			progressBar.name = "progress-bar";
+			progressBar.styleSheets.Add(Resources.Load<StyleSheet>("ProgressBar"));
+			title.Add(progressBar);
+			
+			AddElement(node);
+		}
+
 		private void HandleSaveGraph()
 		{
 			if (Application.isPlaying) return;
@@ -137,14 +215,22 @@ namespace Editor.StateMachineEditor
 			foreach (var node in nodes)
 			{
 				if (node is not StateNodeView) continue;
+				
 				var stateNodeView = node as StateNodeView;
+				stateNodeView.Data.Position = node.GetPosition().position;
 
+				if (stateNodeView.Data.EntryPoint)
+				{
+					_graph.EntryNodeId = stateNodeView.Data.Id;
+				}
+				
 				var edges = this.edges.Where(edge => edge.output.node == node);
 				foreach (var edge in edges)
 				{
 					var connection = new StateConnection()
 					{
-						FromEventName = edge.output.portName,
+						FromPortName = edge.output.portName,
+						ToPortName = edge.input.portName,
 						FromNodeId = stateNodeView.Data.Id,
 						ToNodeId = (edge.output.connections.First().input.node as StateNodeView).Data.Id
 					};

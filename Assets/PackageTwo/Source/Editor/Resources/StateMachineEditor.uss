@@ -1,7 +1,12 @@
 :root, * {
-    
+    --active-highlight: #00ff00;
+    --active-background: #116F1C;
+    --inactive-highlight: #00FFFF;
+    --node-title-color: #444444;
+    --node-text-color: #ffffff;
 }
 
+/* *********** Node Graph *********** */
 .stretch-to-parent-size {
     position:absolute;
     left:0;
@@ -15,4 +20,48 @@
     --line-color: rgba(193, 196, 192, 0.1);
     --thick-line-color: rgba(193, 196, 192, 0.1);
     --spacing: 10;
+}
+
+/* *********** State Node *********** */
+
+.node #title {
+    background-color: var(--node-title-color);
+    color: var(--node-text-color);
+    height: 30px;
+    flex-direction: column;
+    margin-bottom: 0px;
+    padding-top: 3px;
+}
+
+.node #title-container {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.node.entry-node #title {
+    background-color: var(--active-background);
+}
+
+.node.active-node #title {
+    height: 40px;
+}
+
+.node.expanded #selection-border {
+    border-color: var(--inactive-highlight);
+}
+
+.node.expanded.entry-node #selection-border {
+    border-color: var(--active-highlight);
+}
+
+.node #progress-bar {
+    visibility: hidden;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    translate: 0px 2px;
+}
+
+.node.active-node #progress-bar {
+    visibility: visible;
 }

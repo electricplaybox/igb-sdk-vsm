@@ -11,13 +11,13 @@ namespace Editor.StateMachineEditor
 	public class StateMachineWindow : GraphViewEditorWindow
 	{
 		private static StateMachineWindowData _windowData;
+		private StateMachineGraphView _graphView;
 
 		[MenuItem("Tools/State Machine Editor")]
 		public static StateMachineWindow OpenWindow()
 		{
 			var windowData = GetWindowData();
 			var graph = windowData.StateMachineGraph;
-			Debug.Log($"OpenWindow: {graph.name}");
 			
 			var window = GetWindow<StateMachineWindow>();
 			window.titleContent = new GUIContent("State Machine Editor");
@@ -93,8 +93,15 @@ namespace Editor.StateMachineEditor
 		{
 			rootVisualElement.Clear();
 			
-			var graphView = new StateMachineGraphView(graph);
-			rootVisualElement.Add(graphView);
+			_graphView = new StateMachineGraphView(graph);
+			rootVisualElement.Add(_graphView);
+		}
+		
+		private void Update()
+		{
+			if (_graphView == null) return;
+			
+			_graphView.Update();
 		}
 		
 		private void OnGUI()

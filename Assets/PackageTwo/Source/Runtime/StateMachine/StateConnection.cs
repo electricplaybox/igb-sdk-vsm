@@ -5,7 +5,9 @@ namespace StateMachine
 	[Serializable]
 	public class StateConnection
 	{
-		public string FromEventName;
+		public string FromPortName;
+		public string ToPortName;
+		
 		public string FromNodeId;
 		public string ToNodeId;
 		

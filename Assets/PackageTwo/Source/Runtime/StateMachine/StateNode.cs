@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
-using StateMachine.Attributes;
 using UnityEngine;
 
 namespace StateMachine
@@ -12,8 +10,15 @@ namespace StateMachine
 		public string Id;
 		public string StateType;
 		public bool EntryPoint;
+		public Vector2 Position;
+		public string Title;
 		public IReadOnlyList<StateConnection> Connections => _connections;
 		
+		[field: NonSerialized]
+		public bool IsActive { get; set; }
+		
+		public State State => _state;
+
 		[SerializeField]
 		private List<StateConnection> _connections = new ();
 		private State _state;
@@ -34,17 +39,21 @@ namespace StateMachine
 		public void Enter()
 		{
 			SubscribeToConnections();
+			IsActive = true;
 			_state.Enter();
 		}
 
 		public void Update()
 		{
+			if (_state == null) return;
+			
 			_state.Update();
 		}
 
 		public void Exit()
 		{
 			UnsubscribeFromConnections();
+			IsActive = false;
 			_state.Exit();
 		}
 
@@ -52,7 +61,7 @@ namespace StateMachine
 		{
 			foreach (var connection in _connections) 
 			{
-				SubscribeToEventByName(_state, connection.FromEventName, connection);
+				SubscribeToEventByName(_state, connection.FromPortName, connection);
 			}
 		}
 		
@@ -60,7 +69,7 @@ namespace StateMachine
 		{
 			foreach (var connection in _connections) 
 			{
-				UnsubscribeFromEventByName(_state, connection.FromEventName, connection);
+				UnsubscribeFromEventByName(_state, connection.FromPortName, connection);
 			}
 		}
 		
