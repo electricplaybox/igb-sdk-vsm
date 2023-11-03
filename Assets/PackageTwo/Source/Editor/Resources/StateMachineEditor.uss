@@ -27,7 +27,7 @@
 .node #title {
     background-color: var(--node-title-color);
     color: var(--node-text-color);
-    height: 30px;
+    height: 40px;
     flex-direction: column;
     margin-bottom: 0px;
     padding-top: 3px;
@@ -42,10 +42,6 @@
     background-color: var(--active-background);
 }
 
-.node.active-node #title {
-    height: 40px;
-}
-
 .node.expanded #selection-border {
     border-color: var(--inactive-highlight);
 }
@@ -54,14 +50,17 @@
     border-color: var(--active-highlight);
 }
 
-.node #progress-bar {
-    visibility: hidden;
+.node #progress-bar {    
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 0px;
     translate: 0px 2px;
 }
 
-.node.active-node #progress-bar {
+.unity-progress-bar__progress {
+    visibility: hidden;
+}
+
+.active-node .unity-progress-bar__progress {
     visibility: visible;
 }
