@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace StateMachine
@@ -65,6 +64,17 @@ namespace StateMachine
 		public void AddNode(StateNode node)
 		{
 			Nodes.Add(new SerializableKeyValuePair<string, StateNode>(node.Id, node));
+		}
+		
+		public void RemoveNode(StateNode nodeData)
+		{
+			var kvp = Nodes.Where(kvp =>
+			{
+				return kvp.Value == nodeData;
+			}).FirstOrDefault();
+
+			if (kvp == null) return;
+			Nodes.Remove(kvp);
 		}
 		
 		private void CacheDictionaries()

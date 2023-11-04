@@ -8,7 +8,9 @@ namespace Editor.StateMachineEditor
 {
 	public class StateMachineContextMenu
 	{
+		public event Action<StateNodeView> OnDeleteStateNode;
 		public event Action<Type, Vector2> OnCreateNewStateNode;
+		public event Action<StateNodeView> OnSetAsEntryNode;
 		
 		private readonly StateMachineGraphView _graphView;
 
@@ -31,7 +33,17 @@ namespace Editor.StateMachineEditor
 
 		private void BuildNodeContext(ContextualMenuPopulateEvent evt)
 		{
-			
+			var node = evt.target as StateNodeView;
+
+			evt.menu.AppendAction("Set as Entry Node", x =>
+			{
+				OnSetAsEntryNode.Invoke(node);
+			});
+
+			evt.menu.AppendAction("Delete", x =>
+			{
+				OnDeleteStateNode.Invoke(node);
+			});
 		}
 
 		private void BuildGraphViewContext(ContextualMenuPopulateEvent evt)

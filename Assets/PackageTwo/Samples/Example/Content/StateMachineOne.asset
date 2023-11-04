@@ -13,95 +13,26 @@ MonoBehaviour:
   m_Name: StateMachineOne
   m_EditorClassIdentifier: 
   Nodes:
-  - Key: d8b6dbb4-0095-4552-92ae-1e3eecee6053
+  - Key: 27996953-d16d-4bad-b070-1756c7fa9ebf
     Value:
-      Id: d8b6dbb4-0095-4552-92ae-1e3eecee6053
+      Id: 27996953-d16d-4bad-b070-1756c7fa9ebf
       StateType: Example.States.EntryState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       EntryPoint: 1
-      Position: {x: 219, y: 357}
+      Position: {x: 359, y: 335}
       Title: EntryState
       _connections:
-      - FromPortName: Alternative
-        ToPortName: Enter
-        FromNodeId: d8b6dbb4-0095-4552-92ae-1e3eecee6053
-        ToNodeId: d1108ea6-1263-46dc-8952-88451512c247
       - FromPortName: Continue
         ToPortName: Enter
-        FromNodeId: d8b6dbb4-0095-4552-92ae-1e3eecee6053
-        ToNodeId: 2f16d79d-fef4-440a-8d3e-0c9f2c730cff
-  - Key: d1108ea6-1263-46dc-8952-88451512c247
+        FromNodeId: 27996953-d16d-4bad-b070-1756c7fa9ebf
+        ToNodeId: 81b6853b-4289-4443-9e9b-7363428efd77
+  - Key: 81b6853b-4289-4443-9e9b-7363428efd77
     Value:
-      Id: d1108ea6-1263-46dc-8952-88451512c247
+      Id: 81b6853b-4289-4443-9e9b-7363428efd77
       StateType: Example.States.EndState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
       EntryPoint: 0
-      Position: {x: 429, y: 405}
-      Title: EndState
-      _connections:
-      - FromPortName: Continue
-        ToPortName: Enter
-        FromNodeId: d1108ea6-1263-46dc-8952-88451512c247
-        ToNodeId: dedc8ccf-c6c1-4664-81ac-20aa5b4d6ab7
-  - Key: 2f16d79d-fef4-440a-8d3e-0c9f2c730cff
-    Value:
-      Id: 2f16d79d-fef4-440a-8d3e-0c9f2c730cff
-      StateType: Example.States.MyThingState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      EntryPoint: 0
-      Position: {x: 429, y: 256}
-      Title: MyThingState
-      _connections:
-      - FromPortName: Foo
-        ToPortName: Enter
-        FromNodeId: 2f16d79d-fef4-440a-8d3e-0c9f2c730cff
-        ToNodeId: dedc8ccf-c6c1-4664-81ac-20aa5b4d6ab7
-      - FromPortName: Bar
-        ToPortName: Enter
-        FromNodeId: 2f16d79d-fef4-440a-8d3e-0c9f2c730cff
-        ToNodeId: d76ef5c1-0847-4cb3-b2e4-759abfa46bf5
-  - Key: dedc8ccf-c6c1-4664-81ac-20aa5b4d6ab7
-    Value:
-      Id: dedc8ccf-c6c1-4664-81ac-20aa5b4d6ab7
-      StateType: Example.States.EndState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      EntryPoint: 0
-      Position: {x: 643, y: 328}
+      Position: {x: 629, y: 357}
       Title: EndState
       _connections: []
-  - Key: d76ef5c1-0847-4cb3-b2e4-759abfa46bf5
-    Value:
-      Id: d76ef5c1-0847-4cb3-b2e4-759abfa46bf5
-      StateType: Example.States.MyThingState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      EntryPoint: 0
-      Position: {x: 643, y: 178}
-      Title: MyThingState
-      _connections:
-      - FromPortName: Foo
-        ToPortName: Enter
-        FromNodeId: d76ef5c1-0847-4cb3-b2e4-759abfa46bf5
-        ToNodeId: 478f649e-5bd5-4e3c-bbd3-30dba891b542
-      - FromPortName: Bar
-        ToPortName: Enter
-        FromNodeId: d76ef5c1-0847-4cb3-b2e4-759abfa46bf5
-        ToNodeId: 6c3a4716-02d4-4ebd-9e91-d4478d3891b0
-  - Key: 478f649e-5bd5-4e3c-bbd3-30dba891b542
-    Value:
-      Id: 478f649e-5bd5-4e3c-bbd3-30dba891b542
-      StateType: Example.States.EndState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      EntryPoint: 0
-      Position: {x: 813, y: 129}
-      Title: EndState
-      _connections: []
-  - Key: 6c3a4716-02d4-4ebd-9e91-d4478d3891b0
-    Value:
-      Id: 6c3a4716-02d4-4ebd-9e91-d4478d3891b0
-      StateType: Example.States.EndState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      EntryPoint: 0
-      Position: {x: 813, y: 238}
-      Title: EndState
-      _connections: []
-  EntryNodeId: d8b6dbb4-0095-4552-92ae-1e3eecee6053
+  EntryNodeId: 27996953-d16d-4bad-b070-1756c7fa9ebf
