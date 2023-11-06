@@ -15,20 +15,39 @@ namespace StateMachine
 		public IReadOnlyList<StateConnection> Connections => _connections;
 		
 		[field: NonSerialized]
-		public bool IsActive { get; set; }
+		public State State { get; set; }
 		
-		public State State => _state;
+		[field: NonSerialized]
+		public bool IsActive { get; set; }
 
 		[SerializeField]
 		private List<StateConnection> _connections = new ();
-		private State _state;
+
+		[SerializeField] 
+		private string _stateJson;
 		
-		public void Initialize()
+		public StateNode(string id, Type type, bool isEntryPoint, Vector2 position)
 		{
-			var type = Type.GetType(StateType);
-			if (type == null) return;
+			Id = id;
+			StateType = type.AssemblyQualifiedName;
+			EntryPoint = isEntryPoint;
+			Title = type.Name;
+			Position = position;
 			
-			_state = Activator.CreateInstance(type) as State;
+			Load();
+		}
+
+		public void Load(State state = null)
+		{
+			if (state != null)
+			{
+				State = state;
+				return;
+			}
+			
+			var type = Type.GetType(StateType);
+			State = ScriptableObject.CreateInstance(type) as State;
+			State.name = Id;
 		}
 		
 		public void AddConnection(StateConnection connection)
@@ -40,28 +59,26 @@ namespace StateMachine
 		{
 			SubscribeToConnections();
 			IsActive = true;
-			_state.Enter();
+			State.Enter();
 		}
 
 		public void Update()
 		{
-			if (_state == null) return;
-			
-			_state.Update();
+			State.Update();
 		}
 
 		public void Exit()
 		{
 			UnsubscribeFromConnections();
 			IsActive = false;
-			_state.Exit();
+			State.Exit();
 		}
 
 		private void SubscribeToConnections()
 		{
 			foreach (var connection in _connections) 
 			{
-				SubscribeToEventByName(_state, connection.FromPortName, connection);
+				SubscribeToEventByName(State, connection.FromPortName, connection);
 			}
 		}
 		
@@ -69,7 +86,7 @@ namespace StateMachine
 		{
 			foreach (var connection in _connections) 
 			{
-				UnsubscribeFromEventByName(_state, connection.FromPortName, connection);
+				UnsubscribeFromEventByName(State, connection.FromPortName, connection);
 			}
 		}
 		

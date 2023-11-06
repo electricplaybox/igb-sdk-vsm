@@ -78,15 +78,8 @@ namespace Editor.StateMachineEditor
 		private void HandleCreateNewStateNode(Type state, Vector2 position)
 		{
 			var id = Guid.NewGuid().ToString();
-			
-			var stateNode = new StateNode()
-			{
-				Id = id,
-				StateType = state.AssemblyQualifiedName,
-				EntryPoint = this.nodes.ToList().Count == 0,
-				Position = position,
-				Title = state.Name
-			};
+			var entryPoint = this.nodes.ToList().Count == 0;
+			var stateNode = new StateNode(id, state, entryPoint, position);
 			
 			StateMachineNodeFactory.CreateStateNode(stateNode, this);
 		}
@@ -98,6 +91,7 @@ namespace Editor.StateMachineEditor
 			
 			_contextMenu.OnCreateNewStateNode -= HandleCreateNewStateNode;
 			_contextMenu.OnDeleteStateNode -= HandleDeleteStateNode;
+			_contextMenu.OnSetAsEntryNode -= HandleSetAsEntryNode;
 		}
 
 		private void CreateToolbar(StateMachineGraph graph)
@@ -116,11 +110,14 @@ namespace Editor.StateMachineEditor
 
 		private void LoadGraph(StateMachineGraph graph)
 		{
+			if (graph == null) return;
+			graph.Load();
+			
 			foreach (var kvp in graph.Nodes)
 			{
 				StateMachineNodeFactory.CreateStateNode(kvp.Value, this);
 			}
-
+			
 			foreach (var kvp in graph.Nodes)
 			{
 				StateMachineNodeFactory.ConnectStateNode(kvp.Value, this);
@@ -131,7 +128,7 @@ namespace Editor.StateMachineEditor
 		{
 			if (Application.isPlaying) return;
 			if (_graph == null) return;
-
+			
 			StateMachineReadWrite.SaveGraph(_graph, this);
 		}
 

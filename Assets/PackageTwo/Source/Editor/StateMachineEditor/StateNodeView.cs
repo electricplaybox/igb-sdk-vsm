@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using StateMachine;
+﻿using StateMachine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,11 +9,6 @@ namespace Editor.StateMachineEditor
 	{
 		public StateNode Data;
 
-		public StateNodeView()
-		{
-			DisplayStateProperties();
-		}
-
 		public void Update()
 		{
 			if (Data == null) return;
@@ -24,26 +17,6 @@ namespace Editor.StateMachineEditor
 			DrawActiveNode();
 		}
 		
-		private void DisplayStateProperties()
-		{
-			if (Data == null) return;
-
-			var type = Type.GetType(Data.StateType);
-			var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-			foreach (var field in fields)
-			{
-				if (!field.IsPublic && field.GetCustomAttribute<SerializeField>() == null) continue;
-				
-				var nameLabel = new Label(field.Name);
-				Add(nameLabel);
-
-				var valueField = new TextField();
-				valueField.value = field.GetValue(type)?.ToString();
-				Add(valueField);
-			}
-		}
-
 		private void DrawActiveNode()
 		{
 			if (!Application.isPlaying) return;

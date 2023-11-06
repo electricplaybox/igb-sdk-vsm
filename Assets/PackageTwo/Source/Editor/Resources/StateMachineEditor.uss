@@ -15,6 +15,12 @@
     bottom:0;
 }
 
+.full-width {
+    width: 100%;
+    height: auto;
+}
+
+
 #grid {
     --grid-background-color: #282828;
     --line-color: rgba(193, 196, 192, 0.1);
@@ -36,6 +42,9 @@
 .node #title-container {
     padding-left: 10px;
     padding-right: 10px;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
 .node.entry-node #title {
@@ -50,6 +59,8 @@
     border-color: var(--active-highlight);
 }
 
+/* *********** Progress Bar *********** */
+
 .node #progress-bar {    
     margin-left: 0px;
     margin-right: 0px;
@@ -63,4 +74,32 @@
 
 .active-node .unity-progress-bar__progress {
     visibility: visible;
+}
+
+#progress-bar {
+    height: 8px;
+}
+
+.unity-progress-bar__progress {
+    background-color: #4CAF50;
+}
+
+/* *********** Property Container *********** */
+#property-container {
+    background-color: #2E2E2E;
+}
+
+#field-container {
+    height: 20px;
+    flex-direction: row;
+}
+
+/* *********** State Fields *********** */
+
+.state-field {
+    flex-direction: row;
+}
+
+.state-field-value {
+    width: 100px;
 }

@@ -7,11 +7,11 @@ namespace Editor.StateMachineEditor
 {
 	public class StateMachineReadWrite
 	{
-		public static void SaveGraph(StateMachineGraph data, GraphView graph)
+		public static void SaveGraph(StateMachineGraph graph, GraphView graphView)
 		{
-			data.Clear();
+			graph.Clear();
 			
-			foreach (var node in graph.nodes)
+			foreach (var node in graphView.nodes)
 			{
 				if (node is not StateNodeView) continue;
 				
@@ -20,10 +20,10 @@ namespace Editor.StateMachineEditor
 
 				if (stateNodeView.Data.EntryPoint)
 				{
-					data.EntryNodeId = stateNodeView.Data.Id;
+					graph.EntryNodeId = stateNodeView.Data.Id;
 				}
 				
-				var edges = graph.edges.Where(edge => edge.output.node == node);
+				var edges = graphView.edges.Where(edge => edge.output.node == node);
 				foreach (var edge in edges)
 				{
 					var connection = new StateConnection()
@@ -37,11 +37,13 @@ namespace Editor.StateMachineEditor
 					stateNodeView.Data.AddConnection(connection);
 				}
 				
-				data.AddNode(stateNodeView.Data);
+				graph.AddNode(stateNodeView.Data);
 			}
 			
-			EditorUtility.SetDirty(data);
+			EditorUtility.SetDirty(graph);
 			AssetDatabase.SaveAssets();
+			
+			graph.Save();
 		}
 	}
 }

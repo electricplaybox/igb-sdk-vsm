@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using StateMachine;
 using StateMachine.Attributes;
 using UnityEngine;
@@ -14,6 +15,9 @@ namespace Example.States
 		public event Action Alternative;
 
 		public float Duration = 1f;
+		public string Foo = "Foo";
+		public ScriptableObject Bar;
+		
 		
 		private float _duration = 3;
 		private float _time;

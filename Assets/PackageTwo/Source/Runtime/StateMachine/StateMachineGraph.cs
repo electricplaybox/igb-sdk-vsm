@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace StateMachine
@@ -16,19 +17,54 @@ namespace StateMachine
 
 		public void Initialize()
 		{
-			CacheDictionaries();
-			InitializeStateNodes();
-			
 			if (string.IsNullOrEmpty(EntryNodeId))
 			{
-				Debug.LogError("Entry node id is null or empty.", this);
 				return;
 			}
 			
 			_currentNode = _nodeDictionary[EntryNodeId];
-
-			SubscribeToNode(_currentNode);
 			_currentNode.Enter();
+			
+			SubscribeToNode(_currentNode);
+		}
+			
+			
+		public void Load()
+		{
+			LoadStates();
+			CacheDictionaries();
+		}
+		
+		public void Save()
+		{
+			SaveStates();
+		}
+
+		public void SaveStates()
+		{
+			foreach (var kvp in Nodes)
+			{
+				AssetDatabase.AddObjectToAsset(kvp.Value.State, this);
+				EditorUtility.SetDirty(this);
+			}
+			
+			EditorUtility.SetDirty(this);
+			AssetDatabase.SaveAssets();
+			AssetDatabase.Refresh(); 
+		}
+
+		public void LoadStates()
+		{
+			var path = AssetDatabase.GetAssetPath(this);
+			var allSubAssets = AssetDatabase.LoadAllAssetsAtPath(path).ToList();
+			
+			foreach (var kvp in Nodes)
+			{
+				var state = allSubAssets.Where(asset => asset.name == kvp.Value.Id).FirstOrDefault() as State;
+				if (state == null) continue;
+				
+				kvp.Value.Load(state);
+			}
 		}
 
 		private void SubscribeToNode(StateNode node)
@@ -80,14 +116,6 @@ namespace StateMachine
 		private void CacheDictionaries()
 		{
 			_nodeDictionary = GetNodeDictionary();
-		}
-
-		private void InitializeStateNodes()
-		{
-			foreach (var kvp in _nodeDictionary)
-			{
-				kvp.Value.Initialize();
-			}
 		}
 
 		private void OnTransition(StateConnection connection)

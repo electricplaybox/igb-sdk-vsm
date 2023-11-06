@@ -1,0 +1,113 @@
+[33mcommit 034abd28dc408ebe6686ebddaaa630978dee2002[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Sat Nov 4 01:09:38 2023 +0000
+
+    fix for breaking save/load
+
+[33mcommit bc966122f4fca3109c1059514428d46d5c87ee05[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Fri Nov 3 23:38:56 2023 +0000
+
+    Improved styling of the progress bar
+
+[33mcommit 4e749f5a51ebbcf588de875b70777f45840dc25a[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Fri Nov 3 09:52:03 2023 +0000
+
+    We now have a functional state machine. I'm starting to look at exposing state properties in the StateNodeView and will need to explore serializing the state instance.
+
+[33mcommit 0296613169ca5ee4f5f51ec8a6ad3c115549c7c7[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Thu Nov 2 10:00:54 2023 +0000
+
+    Revised node graph now saves data including connections
+
+[33mcommit 568453388f137cd034eaaa580a61ab645a981709[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Wed Nov 1 14:42:30 2023 +0000
+
+    Made the persistance of last selected StateMachineController by the StateMachineWindow more robust
+
+[33mcommit 022af8d14c84fcd5a47b90df1c6172ab8f0ae612[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Wed Nov 1 09:56:34 2023 +0000
+
+    Added a more robust means of caching state machine window data
+
+[33mcommit 6a1233f6f839b4be13d9798625f901bd07383748[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Wed Nov 1 02:37:18 2023 +0000
+
+    Refactoring
+
+[33mcommit b2278d8f316ecd29811fdc99f83e0ddad804af85[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Tue Oct 31 10:30:05 2023 +0000
+
+    Added progress bar and styling
+
+[33mcommit f8f0c2ce324c5ff6f2f99b85d5b4a012638ce57d[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Mon Oct 30 10:12:25 2023 +0000
+
+    .
+
+[33mcommit d923bd644f2e535b275c71f21314bab5a8bbc95a[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Mon Oct 30 08:28:34 2023 +0000
+
+    Data/Write no working but not sure why it still attempts to save the data after exiting runtime with missing data
+
+[33mcommit f54bc2262f04cb65c651c613c22903cf48eb07cb[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Sun Oct 29 06:08:15 2023 +0000
+
+    moving towards processing of states
+
+[33mcommit 85cf84ee0a965043c3803acaed9142c2f4f87f0b[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Sun Oct 29 00:00:13 2023 +0100
+
+    Fix for redrawing the window at runtime and the data going missing
+
+[33mcommit c0a61275f7e11a4f743f645bcb6c6c4d622dd030[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Sat Oct 28 23:14:07 2023 +0100
+
+    Fix for the toolbar not showing a ref to the VsmGraphData when opened via StateMachineController
+
+[33mcommit 56a09daf986b5a991253cbbec680e466a3a2cc77[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Sat Oct 28 15:58:08 2023 +0100
+
+    .
+
+[33mcommit 2757c6dda9a417eefa3e36b8082b7545bfc5f7f1[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Fri Oct 27 02:20:40 2023 +0100
+
+    Fxied serialization of the entry node
+
+[33mcommit 995f7cc02f4eb7040c04a3024583111d3d6a8a2c[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Thu Oct 26 23:15:35 2023 +0100
+
+    .
+
+[33mcommit c415a908951d0bdd410a89d89b2742b6f45db231[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Thu Oct 26 22:52:02 2023 +0100
+
+    Added a better way to save and load the data when double clicking on the asset and from the monobehaviour consuming the asset
+
+[33mcommit b8ba27bf40259e7ce8ad11649b6f2125650d362b[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Thu Oct 26 21:08:35 2023 +0100
+
+    .
+
+[33mcommit 50cc11b1cb88106d4ca607c7124a24e4aad571a1[m
+Author: PaulNonatomic <paul@nonatomic.co.uk>
+Date:   Thu Oct 26 21:07:45 2023 +0100
+
+    Setup project

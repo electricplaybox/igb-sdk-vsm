@@ -37,12 +37,12 @@ namespace Editor.StateMachineEditor
 
 			evt.menu.AppendAction("Set as Entry Node", x =>
 			{
-				OnSetAsEntryNode.Invoke(node);
+				OnSetAsEntryNode?.Invoke(node);
 			});
 
 			evt.menu.AppendAction("Delete", x =>
 			{
-				OnDeleteStateNode.Invoke(node);
+				OnDeleteStateNode?.Invoke(node);
 			});
 		}
 
@@ -56,7 +56,7 @@ namespace Editor.StateMachineEditor
 				evt.menu.AppendAction(stateType.Name, action =>
 				{
 					var state = stateType;
-					OnCreateNewStateNode.Invoke(state, action.eventInfo.mousePosition);
+					OnCreateNewStateNode?.Invoke(state, action.eventInfo.mousePosition);
 				});
 			}
 		}

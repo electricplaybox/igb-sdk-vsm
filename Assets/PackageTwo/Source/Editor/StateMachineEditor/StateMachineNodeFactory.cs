@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using StateMachine;
 using StateMachine.Attributes;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,6 +19,8 @@ namespace Editor.StateMachineEditor
 			node.Data = stateNode;
 			node.title = stateNode.Title;
 			node.name = stateNode.Id;
+			Debug.Log($"LOAD STATENODE: {stateNode}");
+			Debug.Log($"LOAD STATE: {node.Data.State}");
 			
 			CreateInputPort(node);
 			CreateOutputPorts(node);
@@ -26,9 +31,6 @@ namespace Editor.StateMachineEditor
 			
 			var container = new VisualElement();
 			container.name = "title-container";
-			container.style.alignItems = Align.Center;
-			container.style.marginTop = 6;
-			container.style.marginBottom = 6;
 			
 			var title = node.Query<VisualElement>("title").First();
 			var titleLabel = title.Query<VisualElement>("title-label").First();
@@ -40,10 +42,75 @@ namespace Editor.StateMachineEditor
 
 			var progressBar = new ProgressBar();
 			progressBar.name = "progress-bar";
-			progressBar.styleSheets.Add(Resources.Load<StyleSheet>("ProgressBar"));
 			title.Add(progressBar);
+			
+			var contents = node.Query<VisualElement>("contents").First();
+			var propertyContainer = new VisualElement();
+			propertyContainer.name = "property-container";
+			propertyContainer.AddToClassList("full-width");
+			contents.Insert(0, propertyContainer);
 
+			if (stateNode.State != null)
+			{
+				var stateInspector = CreateUIElementInspector(stateNode.State);
+				propertyContainer.Add(stateInspector);
+			}
+			
 			graphView.AddElement(node);
+		}
+		
+		public static VisualElement CreateUIElementInspector(UnityEngine.Object target, List<string> propertiesToExclude = null)
+		{
+			var container = new VisualElement();
+ 
+			var serializedObject = new SerializedObject(target);
+ 
+			var fields = GetVisibleSerializedFields(target.GetType());
+ 
+			for (var i = 0; i < fields.Length; ++i) {
+				var field = fields[i];
+				
+				if ( propertiesToExclude != null && propertiesToExclude.Contains(field.Name)) {
+					continue;
+				}
+
+				var serializedProperty = serializedObject.FindProperty(field.Name);
+				if (serializedProperty != null)
+				{
+					var propertyField = new PropertyField(serializedProperty);
+					if(propertyField != null) container.Add(propertyField);
+				}
+				else
+				{
+					Debug.LogWarning($"Property {field.Name} not found in serialized object.");
+				}
+			}
+           
+			if(serializedObject != null) container.Bind(serializedObject);
+ 
+ 
+			return container;
+		}
+		
+		public static FieldInfo[] GetVisibleSerializedFields(Type T)
+		{
+			List<FieldInfo> infoFields = new List<FieldInfo>();
+ 
+			var publicFields = T.GetFields(BindingFlags.Instance | BindingFlags.Public);
+			for (int i = 0; i < publicFields.Length; i++) {
+				if (publicFields[i].GetCustomAttribute<HideInInspector>() == null) {
+					infoFields.Add(publicFields[i]);
+				}
+			}
+ 
+			var privateFields = T.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+			for (int i = 0; i < privateFields.Length; i++) {
+				if (privateFields[i].GetCustomAttribute<SerializeField>() != null) {
+					infoFields.Add(privateFields[i]);
+				}
+			}
+ 
+			return infoFields.ToArray();
 		}
 		
 		public static void CreateInputPort(Node node)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Editor.StateMachineEditor
 {
+	[CreateAssetMenu(fileName = "StateMachineWindowData", menuName = "StateMachine/WindowData")]
 	public class StateMachineWindowData : ScriptableObject
 	{
 		public StateMachineGraph StateMachineGraph
@@ -42,6 +43,7 @@ namespace Editor.StateMachineEditor
 		{
 			_stateMachineGraph = graph;
 
+			if (StateMachineController == null) return;
 			if (_stateMachineControllerId == 0) return;
 			if (StateMachineController.GraphData == _stateMachineGraph) return;
 

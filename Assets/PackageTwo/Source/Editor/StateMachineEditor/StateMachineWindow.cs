@@ -12,6 +12,8 @@ namespace Editor.StateMachineEditor
 	{
 		private static StateMachineWindowData _windowData;
 		private StateMachineGraphView _graphView;
+		
+		private bool? wasDocked;
 
 		[MenuItem("Tools/State Machine Editor")]
 		public static StateMachineWindow OpenWindow()
@@ -27,6 +29,39 @@ namespace Editor.StateMachineEditor
 			return window;
 		}
 		
+		private void OnGUI()
+		{
+			HandleSelectedGameObject();
+			HandleSelectedObject();
+			HandleDockingStatus();
+		}
+
+		private void HandleDockingStatus()
+		{
+			// Initial setup
+			if (wasDocked == null)
+			{
+				wasDocked = docked;
+			}
+
+			// Check if the docked state has changed
+			if (wasDocked.Value != docked)
+			{
+				if (docked)
+				{
+					Debug.Log("Window was docked");
+					OpenWindow();
+				}
+				else
+				{
+					Debug.Log("Window was undocked");
+					OpenWindow();
+				}
+
+				wasDocked = docked;
+			}
+		}
+
 		public static StateMachineWindow OpenWindow(StateMachineController controller)
 		{
 			GetWindowData().SetStateMachineController(controller);
@@ -104,12 +139,6 @@ namespace Editor.StateMachineEditor
 			_graphView.Update();
 		}
 		
-		private void OnGUI()
-		{
-			HandleSelectedGameObject();
-			HandleSelectedObject();
-		}
-
 		private void HandleSelectedObject()
 		{
 			var selectedObject = Selection.activeObject;
