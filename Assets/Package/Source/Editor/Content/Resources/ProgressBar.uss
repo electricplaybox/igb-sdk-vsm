@@ -1,7 +1,0 @@
-#progress-bar {
-    height: 8px;
-}
-
-.unity-progress-bar__progress {
-    background-color: #4CAF50;
-}
