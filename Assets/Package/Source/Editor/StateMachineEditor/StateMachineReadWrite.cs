@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using StateMachine;
+using Package.Source.Runtime.StateMachine;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 
-namespace Editor.StateMachineEditor
+namespace Package.Source.Editor.StateMachineEditor
 {
 	public class StateMachineReadWrite
 	{

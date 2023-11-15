@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace StateMachine
+namespace Package.Source.Runtime.StateMachine
 {
 	public abstract class State : ScriptableObject
 	{

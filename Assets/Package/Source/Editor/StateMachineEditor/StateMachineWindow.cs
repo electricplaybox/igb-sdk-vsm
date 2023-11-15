@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using StateMachine;
+﻿using Package.Source.Runtime.StateMachine;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.StateMachineEditor
+namespace Package.Source.Editor.StateMachineEditor
 {
 	[InitializeOnLoad]
 	public class StateMachineWindow : GraphViewEditorWindow

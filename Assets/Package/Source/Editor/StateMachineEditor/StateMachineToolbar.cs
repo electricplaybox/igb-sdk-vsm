@@ -1,10 +1,10 @@
 ﻿using System;
-using StateMachine;
+using Package.Source.Runtime.StateMachine;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
-namespace Editor.StateMachineEditor
+namespace Package.Source.Editor.StateMachineEditor
 {
 	public class StateMachineToolbar : Toolbar
 	{

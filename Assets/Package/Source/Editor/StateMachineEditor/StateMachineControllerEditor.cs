@@ -1,8 +1,8 @@
-﻿using StateMachine;
+﻿using Package.Source.Runtime.StateMachine;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.StateMachineEditor
+namespace Package.Source.Editor.StateMachineEditor
 {
 	[CustomEditor(typeof(StateMachineController))]
 	public class StateMachineControllerEditor : UnityEditor.Editor

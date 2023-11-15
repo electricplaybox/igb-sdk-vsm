@@ -1,10 +1,10 @@
 ﻿using System;
-using Editor.Utils;
-using StateMachine;
+using Package.Source.Editor.Utils;
+using Package.Source.Runtime.StateMachine;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.StateMachineEditor
+namespace Package.Source.Editor.StateMachineEditor
 {
 	public class StateMachineContextMenu
 	{

@@ -1,9 +1,9 @@
 ﻿using System;
-using StateMachine;
-using StateMachine.Attributes;
+using Package.Source.Runtime.StateMachine;
+using Package.Source.Runtime.StateMachine.Attributes;
 using UnityEngine;
 
-namespace Example.States
+namespace Samples.Example.Source.States
 {
 	public class EntryState : State
 	{

@@ -1,4 +1,4 @@
-﻿namespace StateMachine
+﻿namespace Package.Source.Runtime.StateMachine
 {
 	public class StatePort
 	{

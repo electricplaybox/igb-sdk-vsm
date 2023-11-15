@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using StateMachine;
-using StateMachine.Attributes;
+using Package.Source.Runtime.StateMachine;
+using Package.Source.Runtime.StateMachine.Attributes;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.StateMachineEditor
+namespace Package.Source.Editor.StateMachineEditor
 {
 	public class StateMachineNodeFactory
 	{

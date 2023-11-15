@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StateMachine.Attributes
+namespace Package.Source.Runtime.StateMachine.Attributes
 {
 	[AttributeUsage(AttributeTargets.Event)]
 	public class Transition : Attribute

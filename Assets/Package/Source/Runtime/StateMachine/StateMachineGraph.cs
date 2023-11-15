@@ -3,9 +3,9 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace StateMachine
+namespace Package.Source.Runtime.StateMachine
 {
-	[CreateAssetMenu(fileName = "StateMachineGraph", menuName = "StateMachine/StateMachineGraph")]
+	// [CreateAssetMenu(fileName = "StateMachineGraph", menuName = "StateMachine/StateMachineGraph")]
 	public class StateMachineGraph : ScriptableObject
 	{
 		public List<SerializableKeyValuePair<string, StateNode>> Nodes = new();
@@ -21,7 +21,8 @@ namespace StateMachine
 			{
 				return;
 			}
-
+            
+            CacheDictionaries();
 			if (_nodeDictionary.Count == 0) return;
 			
 			_currentNode = _nodeDictionary[EntryNodeId];
@@ -44,44 +45,52 @@ namespace StateMachine
 
 		public void SaveStates()
 		{
-			var assetPath = AssetDatabase.GetAssetPath(this);
-			var subAssets = AssetDatabase.LoadAllAssetRepresentationsAtPath(assetPath);
-			
-			//remove all states
-			foreach (var subAsset in subAssets)
+			#if UNITY_EDITOR
 			{
-				if (subAsset is ScriptableObject)
+				var assetPath = AssetDatabase.GetAssetPath(this);
+				var subAssets = AssetDatabase.LoadAllAssetRepresentationsAtPath(assetPath);
+			
+				//remove all states
+				foreach (var subAsset in subAssets)
 				{
-					AssetDatabase.RemoveObjectFromAsset(subAsset);
+					if (subAsset is ScriptableObject)
+					{
+						AssetDatabase.RemoveObjectFromAsset(subAsset);
+					}
 				}
-			}
 			
-			//Add them all back again
-			foreach (var kvp in Nodes)
-			{
-				if (kvp.Value.State == null) continue;
+				//Add them all back again
+				foreach (var kvp in Nodes)
+				{
+					if (kvp.Value.State == null) continue;
 				
-				AssetDatabase.AddObjectToAsset(kvp.Value.State, this);
-				EditorUtility.SetDirty(this);
-			}
+					AssetDatabase.AddObjectToAsset(kvp.Value.State, this);
+					EditorUtility.SetDirty(this);
+				}
 			
-			EditorUtility.SetDirty(this);
-			AssetDatabase.SaveAssets();
-			AssetDatabase.Refresh(); 
+				EditorUtility.SetDirty(this);
+				AssetDatabase.SaveAssets();
+				AssetDatabase.Refresh(); 
+			}
+			#endif
 		}
 
 		public void LoadStates()
 		{
-			var path = AssetDatabase.GetAssetPath(this);
-			var allSubAssets = AssetDatabase.LoadAllAssetsAtPath(path).ToList();
-			
-			foreach (var kvp in Nodes)
+			#if UNITY_EDITOR
 			{
-				var state = allSubAssets.Where(asset => asset.name == kvp.Value.Id).FirstOrDefault() as State;
-				if (state == null) continue;
+				var path = AssetDatabase.GetAssetPath(this);
+				var allSubAssets = AssetDatabase.LoadAllAssetsAtPath(path).ToList();
+			
+				foreach (var kvp in Nodes)
+				{
+					var state = allSubAssets.Where(asset => asset.name == kvp.Value.Id).FirstOrDefault() as State;
+					if (state == null) continue;
 				
-				kvp.Value.Load(state);
+					kvp.Value.Load(state);
+				}
 			}
+			#endif
 		}
 
 		private void SubscribeToNode(StateNode node)

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-546923163040293480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ccd63e5a1f74e6c9298415b1d203e84, type: 3}
+  m_Name: 4288c31c-598d-4812-b59d-4cbfe91980aa
+  m_EditorClassIdentifier: 
+  _duration: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
+  m_Name: StateMachine
+  m_EditorClassIdentifier: 
+  _entryState: {fileID: 0}
+  _nodes:
+  - _state: {fileID: 6341833479154824871}
+    _id: e4349cf0-7fe3-4cba-82bf-b7f16d69edc6
+    _connections:
+    - _toNodeId: 4288c31c-598d-4812-b59d-4cbfe91980aa
+      _fromNodeId: e4349cf0-7fe3-4cba-82bf-b7f16d69edc6
+      _fromPortName: ExitOne
+  - _state: {fileID: -546923163040293480}
+    _id: 4288c31c-598d-4812-b59d-4cbfe91980aa
+    _connections:
+    - _toNodeId: e4349cf0-7fe3-4cba-82bf-b7f16d69edc6
+      _fromNodeId: 4288c31c-598d-4812-b59d-4cbfe91980aa
+      _fromPortName: ExitOne
+--- !u!114 &6341833479154824871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef330e96f47b4872afdbac7e0e080661, type: 3}
+  m_Name: e4349cf0-7fe3-4cba-82bf-b7f16d69edc6
+  m_EditorClassIdentifier: 

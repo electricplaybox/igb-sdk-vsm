@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StateMachine
+namespace Package.Source.Runtime.StateMachine
 {
 	[Serializable]
 	public class SerializableKeyValuePair<TKey, TValue>

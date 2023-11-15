@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace StateMachine
+namespace Package.Source.Runtime.StateMachine
 {
 	[Serializable]
 	public class StateNode

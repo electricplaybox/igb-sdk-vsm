@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace StateMachine
+namespace Package.Source.Runtime.StateMachine
 {
 	public class StateMachineController : MonoBehaviour
 	{
@@ -23,9 +23,9 @@ namespace StateMachine
 
 		public void Update()
 		{
-			if (_stateMachine == null) return;
+			if (_stateMachineInstance == null) return;
 			
-			_stateMachine.Update();
+			_stateMachineInstance.Update();
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Utils
+namespace Package.Source.Runtime.Utils
 {
 	public static class ScriptableObjectUtility
 	{
