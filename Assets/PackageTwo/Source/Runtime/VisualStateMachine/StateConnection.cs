@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace StateMachine
+namespace VisualStateMachine
 {
 	[Serializable]
 	public class StateConnection

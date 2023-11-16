@@ -1,30 +1,41 @@
-﻿using StateMachine;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using VisualStateMachine;
+using StateMachine = VisualStateMachine.StateMachine;
 
-namespace Editor.StateMachineEditor
+namespace Editor.VisualStateMachineEditor
 {
 	[InitializeOnLoad]
 	public class StateMachineWindow : GraphViewEditorWindow
 	{
+		private StateMachine _stateMachine;
+		private StateMachineGraphView _graphView;
+
+		/**
+		 * Static
+		 */
+		
 		[MenuItem("Tools/State Machine Editor")]
 		public static StateMachineWindow OpenWindow()
 		{
 			var window = GetWindow<StateMachineWindow>();
 			window.titleContent = new GUIContent("State Machine Editor");
 			window.rootVisualElement.styleSheets.Add(Resources.Load<StyleSheet>("StateMachineEditor"));
+			window.Draw();
 			
 			return window;
 		}
 		
-		public static StateMachineWindow OpenWindow(StateMachine.StateMachine stateMachine)
+		public static StateMachineWindow OpenWindow(StateMachine stateMachine)
 		{
-			// Debug.Log($"OpenWindow: {stateMachine.name}");
-			return OpenWindow();
+			var window = OpenWindow();
+			window.Draw(stateMachine);
+
+			return window;
 		}
-		
+
 		static StateMachineWindow()
 		{
 			EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
@@ -34,7 +45,7 @@ namespace Editor.StateMachineEditor
 		private static void HandleProjectWindowItemGUI(string guid, Rect selectionRect)
 		{
 			if (Event.current.type != EventType.MouseDown || Event.current.clickCount != 2) return;
-			if (!TryGetSelectedStateMachine(out StateMachine.StateMachine stateMachine)) return;
+			if (!TryGetSelectedStateMachine(out StateMachine stateMachine)) return;
 			
 			OpenWindow(stateMachine);
 			Event.current.Use();
@@ -45,15 +56,15 @@ namespace Editor.StateMachineEditor
 			//Do something
 		}
 
-		private static bool TryGetSelectedStateMachine(out StateMachine.StateMachine stateMachine)
+		private static bool TryGetSelectedStateMachine(out StateMachine stateMachine)
 		{
 			stateMachine = null;
 			
 			var selected = Selection.activeObject;
 			if (selected == null) return false;
-			if (selected is not StateMachine.StateMachine) return false;
+			if (selected is not StateMachine) return false;
 			
-			stateMachine = selected as StateMachine.StateMachine;
+			stateMachine = selected as StateMachine;
 
 			return true;
 		}
@@ -70,7 +81,7 @@ namespace Editor.StateMachineEditor
 		}
 	
 
-		private static bool TryGetStateMachine(out StateMachine.StateMachine stateMachine)
+		private static bool TryGetStateMachine(out StateMachine stateMachine)
 		{
 			stateMachine = null;
 			
@@ -89,6 +100,47 @@ namespace Editor.StateMachineEditor
 			return false;
 		}
 		
+		
+		
+		
+		
+		
+		
+		/**
+		 * Instance
+		 */
+		private void Draw()
+		{
+			if (_stateMachine != null)
+			{
+				Draw(_stateMachine);
+				return;
+			}
+
+			if (_graphView == null)
+			{
+				_graphView = new StateMachineGraphView();
+				rootVisualElement.Clear();
+				rootVisualElement.Add(_graphView);
+			}
+		}
+		
+		private void Draw(StateMachine stateMachine)
+		{
+			_stateMachine = stateMachine;
+			
+			if (_graphView == null)
+			{
+				_graphView = new StateMachineGraphView(_stateMachine);
+				rootVisualElement.Clear();
+				rootVisualElement.Add(_graphView);
+			}
+			else
+			{
+				_graphView.Update(_stateMachine);
+			}
+		}
+		
 		private void OnEnable()
 		{
 			EditorApplication.update += HandleEditorUpdate;
@@ -103,7 +155,7 @@ namespace Editor.StateMachineEditor
 		
 		private void HandleEditorUpdate()
 		{
-			if (TryGetStateMachine(out StateMachine.StateMachine stateMachine))
+			if (TryGetStateMachine(out StateMachine stateMachine))
 			{
 				OpenWindow(stateMachine);
 			}

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
-namespace StateMachine
+namespace VisualStateMachine
 {
 	[Serializable]
 	public class StateNode

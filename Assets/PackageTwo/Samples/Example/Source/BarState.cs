@@ -1,6 +1,6 @@
 ﻿using System;
-using StateMachine;
 using UnityEngine;
+using VisualStateMachine;
 
 namespace Example
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace StateMachine
+namespace VisualStateMachine
 {
 	[CreateAssetMenu(fileName = "StateMachine", menuName = "StateMachine/StateMachine")]
 	public class StateMachine : ScriptableObject
@@ -135,7 +135,23 @@ namespace StateMachine
 		{
 			if (!_nodes.Contains(node)) throw new Exception("Node is not part of this state machine");
 			
-			_entryStateId = node.Id;
+			SetEntryNodeId(node.Id);
+		}
+
+		public void SetEntryNodeId(string entryNodeId)
+		{
+			_entryStateId = entryNodeId;
+			Save();
+		}
+
+		private void Save()
+		{
+			#if UNITY_EDITOR
+			{
+				EditorUtility.SetDirty(this);
+				AssetDatabase.SaveAssetIfDirty(this);
+			}
+			#endif
 		}
 
 		public void RemoveNode(StateNode node)
@@ -148,19 +164,17 @@ namespace StateMachine
 				
 				AssetDatabase.RemoveObjectFromAsset(node.State);
 				_nodes.Remove(node);
-
-				if(isEntryNode) SelectNextEntryNode();
+				Save();
 				
-				AssetDatabase.SaveAssets();
+				if(isEntryNode) SelectNextEntryNode();
 			}
 			#endif
-			
-			_nodes.Remove(node);
 		}
 
 		private void SelectNextEntryNode()
 		{
 			_entryStateId = _nodes.Count > 0 ? _nodes[0].Id : null;
+			Save();
 		}
 
 		public void RemoveAllNodes()
@@ -173,7 +187,7 @@ namespace StateMachine
 				}
 				
 				_nodes.Clear();
-				AssetDatabase.SaveAssets();
+				Save();
 			}
 			#endif
 		}

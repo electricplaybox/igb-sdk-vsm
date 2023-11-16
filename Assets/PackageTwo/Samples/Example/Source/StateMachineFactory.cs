@@ -1,11 +1,11 @@
-﻿using StateMachine;
-using UnityEngine;
+﻿using UnityEngine;
+using VisualStateMachine;
 
 namespace Example
 {
 	public class StateMachineFactory : MonoBehaviour
 	{
-		[SerializeField] private StateMachine.StateMachine _stateMachine;
+		[SerializeField] private StateMachine _stateMachine;
 
 		private void OnValidate()
 		{
