@@ -18,6 +18,7 @@ namespace Editor.VisualStateMachineEditor
 			_stateMachine = stateMachine;
 
 			CreateEmptyGraphView();
+			LoadStateMachine(stateMachine);
 		}
 		
 		public void Update(StateMachine stateMachine)
@@ -54,6 +55,19 @@ namespace Editor.VisualStateMachineEditor
 			this.AddManipulator(new SelectionDragger());
 			this.AddManipulator(new RectangleSelector());
 			this.AddManipulator(new FreehandSelector());
+		}
+		
+		private void LoadStateMachine(StateMachine stateMachine)
+		{
+			foreach (var node in stateMachine.Nodes)
+			{
+				StateMachineNodeFactory.CreateStateNode(node, this);
+			}
+			
+			foreach (var node in stateMachine.Nodes)
+			{
+				StateMachineNodeFactory.ConnectStateNode(node, this);
+			}
 		}
 	}
 }

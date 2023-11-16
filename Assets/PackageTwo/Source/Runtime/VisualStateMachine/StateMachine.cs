@@ -9,6 +9,7 @@ namespace VisualStateMachine
 	public class StateMachine : ScriptableObject
 	{
 		public StateMachine Base { get; set; }
+		public IReadOnlyCollection<StateNode> Nodes => _nodes;
 		
 		[SerializeField] 
 		private string _entryStateId;
