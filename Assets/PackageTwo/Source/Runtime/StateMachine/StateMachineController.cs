@@ -39,5 +39,17 @@ namespace StateMachine
 			
 			_stateMachineInstance.Update();
 		}
+
+		public StateMachine GetStateMachine()
+		{
+			if (Application.isPlaying)
+			{
+				return _stateMachineInstance;
+			}
+			else
+			{
+				return _stateMachine;
+			}
+		}
 	}
 }

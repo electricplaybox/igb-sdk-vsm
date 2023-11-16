@@ -9,6 +9,8 @@ namespace Example
 
 		private void OnValidate()
 		{
+			if (_stateMachine == null) return;
+			
 			var foo = new StateNode(typeof(FooBarState), _stateMachine);
 			var bar = new StateNode(typeof(BarState), _stateMachine);
 			

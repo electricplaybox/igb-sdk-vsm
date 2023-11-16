@@ -14,7 +14,7 @@ namespace Package.Source.Editor.StateMachineEditor
 		
 		private bool? wasDocked;
 
-		[MenuItem("Tools/State Machine Editor")]
+		// [MenuItem("Tools/State Machine Editor")]
 		public static StateMachineWindow OpenWindow()
 		{
 			var windowData = GetWindowData();
@@ -120,7 +120,7 @@ namespace Package.Source.Editor.StateMachineEditor
 
 		private static void HandlePlayModeStateChanged(PlayModeStateChange stateChange)
 		{
-			OpenWindow();
+			//OpenWindow();
 		}
 		
 		private void Draw(StateMachineGraph graph)

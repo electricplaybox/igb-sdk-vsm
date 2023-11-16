@@ -11,7 +11,7 @@ namespace StateMachine
 		public StateMachine Base { get; set; }
 		
 		[SerializeField] 
-		private State _entryState;
+		private string _entryStateId;
 		
 		[SerializeField]
 		private List<StateNode> _nodes = new();
@@ -40,7 +40,7 @@ namespace StateMachine
 			
 			if(_nodeLookup.Count == 0) throw new Exception($"StateMachine {this.name} has 0 nodes.");
 			
-			_currentNode = _nodeLookup[_entryState.name];
+			_currentNode = _nodeLookup[_entryStateId];
 			_currentNodeIsNull = _currentNode == null;
 			
 			SubscribeToNode(_currentNode);
@@ -135,7 +135,7 @@ namespace StateMachine
 		{
 			if (!_nodes.Contains(node)) throw new Exception("Node is not part of this state machine");
 			
-			_entryState = node.State;
+			_entryStateId = node.Id;
 		}
 
 		public void RemoveNode(StateNode node)
@@ -144,7 +144,7 @@ namespace StateMachine
 
 			#if UNITY_EDITOR
 			{
-				var isEntryNode = _entryState == node.State;
+				var isEntryNode = _entryStateId == node.Id;
 				
 				AssetDatabase.RemoveObjectFromAsset(node.State);
 				_nodes.Remove(node);
@@ -160,7 +160,7 @@ namespace StateMachine
 
 		private void SelectNextEntryNode()
 		{
-			_entryState = _nodes.Count > 0 ? _nodes[0].State : null;
+			_entryStateId = _nodes.Count > 0 ? _nodes[0].Id : null;
 		}
 
 		public void RemoveAllNodes()
