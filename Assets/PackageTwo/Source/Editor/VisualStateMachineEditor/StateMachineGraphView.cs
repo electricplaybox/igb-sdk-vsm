@@ -1,4 +1,6 @@
-﻿using UnityEditor.Experimental.GraphView;
+﻿using System.Linq;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine;
@@ -29,6 +31,7 @@ namespace Editor.VisualStateMachineEditor
 			
 			_stateMachine = stateMachine;
 			_toolbar?.Update(stateMachine);
+			LoadStateMachine(stateMachine);
 		}
 
 		private void CreateToolbar(StateMachine stateMachine)
@@ -49,8 +52,8 @@ namespace Editor.VisualStateMachineEditor
 		{
 			if (Application.isPlaying) return;
 			if (_stateMachine == null) return;
-			
-			//DO SOME SAVING
+
+			SaveStateMachine(_stateMachine);
 		}
 
 		private void CreateEmptyGraphView()
@@ -87,6 +90,9 @@ namespace Editor.VisualStateMachineEditor
 		
 		private void LoadStateMachine(StateMachine stateMachine)
 		{
+			DeleteElements(nodes);
+			DeleteElements(edges);
+			
 			foreach (var node in stateMachine.Nodes)
 			{
 				StateMachineNodeFactory.CreateStateNode(node, this);
@@ -95,6 +101,38 @@ namespace Editor.VisualStateMachineEditor
 			foreach (var node in stateMachine.Nodes)
 			{
 				StateMachineNodeFactory.ConnectStateNode(node, this);
+			}
+		}
+
+		private void SaveStateMachine(StateMachine stateMachine)
+		{
+			stateMachine.RemoveAllNodes();
+			
+			foreach (var node in this.nodes)
+			{
+				if (node is not StateNodeView) continue;
+				
+				var stateNodeView = node as StateNodeView;
+				stateNodeView.Data.Position = node.GetPosition().position;
+
+				// if (stateNodeView.Data.EntryPoint)
+				// {
+				// 	graph.EntryNodeId = stateNodeView.Data.Id;
+				// }
+				
+				var edges = this.edges.Where(edge => edge.output.node == node);
+				foreach (var edge in edges)
+				{
+					var connection = new StateConnection(
+						fromNodeId: stateNodeView.Data.Id,
+						fromPortName: edge.output.portName,
+						toNodeId: (edge.output.connections.First().input.node as StateNodeView).Data.Id
+					);
+					
+					stateNodeView.Data.AddConnection(connection);
+				}
+				
+				stateMachine.AddNode(stateNodeView.Data);
 			}
 		}
 	}

@@ -12,21 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
   m_Name: StateMachine
   m_EditorClassIdentifier: 
-  _entryStateId: 1d72c379-6214-4222-be77-8e39895f481f
+  _entryStateId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
   _nodes:
-  - _state: {fileID: 5604556624272690694}
-    _id: 1d72c379-6214-4222-be77-8e39895f481f
+  - _state: {fileID: 9085538914115798256}
+    _id: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
     _connections:
-    - _toNodeId: 65cf2ca5-ce42-4ba4-8e08-3d6e06e0f8fc
-      _fromNodeId: 1d72c379-6214-4222-be77-8e39895f481f
+    - _toNodeId: 0c3d4168-9637-438a-8228-a5347a1b6390
+      _fromNodeId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
       _fromPortName: ExitOne
-  - _state: {fileID: 254664840717911041}
-    _id: 65cf2ca5-ce42-4ba4-8e08-3d6e06e0f8fc
+    - _toNodeId: 0c3d4168-9637-438a-8228-a5347a1b6390
+      _fromNodeId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
+      _fromPortName: ExitOne
+  - _state: {fileID: 4211499361246139435}
+    _id: 0c3d4168-9637-438a-8228-a5347a1b6390
     _connections:
-    - _toNodeId: 1d72c379-6214-4222-be77-8e39895f481f
-      _fromNodeId: 65cf2ca5-ce42-4ba4-8e08-3d6e06e0f8fc
+    - _toNodeId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
+      _fromNodeId: 0c3d4168-9637-438a-8228-a5347a1b6390
       _fromPortName: ExitOne
---- !u!114 &254664840717911041
+    - _toNodeId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
+      _fromNodeId: 0c3d4168-9637-438a-8228-a5347a1b6390
+      _fromPortName: ExitOne
+--- !u!114 &4211499361246139435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36,10 +42,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ccd63e5a1f74e6c9298415b1d203e84, type: 3}
-  m_Name: 65cf2ca5-ce42-4ba4-8e08-3d6e06e0f8fc
+  m_Name: 0c3d4168-9637-438a-8228-a5347a1b6390
   m_EditorClassIdentifier: 
   _duration: 0
---- !u!114 &5604556624272690694
+--- !u!114 &9085538914115798256
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,5 +55,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef330e96f47b4872afdbac7e0e080661, type: 3}
-  m_Name: 1d72c379-6214-4222-be77-8e39895f481f
+  m_Name: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
   m_EditorClassIdentifier: 
