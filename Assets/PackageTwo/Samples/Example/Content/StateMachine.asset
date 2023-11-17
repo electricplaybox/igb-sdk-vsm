@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4919194750120150572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ccd63e5a1f74e6c9298415b1d203e84, type: 3}
+  m_Name: d52d7a00-8227-4d63-9da9-7b6a668fd488
+  m_EditorClassIdentifier: 
+  _duration: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,40 +25,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
   m_Name: StateMachine
   m_EditorClassIdentifier: 
-  _entryStateId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
+  _entryStateId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
   _nodes:
-  - _state: {fileID: 9085538914115798256}
-    _id: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
+  - _state: {fileID: -4919194750120150572}
+    _id: d52d7a00-8227-4d63-9da9-7b6a668fd488
     _connections:
-    - _toNodeId: 0c3d4168-9637-438a-8228-a5347a1b6390
-      _fromNodeId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
+    - _toNodeId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
+      _fromNodeId: d52d7a00-8227-4d63-9da9-7b6a668fd488
       _fromPortName: ExitOne
-    - _toNodeId: 0c3d4168-9637-438a-8228-a5347a1b6390
-      _fromNodeId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
+    - _toNodeId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
+      _fromNodeId: d52d7a00-8227-4d63-9da9-7b6a668fd488
       _fromPortName: ExitOne
-  - _state: {fileID: 4211499361246139435}
-    _id: 0c3d4168-9637-438a-8228-a5347a1b6390
+    _position: {x: 435, y: 176}
+  - _state: {fileID: 2767829881198704371}
+    _id: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
     _connections:
-    - _toNodeId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
-      _fromNodeId: 0c3d4168-9637-438a-8228-a5347a1b6390
+    - _toNodeId: d52d7a00-8227-4d63-9da9-7b6a668fd488
+      _fromNodeId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
       _fromPortName: ExitOne
-    - _toNodeId: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
-      _fromNodeId: 0c3d4168-9637-438a-8228-a5347a1b6390
+    - _toNodeId: d52d7a00-8227-4d63-9da9-7b6a668fd488
+      _fromNodeId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
       _fromPortName: ExitOne
---- !u!114 &4211499361246139435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ccd63e5a1f74e6c9298415b1d203e84, type: 3}
-  m_Name: 0c3d4168-9637-438a-8228-a5347a1b6390
-  m_EditorClassIdentifier: 
-  _duration: 0
---- !u!114 &9085538914115798256
+    _position: {x: 776, y: 345}
+--- !u!114 &2767829881198704371
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,5 +57,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef330e96f47b4872afdbac7e0e080661, type: 3}
-  m_Name: c2cfb101-cfb3-46d0-a92f-2fc421ddc864
+  m_Name: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
   m_EditorClassIdentifier: 

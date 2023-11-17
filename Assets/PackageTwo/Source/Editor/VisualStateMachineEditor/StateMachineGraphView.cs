@@ -113,7 +113,7 @@ namespace Editor.VisualStateMachineEditor
 				if (node is not StateNodeView) continue;
 				
 				var stateNodeView = node as StateNodeView;
-				stateNodeView.Data.Position = node.GetPosition().position;
+				stateNodeView.Data.SetPosition(node.GetPosition().position);
 
 				// if (stateNodeView.Data.EntryPoint)
 				// {

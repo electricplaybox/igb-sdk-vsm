@@ -8,13 +8,14 @@ namespace VisualStateMachine
 	public class StateNode
 	{
 		public bool IsActive => _isActive;
-		public Vector2 Position { get; set; }
+		public Vector2 Position => _position;
 		public State State => _state;
 		public string Id => _id;
 		public IReadOnlyList<StateConnection> Connections => _connections;
 
 		[SerializeField] private State _state;
 		[SerializeField] private string _id = Guid.NewGuid().ToString();
+		[SerializeField] private Vector2 _position;
 		[SerializeField] private List<StateConnection> _connections = new();
 
 		[NonSerialized]
@@ -29,6 +30,11 @@ namespace VisualStateMachine
 			
 			_state = ScriptableObject.CreateInstance(stateType) as State;
 			_state.name = _id;
+		}
+
+		public void SetPosition(Vector2 position)
+		{
+			_position = position;
 		}
 		
 		public void Initialize(StateMachineController controller)
