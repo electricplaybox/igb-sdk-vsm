@@ -1,4 +1,5 @@
 ﻿using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine;
 
@@ -7,6 +8,7 @@ namespace Editor.VisualStateMachineEditor
 	public class StateMachineGraphView : GraphView
 	{
 		private StateMachine _stateMachine;
+		private StateMachineToolbar _toolbar;
 
 		public StateMachineGraphView()
 		{
@@ -16,14 +18,39 @@ namespace Editor.VisualStateMachineEditor
 		public StateMachineGraphView(StateMachine stateMachine)
 		{
 			_stateMachine = stateMachine;
-
+			
 			CreateEmptyGraphView();
 			LoadStateMachine(stateMachine);
 		}
 		
 		public void Update(StateMachine stateMachine)
 		{
+			if (_stateMachine == stateMachine) return;
+			
 			_stateMachine = stateMachine;
+			_toolbar?.Update(stateMachine);
+		}
+
+		private void CreateToolbar(StateMachine stateMachine)
+		{
+			_toolbar = new StateMachineToolbar(stateMachine);
+			_toolbar.OnSave += HandleSaveStateMachine;
+			_toolbar.OnStateMachineChanged += HandleStateMachineChanged;
+			
+			Add(_toolbar);
+		}
+
+		private void HandleStateMachineChanged(StateMachine obj)
+		{
+			//SOMETHING CHANGED
+		}
+
+		private void HandleSaveStateMachine()
+		{
+			if (Application.isPlaying) return;
+			if (_stateMachine == null) return;
+			
+			//DO SOME SAVING
 		}
 
 		private void CreateEmptyGraphView()
@@ -34,6 +61,7 @@ namespace Editor.VisualStateMachineEditor
 			CreateGrid();
 			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 			AddManipulators();
+			CreateToolbar(_stateMachine);
 		}
 
 		private void OnDestroy()
