@@ -12,7 +12,10 @@ namespace Editor.VisualStateMachineEditor
 	{
 		private StateMachine _stateMachine;
 		private StateMachineGraphView _graphView;
+		private StateMachineWindow _openWindow;
 
+		private const string Title = "State Machine Editor";
+		
 		/**
 		 * Static
 		 */
@@ -20,8 +23,7 @@ namespace Editor.VisualStateMachineEditor
 		[MenuItem("Tools/State Machine Editor")]
 		public static StateMachineWindow OpenWindow()
 		{
-			var window = GetWindow<StateMachineWindow>();
-			window.titleContent = new GUIContent("State Machine Editor");
+			var window = GetWindow<StateMachineWindow>(false, Title, false);
 			window.rootVisualElement.styleSheets.Add(Resources.Load<StyleSheet>("StateMachineEditor"));
 			window.Draw();
 			
@@ -88,13 +90,13 @@ namespace Editor.VisualStateMachineEditor
 			if (TryGetSelectedStateMachine(out var selectedStateMachine))
 			{
 				stateMachine = selectedStateMachine;
-				return true;
+				return stateMachine != null;
 			}
 
 			if (TryGetSelectedStateController(out var selectedStateController))
 			{
 				stateMachine = selectedStateController.GetStateMachine();
-				return true;
+				return stateMachine != null;
 			}
 
 			return false;
@@ -153,42 +155,47 @@ namespace Editor.VisualStateMachineEditor
 			// EditorPrefs.SetInt("MyEditorWindowState", someState);
 		}
 		
+		
+		/**
+		 * If we call OpenWindow() every time the window remains populated but steels focus. If we call redraw when the
+		 * window is open it doesn't steel focus but doesn't seem the render the window. The contents of the window
+		 * however remain present and detectable by the UIToolKit debugger.
+		 */
 		private void HandleEditorUpdate()
 		{
-			if (TryGetStateMachine(out StateMachine stateMachine))
-			{
-				OpenWindow(stateMachine);
-			}
+			if (!TryGetStateMachine(out var stateMachine)) return;
+			
+			OpenWindow(stateMachine);
 		}
 		
-		private void OnFocus()
-		{
-			Debug.Log("OnFocus");
-		}
+		// private void OnFocus()
+		// {
+		// 	Debug.Log("OnFocus");
+		// }
+		//
+		// private void OnDestroy()
+		// {
+		// 	Debug.Log("OnDestroy");
+		// }
 
-		private void OnDestroy()
-		{
-			Debug.Log("OnDestroy");
-		}
-
-		private void OnBecameInvisible()
-		{
-			Debug.Log("OnBecameInvisible");
-		}
-
-		private void OnBecameVisible()
-		{
-			Debug.Log("OnBecameVisible");
-		}
-		
-		private void OnLostFocus()
-		{
-			Debug.Log("OnLostFocus");
-		}
-
-		private void ModifierKeysChanged()
-		{
-			Debug.Log("ModifierKeysChanged");
-		}
+		// private void OnBecameInvisible()
+		// {
+		// 	Debug.Log("OnBecameInvisible");
+		// }
+		//
+		// private void OnBecameVisible()
+		// {
+		// 	Debug.Log("OnBecameVisible");
+		// }
+		//
+		// private void OnLostFocus()
+		// {
+		// 	Debug.Log("OnLostFocus");
+		// }
+		//
+		// private void ModifierKeysChanged()
+		// {
+		// 	Debug.Log("ModifierKeysChanged");
+		// }
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net.Mime;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -27,11 +28,29 @@ namespace Editor.VisualStateMachineEditor
 		
 		public void Update(StateMachine stateMachine)
 		{
-			if (_stateMachine == stateMachine) return;
-			
 			_stateMachine = stateMachine;
 			_toolbar?.Update(stateMachine);
+
 			LoadStateMachine(stateMachine);
+			UpdateNodes();
+		}
+
+		private void UpdateNodes()
+		{
+			if (_stateMachine == null) return;
+			
+			foreach (var node in nodes)
+			{
+				if (node is not StateNodeView) continue;
+
+				if (Application.isPlaying)
+				{
+					Debug.Log($"GraphView.UpdateNodes: {_stateMachine.GetInstanceID()}");
+				}
+				
+				var stateNodeView = node as StateNodeView;
+				stateNodeView.Update();
+			}
 		}
 
 		private void CreateToolbar(StateMachine stateMachine)

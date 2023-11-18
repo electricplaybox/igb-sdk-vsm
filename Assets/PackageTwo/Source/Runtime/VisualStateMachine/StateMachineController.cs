@@ -23,7 +23,6 @@ namespace VisualStateMachine
 			if(_stateMachineIsNull) throw new NullReferenceException("State machine is null");
 			
 			_stateMachineInstance = StateMachine.CreateInstance(_stateMachine);
-			Debug.Log($"StateMachine: {_stateMachineInstance.GetInstanceID()}");
 		}
 
 		public void Start()
