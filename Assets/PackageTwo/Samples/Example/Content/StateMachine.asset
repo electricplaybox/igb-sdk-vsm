@@ -29,15 +29,21 @@ MonoBehaviour:
   _nodes:
   - _state: {fileID: 4543943139778713553}
     _id: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
-    _position: {x: 0, y: 0}
+    _position: {x: 268, y: 148}
     _connections:
+    - _toNodeId: f750ae02-8015-40c9-ac52-c30e19e5897e
+      _fromNodeId: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
+      _fromPortName: ExitOne
     - _toNodeId: f750ae02-8015-40c9-ac52-c30e19e5897e
       _fromNodeId: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
       _fromPortName: ExitOne
   - _state: {fileID: -1635338049324723291}
     _id: f750ae02-8015-40c9-ac52-c30e19e5897e
-    _position: {x: 0, y: 0}
+    _position: {x: 604, y: 243}
     _connections:
+    - _toNodeId: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
+      _fromNodeId: f750ae02-8015-40c9-ac52-c30e19e5897e
+      _fromPortName: ExitOne
     - _toNodeId: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
       _fromNodeId: f750ae02-8015-40c9-ac52-c30e19e5897e
       _fromPortName: ExitOne

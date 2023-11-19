@@ -28,9 +28,6 @@ namespace Editor.VisualStateMachineEditor
 		
 		public void Update(StateMachine stateMachine)
 		{
-			_stateMachine = stateMachine;
-			_toolbar?.Update(stateMachine);
-
 			LoadStateMachine(stateMachine);
 			UpdateNodes();
 		}
@@ -43,7 +40,7 @@ namespace Editor.VisualStateMachineEditor
 			{
 				if (node is not StateNodeView stateNodeView) continue;
 
-				stateNodeView.Update();
+				stateNodeView?.Update();
 			}
 		}
 
@@ -128,6 +125,11 @@ namespace Editor.VisualStateMachineEditor
 		
 		private void LoadStateMachine(StateMachine stateMachine)
 		{
+			if (stateMachine == _stateMachine && stateMachine.Nodes.Count == nodes.Count()) return;
+			
+			_stateMachine = stateMachine;
+			_toolbar?.Update(stateMachine);
+			
 			DeleteElements(nodes);
 			DeleteElements(edges);
 			
