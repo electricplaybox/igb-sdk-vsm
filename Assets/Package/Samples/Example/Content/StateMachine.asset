@@ -1,5 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1413877652081130883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6ebc7a57e549928b5bfe6c1c04808d, type: 3}
+  m_Name: 8c682c57-0c7a-47da-9d99-b79fbfb08435
+  m_EditorClassIdentifier: 
+  _things: 0
+--- !u!114 &-757986194479041340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781197c615974e4787f569071201b413, type: 3}
+  m_Name: 282180e3-8018-414e-8ad9-9f20ed2a5a20
+  m_EditorClassIdentifier: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,17 +37,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
   m_Name: StateMachine
   m_EditorClassIdentifier: 
-  _entryStateId: 494c5f37-bff5-4b73-b652-b3208d51977f
+  _entryStateId: 7cfa8668-397a-4e69-ac8e-351fb8e64479
   _nodes:
-  - _state: {fileID: 2684281246195715086}
-    _id: 494c5f37-bff5-4b73-b652-b3208d51977f
-    _position: {x: 556, y: 106}
+  - _state: {fileID: 3427952612652580219}
+    _id: 7cfa8668-397a-4e69-ac8e-351fb8e64479
+    _position: {x: 128, y: 232}
+    _isEntryNode: 1
+    _connections:
+    - _toNodeId: 282180e3-8018-414e-8ad9-9f20ed2a5a20
+      _fromNodeId: 7cfa8668-397a-4e69-ac8e-351fb8e64479
+      _fromPortName: Complete
+  - _state: {fileID: -757986194479041340}
+    _id: 282180e3-8018-414e-8ad9-9f20ed2a5a20
+    _position: {x: 442, y: 232}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: 8c682c57-0c7a-47da-9d99-b79fbfb08435
+      _fromNodeId: 282180e3-8018-414e-8ad9-9f20ed2a5a20
+      _fromPortName: Complete
+  - _state: {fileID: -1413877652081130883}
+    _id: 8c682c57-0c7a-47da-9d99-b79fbfb08435
+    _position: {x: 748, y: 232}
+    _isEntryNode: 0
     _connections: []
-  - _state: {fileID: 1372930392983659084}
-    _id: 3f731370-ed27-407e-ac85-53ec45898047
-    _position: {x: 551, y: 442}
-    _connections: []
---- !u!114 &1372930392983659084
+--- !u!114 &3427952612652580219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,18 +69,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f405730136914b548f56a8b57ce48ef7, type: 3}
-  m_Name: 3f731370-ed27-407e-ac85-53ec45898047
+  m_Script: {fileID: 11500000, guid: e0c71942240c472dbb82c14996285e4d, type: 3}
+  m_Name: 7cfa8668-397a-4e69-ac8e-351fb8e64479
   m_EditorClassIdentifier: 
---- !u!114 &2684281246195715086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef330e96f47b4872afdbac7e0e080661, type: 3}
-  m_Name: 494c5f37-bff5-4b73-b652-b3208d51977f
-  m_EditorClassIdentifier: 
+  Value: 0

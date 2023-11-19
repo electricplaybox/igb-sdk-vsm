@@ -17,12 +17,11 @@ namespace VisualStateMachine
 		[SerializeField] private State _state;
 		[SerializeField] private string _id = Guid.NewGuid().ToString();
 		[SerializeField] private Vector2 _position;
+		[SerializeField] private bool _isEntryNode;
 		[SerializeField] private List<StateConnection> _connections = new();
-		
+
 		[NonSerialized]
 		private bool _isActive;
-		
-		private bool _isEntryNode;
 		
 		public StateNode(Type stateType, StateMachine parent)
 		{

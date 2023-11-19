@@ -1,14 +1,12 @@
 ﻿using System;
-using Package.Source.Editor.Utils;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VisualStateMachine;
 
 namespace Editor.VisualStateMachineEditor
 {
 	public class StateMachineContextMenu
 	{
-		public event Action<Type, Vector2> OnCreateNewStateNode;
+		public event Action<Vector2> OnCreateNewStateNode;
 		public event Action<StateNodeView> OnSetAsEntryNode;
 		
 		private readonly StateMachineGraphView _graphView;
@@ -43,16 +41,10 @@ namespace Editor.VisualStateMachineEditor
 		private void BuildGraphViewContext(ContextualMenuPopulateEvent evt)
 		{
 			evt.menu.AppendSeparator();
-			var states = AssetUtils.GetAllDerivedTypes<State>();
-
-			foreach (var stateType in states)
+			evt.menu.AppendAction("Add State", action =>
 			{
-				evt.menu.AppendAction(stateType.Name, action =>
-				{
-					var state = stateType;
-					OnCreateNewStateNode?.Invoke(state, action.eventInfo.mousePosition);
-				});
-			}
+				OnCreateNewStateNode?.Invoke(action.eventInfo.mousePosition);
+			});
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using VisualStateMachine;
 
 namespace Package.Samples.Example.Source
@@ -7,6 +8,8 @@ namespace Package.Samples.Example.Source
 	{
 		[Transition]
 		public event Action Complete;
+
+		[SerializeField] private float _things;
 		
 		public override void Enter()
 		{

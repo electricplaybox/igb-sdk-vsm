@@ -39,6 +39,13 @@
     padding-top: 3px;
 }
 
+.node #title-label {
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 10px;
+    -unity-font-style: Bold;
+}
+
 .node #title-container {
     padding-left: 10px;
     padding-right: 10px;
@@ -68,6 +75,10 @@
     translate: 0px 2px;
 }
 
+.node .unity-progress-bar__background {
+    background-color: #252525;
+ }
+
 .unity-progress-bar__progress {
     visibility: hidden;
 }
@@ -77,7 +88,8 @@
 }
 
 #progress-bar {
-    height: 8px;
+    height: 6px;
+    margin:2px;
 }
 
 .unity-progress-bar__progress {
@@ -88,6 +100,8 @@
 #property-container {
     background-color: #2E2E2E;
     width: 270px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .unity-label.unity-base-field__label {

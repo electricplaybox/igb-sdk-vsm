@@ -42,11 +42,9 @@ namespace Editor.VisualStateMachineEditor
 			title.Add(progressBar);
 			
 			var contents = node.Query<VisualElement>("contents").First();
-			var propertyContainer = new Foldout()
+			var propertyContainer = new VisualElement()
 			{
-				name = "property-container",
-				text = "",
-				value = false
+				name = "property-container"
 			};
 			
 			propertyContainer.AddToClassList("full-width");

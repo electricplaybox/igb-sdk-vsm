@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Package.Source.Editor.VisualStateMachineEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -120,6 +121,8 @@ namespace Editor.VisualStateMachineEditor
 					
 					sourceNode.Data.AddConnection(connection);
 				}
+				
+				_stateMachine.Save();
 			}
 			
 			if (graphViewChange.elementsToRemove != null)
@@ -167,16 +170,26 @@ namespace Editor.VisualStateMachineEditor
 			Remove(node);
 		}
 
-		private void HandleCreateNewStateNode(Type type, Vector2 position)
+		private void HandleCreateNewStateNode(Vector2 position)
 		{
-			var stateNode = new StateNode(type, _stateMachine);
+			StateSelectorWindow.Open(stateType =>
+			{
+				if (stateType == null) return;
+				
+				CreateStateNode(stateType, position);
+			});
+		}
+		
+		private void CreateStateNode(Type stateType, Vector2 position)
+		{
+			var stateNode = new StateNode(stateType, _stateMachine);
 			stateNode.SetPosition(position);
-
+			
 			var isEntryNode = this.nodes.ToList().Count == 0;
 			
 			StateMachineNodeFactory.CreateStateNode(stateNode, this);
 			_stateMachine.AddNode(stateNode);
-
+			
 			if (isEntryNode)
 			{
 				_stateMachine.SetEntryNode(stateNode);
@@ -246,11 +259,6 @@ namespace Editor.VisualStateMachineEditor
 				var stateNodeView = node as StateNodeView;
 				stateNodeView.Data.SetPosition(node.GetPosition().position);
 		
-				// if (stateNodeView.Data.EntryPoint)
-				// {
-				// 	graph.EntryNodeId = stateNodeView.Data.Id;
-				// }
-				
 				var edges = this.edges.Where(edge => edge.output.node == node);
 				foreach (var edge in edges)
 				{

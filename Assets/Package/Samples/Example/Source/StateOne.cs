@@ -7,6 +7,8 @@ namespace Samples.Example.Source
 	{
 		[Transition]
 		public event Action Complete;
+
+		public int Value;
 		
 		public override void Enter()
 		{

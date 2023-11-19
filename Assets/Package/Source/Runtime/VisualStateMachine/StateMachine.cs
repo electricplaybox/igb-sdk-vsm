@@ -167,7 +167,7 @@ namespace VisualStateMachine
 			Save();
 		}
 
-		private void Save()
+		public void Save()
 		{
 			#if UNITY_EDITOR
 			{
