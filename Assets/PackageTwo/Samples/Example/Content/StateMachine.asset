@@ -1,17 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7860966332431113353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f405730136914b548f56a8b57ce48ef7, type: 3}
-  m_Name: 6631971c-006f-4331-a911-2cdf3278ca5f
-  m_EditorClassIdentifier: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24,26 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
   m_Name: StateMachine
   m_EditorClassIdentifier: 
-  _entryStateId: d17bf02b-46b5-4610-9699-44098518c74e
+  _entryStateId: 494c5f37-bff5-4b73-b652-b3208d51977f
   _nodes:
-  - _state: {fileID: 6897543284310431918}
-    _id: d17bf02b-46b5-4610-9699-44098518c74e
-    _position: {x: 271, y: 338}
-    _connections:
-    - _toNodeId: 6631971c-006f-4331-a911-2cdf3278ca5f
-      _fromNodeId: d17bf02b-46b5-4610-9699-44098518c74e
-      _fromPortName: ExitOne
-    - _toNodeId: 6631971c-006f-4331-a911-2cdf3278ca5f
-      _fromNodeId: d17bf02b-46b5-4610-9699-44098518c74e
-      _fromPortName: ExitTwo
-    - _toNodeId: 6631971c-006f-4331-a911-2cdf3278ca5f
-      _fromNodeId: d17bf02b-46b5-4610-9699-44098518c74e
-      _fromPortName: ExitOne
-  - _state: {fileID: -7860966332431113353}
-    _id: 6631971c-006f-4331-a911-2cdf3278ca5f
-    _position: {x: 652, y: 444}
+  - _state: {fileID: 2684281246195715086}
+    _id: 494c5f37-bff5-4b73-b652-b3208d51977f
+    _position: {x: 556, y: 106}
     _connections: []
---- !u!114 &6897543284310431918
+  - _state: {fileID: 1372930392983659084}
+    _id: 3f731370-ed27-407e-ac85-53ec45898047
+    _position: {x: 551, y: 442}
+    _connections: []
+--- !u!114 &1372930392983659084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,7 +31,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ccd63e5a1f74e6c9298415b1d203e84, type: 3}
-  m_Name: d17bf02b-46b5-4610-9699-44098518c74e
+  m_Script: {fileID: 11500000, guid: f405730136914b548f56a8b57ce48ef7, type: 3}
+  m_Name: 3f731370-ed27-407e-ac85-53ec45898047
   m_EditorClassIdentifier: 
-  _duration: 0
+--- !u!114 &2684281246195715086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef330e96f47b4872afdbac7e0e080661, type: 3}
+  m_Name: 494c5f37-bff5-4b73-b652-b3208d51977f
+  m_EditorClassIdentifier: 

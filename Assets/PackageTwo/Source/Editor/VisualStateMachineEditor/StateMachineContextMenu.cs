@@ -8,12 +8,10 @@ namespace Editor.VisualStateMachineEditor
 {
 	public class StateMachineContextMenu
 	{
-		public event Action<StateNodeView> OnDeleteStateNode;
 		public event Action<Type, Vector2> OnCreateNewStateNode;
 		public event Action<StateNodeView> OnSetAsEntryNode;
 		
 		private readonly StateMachineGraphView _graphView;
-		private const int NativeDeleteActionIndex = 5;
 
 		public StateMachineContextMenu(StateMachineGraphView graphView)
 		{
@@ -40,11 +38,6 @@ namespace Editor.VisualStateMachineEditor
 			{
 				OnSetAsEntryNode?.Invoke(node);
 			});
-			
-			// evt.menu.InsertAction(NativeDeleteActionIndex, "Delete", x =>
-			// {
-			// 	OnDeleteStateNode?.Invoke(node);
-			// });
 		}
 
 		private void BuildGraphViewContext(ContextualMenuPopulateEvent evt)

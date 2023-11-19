@@ -8,6 +8,7 @@ namespace Editor.VisualStateMachineEditor
 	public class StateNodeView : Node
 	{
 		public StateNode Data;
+		public StateMachine StateMachine;
 
 		public void Update()
 		{
@@ -34,14 +35,14 @@ namespace Editor.VisualStateMachineEditor
 
 		private void DrawEntryPoint()
 		{
-			// if (Data.EntryPoint)
-			// {
-			// 	AddToClassList("entry-node");
-			// }
-			// else
-			// {
-			// 	RemoveFromClassList("entry-node");
-			// }
+			if (Data.IsEntryNode)
+			{
+				AddToClassList("entry-node");
+			}
+			else
+			{
+				RemoveFromClassList("entry-node");
+			}
 		}
 	}
 }

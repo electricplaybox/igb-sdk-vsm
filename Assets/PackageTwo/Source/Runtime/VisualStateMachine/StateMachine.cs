@@ -155,9 +155,15 @@ namespace VisualStateMachine
 			SetEntryNodeId(node.Id);
 		}
 
-		public void SetEntryNodeId(string entryNodeId)
+		private void SetEntryNodeId(string entryNodeId)
 		{
 			_entryStateId = entryNodeId;
+
+			foreach (var node in _nodes)
+			{
+				node.SetAsEntryNode(node.Id == entryNodeId);
+			}
+			
 			Save();
 		}
 

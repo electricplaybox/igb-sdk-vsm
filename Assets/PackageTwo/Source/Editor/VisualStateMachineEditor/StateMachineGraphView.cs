@@ -31,8 +31,16 @@ namespace Editor.VisualStateMachineEditor
 		{
 			LoadStateMachine(stateMachine);
 			UpdateNodes();
+			ClearNullStateMachine();
 		}
-		
+
+		private void ClearNullStateMachine()
+		{
+			if (_stateMachine != null) return;
+			
+			Clear();
+		}
+
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
 		{
 			var compatiblePorts = new List<Port>();
@@ -128,13 +136,13 @@ namespace Editor.VisualStateMachineEditor
 			
 			if (graphViewChange.movedElements != null)
 			{
-				//SaveStateMachine(_stateMachine);
 				foreach (var element in graphViewChange.movedElements)
 				{
 					if (element is StateNodeView)
 					{
 						var stateNodeView = element as StateNodeView;
-						stateNodeView.SetPosition(element.GetPosition());
+						var position = element.GetPosition().position;
+						stateNodeView.Data.SetPosition(position);
 					}
 				}
 			}
@@ -151,7 +159,7 @@ namespace Editor.VisualStateMachineEditor
 
 		private void HandleSetAsEntryNode(StateNodeView node)
 		{
-			_stateMachine.SetEntryNodeId(node.Data.Id);
+			_stateMachine.SetEntryNode(node.Data);
 		}
 
 		private void HandleDeleteStateNode(StateNodeView node)
@@ -163,9 +171,16 @@ namespace Editor.VisualStateMachineEditor
 		{
 			var stateNode = new StateNode(type, _stateMachine);
 			stateNode.SetPosition(position);
+
+			var isEntryNode = this.nodes.ToList().Count == 0;
 			
 			StateMachineNodeFactory.CreateStateNode(stateNode, this);
 			_stateMachine.AddNode(stateNode);
+
+			if (isEntryNode)
+			{
+				_stateMachine.SetEntryNode(stateNode);
+			}
 		}
 
 		private void OnDestroy()

@@ -7,6 +7,7 @@ namespace VisualStateMachine
 	[Serializable]
 	public class StateNode
 	{
+		public bool IsEntryNode => _isEntryNode;
 		public bool IsActive => _isActive;
 		public Vector2 Position => _position;
 		public State State => _state;
@@ -17,9 +18,11 @@ namespace VisualStateMachine
 		[SerializeField] private string _id = Guid.NewGuid().ToString();
 		[SerializeField] private Vector2 _position;
 		[SerializeField] private List<StateConnection> _connections = new();
-
+		
 		[NonSerialized]
 		private bool _isActive;
+		
+		private bool _isEntryNode;
 		
 		public StateNode(Type stateType, StateMachine parent)
 		{
@@ -30,6 +33,11 @@ namespace VisualStateMachine
 			
 			_state = ScriptableObject.CreateInstance(stateType) as State;
 			_state.name = _id;
+		}
+		
+		public void SetAsEntryNode(bool isEntryNode)
+		{
+			_isEntryNode = isEntryNode;
 		}
 
 		public void SetPosition(Vector2 position)
