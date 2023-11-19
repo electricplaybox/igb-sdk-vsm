@@ -41,10 +41,10 @@ namespace Editor.VisualStateMachineEditor
 				OnSetAsEntryNode?.Invoke(node);
 			});
 			
-			evt.menu.InsertAction(NativeDeleteActionIndex, "Delete", x =>
-			{
-				OnDeleteStateNode?.Invoke(node);
-			});
+			// evt.menu.InsertAction(NativeDeleteActionIndex, "Delete", x =>
+			// {
+			// 	OnDeleteStateNode?.Invoke(node);
+			// });
 		}
 
 		private void BuildGraphViewContext(ContextualMenuPopulateEvent evt)

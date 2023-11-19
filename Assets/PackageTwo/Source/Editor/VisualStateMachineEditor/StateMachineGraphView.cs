@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -31,6 +32,17 @@ namespace Editor.VisualStateMachineEditor
 			LoadStateMachine(stateMachine);
 			UpdateNodes();
 		}
+		
+		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+		{
+			var compatiblePorts = new List<Port>();
+			ports.ForEach(port =>
+			{
+				if (startPort != port && startPort.node != port.node) compatiblePorts.Add(port);
+			});
+			
+			return compatiblePorts;
+		}
 
 		private void UpdateNodes()
 		{
@@ -56,6 +68,7 @@ namespace Editor.VisualStateMachineEditor
 		private void HandleStateMachineChanged(StateMachine stateMachine)
 		{
 			//SOMETHING CHANGED
+			Debug.Log("Statemachine changed");
 		}
 
 		private void HandleSaveStateMachine()
@@ -76,24 +89,73 @@ namespace Editor.VisualStateMachineEditor
 			AddManipulators();
 			CreateToolbar(_stateMachine);
 			CreateContextMenu();
+			
+			graphViewChanged += OnGraphViewChanged;
 		}
-		
+
+		private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
+		{
+			if (_stateMachine == null) return graphViewChange;
+			
+			if (graphViewChange.edgesToCreate != null)
+			{
+				foreach (var edge in graphViewChange.edgesToCreate)
+				{
+					var sourceNode = edge.output.node as StateNodeView;
+					var targetNode = edge.input.node as StateNodeView;
+
+					var connection = new StateConnection(
+						fromNodeId: sourceNode.Data.Id,
+						fromPortName: edge.output.portName,
+						toNodeId: targetNode.Data.Id
+					);
+					
+					sourceNode.Data.AddConnection(connection);
+				}
+			}
+			
+			if (graphViewChange.elementsToRemove != null)
+			{
+				foreach (var element in graphViewChange.elementsToRemove)
+				{
+					if (element is StateNodeView)
+					{
+						var stateNodeView = element as StateNodeView;
+						_stateMachine.RemoveNode(stateNodeView.Data);
+					}
+				}
+			}
+			
+			if (graphViewChange.movedElements != null)
+			{
+				//SaveStateMachine(_stateMachine);
+				foreach (var element in graphViewChange.movedElements)
+				{
+					if (element is StateNodeView)
+					{
+						var stateNodeView = element as StateNodeView;
+						stateNodeView.SetPosition(element.GetPosition());
+					}
+				}
+			}
+			
+			return graphViewChange;
+		}
+
 		private void CreateContextMenu()
 		{
 			_contextMenu = new StateMachineContextMenu(this);
 			_contextMenu.OnCreateNewStateNode += HandleCreateNewStateNode;
-			_contextMenu.OnDeleteStateNode += HandleDeleteStateNode;
 			_contextMenu.OnSetAsEntryNode += HandleSetAsEntryNode;
 		}
 
 		private void HandleSetAsEntryNode(StateNodeView node)
 		{
-			throw new NotImplementedException();
+			_stateMachine.SetEntryNodeId(node.Data.Id);
 		}
 
 		private void HandleDeleteStateNode(StateNodeView node)
 		{
-			_stateMachine.RemoveNode(node.Data);
 			Remove(node);
 		}
 
@@ -103,7 +165,6 @@ namespace Editor.VisualStateMachineEditor
 			stateNode.SetPosition(position);
 			
 			StateMachineNodeFactory.CreateStateNode(stateNode, this);
-			
 			_stateMachine.AddNode(stateNode);
 		}
 
@@ -118,7 +179,6 @@ namespace Editor.VisualStateMachineEditor
 			if (_contextMenu != null)
 			{
 				_contextMenu.OnCreateNewStateNode -= HandleCreateNewStateNode;
-				_contextMenu.OnDeleteStateNode -= HandleDeleteStateNode;
 				_contextMenu.OnSetAsEntryNode -= HandleSetAsEntryNode;
 			}
 		}
@@ -170,7 +230,7 @@ namespace Editor.VisualStateMachineEditor
 				
 				var stateNodeView = node as StateNodeView;
 				stateNodeView.Data.SetPosition(node.GetPosition().position);
-
+		
 				// if (stateNodeView.Data.EntryPoint)
 				// {
 				// 	graph.EntryNodeId = stateNodeView.Data.Id;

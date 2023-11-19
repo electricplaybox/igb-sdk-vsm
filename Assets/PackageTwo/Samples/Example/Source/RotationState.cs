@@ -13,7 +13,7 @@ namespace Example
 
 		public override void Update()
 		{
-			_references.transform.Rotate(0, 0, 1);
+			_references.Cube.Rotate(0, 0, 1);
 		}
 
 		public override void Exit()
