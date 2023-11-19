@@ -93,18 +93,34 @@ namespace Editor.VisualStateMachineEditor
 
 		private void HandleDeleteStateNode(StateNodeView node)
 		{
-			throw new NotImplementedException();
+			_stateMachine.RemoveNode(node.Data);
+			Remove(node);
 		}
 
 		private void HandleCreateNewStateNode(Type type, Vector2 position)
 		{
 			var stateNode = new StateNode(type, _stateMachine);
+			stateNode.SetPosition(position);
+			
 			StateMachineNodeFactory.CreateStateNode(stateNode, this);
+			
+			_stateMachine.AddNode(stateNode);
 		}
 
 		private void OnDestroy()
 		{
-			
+			if (_toolbar != null)
+			{
+				_toolbar.OnSave -= HandleSaveStateMachine;
+				_toolbar.OnStateMachineChanged -= HandleStateMachineChanged;
+			}
+
+			if (_contextMenu != null)
+			{
+				_contextMenu.OnCreateNewStateNode -= HandleCreateNewStateNode;
+				_contextMenu.OnDeleteStateNode -= HandleDeleteStateNode;
+				_contextMenu.OnSetAsEntryNode -= HandleSetAsEntryNode;
+			}
 		}
 
 		private void CreateGrid()

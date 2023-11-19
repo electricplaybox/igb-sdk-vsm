@@ -13,6 +13,7 @@ namespace Editor.VisualStateMachineEditor
 		public event Action<StateNodeView> OnSetAsEntryNode;
 		
 		private readonly StateMachineGraphView _graphView;
+		private const int NativeDeleteActionIndex = 5;
 
 		public StateMachineContextMenu(StateMachineGraphView graphView)
 		{
@@ -39,8 +40,8 @@ namespace Editor.VisualStateMachineEditor
 			{
 				OnSetAsEntryNode?.Invoke(node);
 			});
-
-			evt.menu.AppendAction("Delete", x =>
+			
+			evt.menu.InsertAction(NativeDeleteActionIndex, "Delete", x =>
 			{
 				OnDeleteStateNode?.Invoke(node);
 			});

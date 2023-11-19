@@ -155,12 +155,6 @@ namespace Editor.VisualStateMachineEditor
 			// EditorPrefs.SetInt("MyEditorWindowState", someState);
 		}
 		
-		
-		/**
-		 * If we call OpenWindow() every time the window remains populated but steels focus. If we call redraw when the
-		 * window is open it doesn't steel focus but doesn't seem the render the window. The contents of the window
-		 * however remain present and detectable by the UIToolKit debugger.
-		 */
 		private void HandleEditorUpdate()
 		{
 			if (!TryGetStateMachine(out var stateMachine)) return;

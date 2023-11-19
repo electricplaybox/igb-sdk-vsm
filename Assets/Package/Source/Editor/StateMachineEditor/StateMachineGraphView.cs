@@ -10,7 +10,7 @@ namespace Package.Source.Editor.StateMachineEditor
 	public class StateMachineGraphView : GraphView
 	{
 		private StateMachineToolbar _toolbar;
-		private StateMachineContextMenu _contextMenu;
+		//private StateMachineContextMenu _contextMenu;
 		
 		private StateMachineGraph _graph;
 
@@ -25,7 +25,6 @@ namespace Package.Source.Editor.StateMachineEditor
 			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 			AddManipulators();
 			CreateToolbar(graph);
-			CreateContextMenu();
 			LoadGraph(graph);
 		}
 		
@@ -52,14 +51,6 @@ namespace Package.Source.Editor.StateMachineEditor
 			return compatiblePorts;
 		}
 		
-		private void CreateContextMenu()
-		{
-			_contextMenu = new StateMachineContextMenu(this);
-			_contextMenu.OnCreateNewStateNode += HandleCreateNewStateNode;
-			_contextMenu.OnDeleteStateNode += HandleDeleteStateNode;
-			_contextMenu.OnSetAsEntryNode += HandleSetAsEntryNode;
-		}
-
 		private void HandleSetAsEntryNode(StateNodeView node)
 		{
 			var currentEntryNode = this.Q<StateNodeView>(_graph.EntryNodeId);
@@ -88,10 +79,6 @@ namespace Package.Source.Editor.StateMachineEditor
 		{
 			_toolbar.OnSave -= HandleSaveGraph;
 			_toolbar.OnGraphChanged -= HandleGraphChanged;
-			
-			_contextMenu.OnCreateNewStateNode -= HandleCreateNewStateNode;
-			_contextMenu.OnDeleteStateNode -= HandleDeleteStateNode;
-			_contextMenu.OnSetAsEntryNode -= HandleSetAsEntryNode;
 		}
 
 		private void CreateToolbar(StateMachineGraph graph)

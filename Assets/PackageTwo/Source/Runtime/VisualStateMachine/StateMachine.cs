@@ -130,6 +130,23 @@ namespace VisualStateMachine
 			}
 			#endif
 		}
+		
+		public void RemoveNode(StateNode node)
+		{
+			if (!_nodes.Contains(node)) return;
+
+			#if UNITY_EDITOR
+			{
+				var isEntryNode = _entryStateId == node.Id;
+				
+				AssetDatabase.RemoveObjectFromAsset(node.State);
+				_nodes.Remove(node);
+				Save();
+				
+				if(isEntryNode) SelectNextEntryNode();
+			}
+			#endif
+		}
 
 		public void SetEntryNode(StateNode node)
 		{
@@ -153,24 +170,7 @@ namespace VisualStateMachine
 			}
 			#endif
 		}
-
-		public void RemoveNode(StateNode node)
-		{
-			if (!_nodes.Contains(node)) return;
-
-			#if UNITY_EDITOR
-			{
-				var isEntryNode = _entryStateId == node.Id;
-				
-				AssetDatabase.RemoveObjectFromAsset(node.State);
-				_nodes.Remove(node);
-				Save();
-				
-				if(isEntryNode) SelectNextEntryNode();
-			}
-			#endif
-		}
-
+		
 		private void SelectNextEntryNode()
 		{
 			_entryStateId = _nodes.Count > 0 ? _nodes[0].Id : null;
@@ -193,5 +193,6 @@ namespace VisualStateMachine
 		}
 		
 		#endregion
+		
 	}
 }
