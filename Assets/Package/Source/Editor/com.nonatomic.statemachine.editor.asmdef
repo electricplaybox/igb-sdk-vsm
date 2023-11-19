@@ -1,9 +1,9 @@
 {
-    "name": "com.nonatomic.statemachine.editor.old",
+    "name": "com.nonatomic.statemachine.editor",
     "rootNamespace": "",
     "references": [
         "GUID:cbad043a04d3cfe47921372813a1f0f8",
-        "GUID:81a57b6ef2ff40dda8a8449847a1021b"
+        "GUID:933b2205b9e1bf44c9cf43214981a083"
     ],
     "includePlatforms": [
         "Editor"
