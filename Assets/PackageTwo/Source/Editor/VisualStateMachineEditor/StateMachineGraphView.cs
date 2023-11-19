@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using System.Net.Mime;
-using UnityEditor;
+﻿using System;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +11,7 @@ namespace Editor.VisualStateMachineEditor
 	{
 		private StateMachine _stateMachine;
 		private StateMachineToolbar _toolbar;
+		private StateMachineContextMenu _contextMenu;
 
 		public StateMachineGraphView()
 		{
@@ -41,14 +41,8 @@ namespace Editor.VisualStateMachineEditor
 			
 			foreach (var node in nodes)
 			{
-				if (node is not StateNodeView) continue;
+				if (node is not StateNodeView stateNodeView) continue;
 
-				if (Application.isPlaying)
-				{
-					Debug.Log($"GraphView.UpdateNodes: {_stateMachine.GetInstanceID()}");
-				}
-				
-				var stateNodeView = node as StateNodeView;
 				stateNodeView.Update();
 			}
 		}
@@ -62,7 +56,7 @@ namespace Editor.VisualStateMachineEditor
 			Add(_toolbar);
 		}
 
-		private void HandleStateMachineChanged(StateMachine obj)
+		private void HandleStateMachineChanged(StateMachine stateMachine)
 		{
 			//SOMETHING CHANGED
 		}
@@ -84,6 +78,31 @@ namespace Editor.VisualStateMachineEditor
 			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 			AddManipulators();
 			CreateToolbar(_stateMachine);
+			CreateContextMenu();
+		}
+		
+		private void CreateContextMenu()
+		{
+			_contextMenu = new StateMachineContextMenu(this);
+			_contextMenu.OnCreateNewStateNode += HandleCreateNewStateNode;
+			_contextMenu.OnDeleteStateNode += HandleDeleteStateNode;
+			_contextMenu.OnSetAsEntryNode += HandleSetAsEntryNode;
+		}
+
+		private void HandleSetAsEntryNode(StateNodeView node)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void HandleDeleteStateNode(StateNodeView node)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void HandleCreateNewStateNode(Type type, Vector2 position)
+		{
+			var stateNode = new StateNode(type, _stateMachine);
+			StateMachineNodeFactory.CreateStateNode(stateNode, this);
 		}
 
 		private void OnDestroy()

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4919194750120150572
+--- !u!114 &-1635338049324723291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ccd63e5a1f74e6c9298415b1d203e84, type: 3}
-  m_Name: d52d7a00-8227-4d63-9da9-7b6a668fd488
+  m_Name: f750ae02-8015-40c9-ac52-c30e19e5897e
   m_EditorClassIdentifier: 
   _duration: 0
 --- !u!114 &11400000
@@ -25,29 +25,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
   m_Name: StateMachine
   m_EditorClassIdentifier: 
-  _entryStateId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
+  _entryStateId: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
   _nodes:
-  - _state: {fileID: -4919194750120150572}
-    _id: d52d7a00-8227-4d63-9da9-7b6a668fd488
+  - _state: {fileID: 4543943139778713553}
+    _id: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
+    _position: {x: 0, y: 0}
     _connections:
-    - _toNodeId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
-      _fromNodeId: d52d7a00-8227-4d63-9da9-7b6a668fd488
+    - _toNodeId: f750ae02-8015-40c9-ac52-c30e19e5897e
+      _fromNodeId: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
       _fromPortName: ExitOne
-    - _toNodeId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
-      _fromNodeId: d52d7a00-8227-4d63-9da9-7b6a668fd488
-      _fromPortName: ExitOne
-    _position: {x: 435, y: 176}
-  - _state: {fileID: 2767829881198704371}
-    _id: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
+  - _state: {fileID: -1635338049324723291}
+    _id: f750ae02-8015-40c9-ac52-c30e19e5897e
+    _position: {x: 0, y: 0}
     _connections:
-    - _toNodeId: d52d7a00-8227-4d63-9da9-7b6a668fd488
-      _fromNodeId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
+    - _toNodeId: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
+      _fromNodeId: f750ae02-8015-40c9-ac52-c30e19e5897e
       _fromPortName: ExitOne
-    - _toNodeId: d52d7a00-8227-4d63-9da9-7b6a668fd488
-      _fromNodeId: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
-      _fromPortName: ExitOne
-    _position: {x: 776, y: 345}
---- !u!114 &2767829881198704371
+--- !u!114 &4543943139778713553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,5 +51,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef330e96f47b4872afdbac7e0e080661, type: 3}
-  m_Name: 6044fb31-e816-47e4-9046-2ae3ac1b7c04
+  m_Name: 74674f76-d8fa-4bb0-8985-89d6eda6d96e
   m_EditorClassIdentifier: 

@@ -21,9 +21,6 @@ namespace Editor.VisualStateMachineEditor
 		{
 			if (!Application.isPlaying) return;
 			
-			
-			Debug.Log($">> DrawActiveNode: {Data.GetHashCode()}, {Data.State.name} = {Data.IsActive}");
-			
 			if (Data.IsActive)
 			{
 				AddToClassList("active-node");

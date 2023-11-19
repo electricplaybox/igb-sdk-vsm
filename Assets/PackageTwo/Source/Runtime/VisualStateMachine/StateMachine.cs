@@ -69,8 +69,6 @@ namespace VisualStateMachine
 		public void Update()
 		{
 			if (_currentNodeIsNull) return;
-			
-			Debug.Log($"UpdateCurrentNode: {this.GetInstanceID()}, {_currentNode.GetHashCode()}, {_currentNode.State.name} = {_currentNode.IsActive}");
 			_currentNode.Update();
 		}
 		
