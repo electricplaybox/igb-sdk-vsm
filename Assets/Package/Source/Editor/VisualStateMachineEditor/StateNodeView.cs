@@ -38,8 +38,15 @@ namespace Editor.VisualStateMachineEditor
 			
 			var nodeColor = stateType.GetCustomAttribute<NodeColor>();
 			if (nodeColor == null) return;
-			
-			titleContainer.style.backgroundColor = ColorUtils.HexToColor(nodeColor.HexColor);
+
+			var color = ColorUtils.HexToColor(nodeColor.HexColor);
+			titleContainer.style.backgroundColor = color;
+
+			var selectionBorder = this.Q("selection-border");
+			selectionBorder.style.borderBottomColor = color;
+			selectionBorder.style.borderTopColor = color;
+			selectionBorder.style.borderLeftColor = color;
+			selectionBorder.style.borderRightColor = color;
 		}
 
 		private void DrawActiveNode()

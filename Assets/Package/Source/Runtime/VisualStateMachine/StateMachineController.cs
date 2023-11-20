@@ -10,7 +10,7 @@ namespace VisualStateMachine
 		[SerializeField] private StateMachine _stateMachine;
 		
 		private StateMachine _stateMachineInstance;
-		private bool _stateMachineIsNull;
+		private bool _isComplete;
 
 		public void OnValidate()
 		{
@@ -22,13 +22,15 @@ namespace VisualStateMachine
 		public void SetStateMachine(StateMachine stateMachine)
 		{
 			_stateMachine = stateMachine;
+			if (_stateMachine == null) return;
+			
+			_isComplete = false;
 			OnValidate();
 		}
 	
 		public void Start()
 		{
-			_stateMachineIsNull = _stateMachine == null;
-			if(_stateMachineIsNull) throw new NullReferenceException("State machine is null");
+			if (_stateMachine == null) throw new NullReferenceException("State machine is null");
 			
 			_stateMachineInstance = StateMachine.CreateInstance(_stateMachine);
 			_stateMachineInstance.Initialize(this);
@@ -36,7 +38,8 @@ namespace VisualStateMachine
 
 		public void Update()
 		{
-			if (_stateMachineIsNull) return;
+			if (_isComplete) return;
+			if (_stateMachine == null) return;
 			
 			_stateMachineInstance.Update();
 		}
@@ -55,6 +58,7 @@ namespace VisualStateMachine
 
 		public void Complete()
 		{
+			_isComplete = true;
 			OnComplete.Invoke();
 		}
 	}

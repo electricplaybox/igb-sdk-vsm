@@ -69,6 +69,8 @@ namespace VisualStateMachine
 
 		public void Update()
 		{
+			if (!_isActive) return;
+			
 			State.Update();
 		}
 
