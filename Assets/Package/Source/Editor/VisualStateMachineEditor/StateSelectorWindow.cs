@@ -1,75 +1,83 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System;
+using Package.Source.Editor.Utils;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
 using VisualStateMachine;
 
 namespace Package.Source.Editor.VisualStateMachineEditor
 {
 	public class StateSelectorWindow : EditorWindow
 	{
-		private string _searchQuery = "";
-		private Vector2 _scrollPosition;
-
 		public Action<Type> OnTypeSelected;
+		
+		private TextField _searchField;
+		private const string FlowIcon = "flow";
 
 		public static void Open(Action<Type> onTypeSelected)
 		{
 			var window = GetWindow<StateSelectorWindow>("Select State Type");
+			window.rootVisualElement.styleSheets.Add(Resources.Load<StyleSheet>("StateSelectorWindow"));
 			window.OnTypeSelected = onTypeSelected;
+			window.SearchStates(string.Empty);
 		}
 
-		void OnGUI()
+		public void CreateGUI()
 		{
-			RenderSearchField();
-			RenderSearchResults();
-		}
+			
+			var root = rootVisualElement;
 
-		private void RenderSearchField()
-		{
-			GUILayout.Label("Select State Type", EditorStyles.boldLabel);
-			_searchQuery = EditorGUILayout.TextField("Search", _searchQuery);
-
-			if (GUILayout.Button("Search"))
+			var searchField = new ToolbarSearchField();
+			searchField.AddToClassList("search-bar");
+			searchField.RegisterValueChangedCallback(evt =>
 			{
-				// Refreshes the list based on the search query.
-			}
+				SearchStates(evt.newValue);
+			});
+			root.Add(searchField);
+
+			var results = new ScrollView();
+			root.Add(results);
+			results.Clear();
 		}
 
-		private void RenderSearchResults()
+		private void SearchStates(string searchQuery)
 		{
-			_scrollPosition = GUILayout.BeginScrollView(_scrollPosition);
-			try
+			var results = rootVisualElement.Q<ScrollView>(); // Assuming there's only one ScrollView
+			results.Clear();
+
+			var derivedTypes = AssetUtils.GetAllDerivedTypes<State>();
+			
+			for (var i = 0; i < derivedTypes.Count; i++)
 			{
-				var guids = AssetDatabase.FindAssets("t:MonoScript");
-				foreach (var guid in guids)
+				var isEven = i % 2 == 0;
+				var stateType = derivedTypes[i];
+				
+				if (stateType.Name.Contains(searchQuery))
 				{
-					TryRenderAssetButton(guid);
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.LogError($"Error rendering search results: {ex.Message}");
-			}
-			GUILayout.EndScrollView();
-		}
+					var button = new Button(() => SelectState(stateType)) { };
+					if(isEven) button.AddToClassList("even");
 
-		private void TryRenderAssetButton(string guid)
-		{
-			var path = AssetDatabase.GUIDToAssetPath(guid);
-			var asset = AssetDatabase.LoadAssetAtPath<MonoScript>(path);
-
-			if (asset != null && asset.GetClass() != null)
-			{
-				if (typeof(State).IsAssignableFrom(asset.GetClass()) && asset.GetClass().Name.Contains(_searchQuery))
-				{
-					if (GUILayout.Button(asset.GetClass().Name))
+					button.Insert(0, new Image()
 					{
-						OnTypeSelected?.Invoke(asset.GetClass());
-						Close();
-					}
+						image = Resources.Load<Texture2D>(FlowIcon),
+						scaleMode = ScaleMode.ScaleToFit
+					});
+
+					button.Add(new Label()
+					{
+						text = stateType.Name
+					});
+
+					results.Add(button);
 				}
 			}
+		}
+
+		private void SelectState(Type stateType)
+		{
+			OnTypeSelected?.Invoke(stateType);
+			Close();
 		}
 	}
-
 }

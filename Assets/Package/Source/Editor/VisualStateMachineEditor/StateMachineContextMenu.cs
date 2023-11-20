@@ -40,7 +40,7 @@ namespace Editor.VisualStateMachineEditor
 
 		private void BuildGraphViewContext(ContextualMenuPopulateEvent evt)
 		{
-			evt.menu.AppendSeparator();
+			evt.menu.ClearItems();
 			evt.menu.AppendAction("Add State", action =>
 			{
 				OnCreateNewStateNode?.Invoke(action.eventInfo.mousePosition);

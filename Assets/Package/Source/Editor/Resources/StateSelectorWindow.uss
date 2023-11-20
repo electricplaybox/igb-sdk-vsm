@@ -1,0 +1,33 @@
+﻿/* *********** State Type Selector *********** */
+.unity-button {
+    color: white;
+    background-color: var(--unity-colors-window-background);
+    font-size: 12px;
+    padding: 1px 0px;
+    border-width:0;
+    flex-direction: row;
+    -unity-text-align: middle-left;
+}
+
+.unity-button.even {
+    background-color: var(--unity-colors-alternated_rows-background);
+}
+
+.unity-button .unity-image {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.unity-scroll-view__content-container {
+    padding-top:10px;
+    background-color: var(--unity-colors-window-background);
+}
+
+.search-bar {
+    width: auto;
+}
+
+.search-bar #unity-cancel {
+    visibility: hidden;
+}
