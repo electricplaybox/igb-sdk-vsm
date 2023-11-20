@@ -63,13 +63,8 @@ namespace Editor.VisualStateMachineEditor
 		
 		private void LoadGraphViewState()
 		{
-			// var positionX = EditorPrefs.GetFloat("StateMachineGraphView_PositionX", 0);
-			// var positionY = EditorPrefs.GetFloat("StateMachineGraphView_PositionY", 0);
-			// var scale = EditorPrefs.GetFloat("StateMachineGraphView_Scale", 1);
-			//
-			// contentViewContainer.transform.position = new Vector3(positionX, positionY, 0);
-			// contentViewContainer.transform.scale = new Vector3(scale, scale, scale);
-
+			if (_stateMachine == null) return;
+			
 			contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
 			contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
 		}
