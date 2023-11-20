@@ -66,6 +66,11 @@ namespace VisualStateMachine
 			State.Update();
 		}
 
+		public void FixedUpdate()
+		{
+			State.FixedUpdate();
+		}
+
 		public void Exit()
 		{
 			ToggleConnectionSubscription(subscribe: false);

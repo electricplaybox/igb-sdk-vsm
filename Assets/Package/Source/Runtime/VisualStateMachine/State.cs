@@ -12,6 +12,8 @@ namespace VisualStateMachine
 		public abstract void Update();
 		public abstract void Exit();
 
+		public virtual void FixedUpdate() { }
+
 		public State Clone(StateMachineController stateMachineController)
 		{
 			var state = Instantiate(this);

@@ -1,5 +1,61 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7159820806029338073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061fcb093cd748eab1b4693c5147f908, type: 3}
+  m_Name: f3fadc04-7fe2-4775-84d3-409147cae91f
+  m_EditorClassIdentifier: 
+  _duration: 1
+--- !u!114 &-6744102724517069293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f405730136914b548f56a8b57ce48ef7, type: 3}
+  m_Name: 06e34672-c843-4db5-8690-c5bc13082f11
+  m_EditorClassIdentifier: 
+  _speed: 3
+  _axis: {x: 1, y: 0, z: 0}
+  _duration: 3
+--- !u!114 &-5584128036656260461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f405730136914b548f56a8b57ce48ef7, type: 3}
+  m_Name: 960489c3-accb-4431-9618-f00a715f0187
+  m_EditorClassIdentifier: 
+  _speed: 3
+  _axis: {x: -1, y: 0, z: 1}
+  _duration: 3
+--- !u!114 &-3381532422406865073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115fca3636f24cff8630dd8daa3b5e48, type: 3}
+  m_Name: 00860ce4-c3d2-45a5-9117-bda49821faa1
+  m_EditorClassIdentifier: 
+  _duration: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,5 +68,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
   m_Name: StateMachine 1
   m_EditorClassIdentifier: 
-  _entryStateId: 
-  _nodes: []
+  _entryStateId: f3fadc04-7fe2-4775-84d3-409147cae91f
+  _nodes:
+  - _state: {fileID: -7159820806029338073}
+    _id: f3fadc04-7fe2-4775-84d3-409147cae91f
+    _position: {x: 173, y: 194}
+    _isEntryNode: 1
+    _connections:
+    - _toNodeId: 06e34672-c843-4db5-8690-c5bc13082f11
+      _fromNodeId: f3fadc04-7fe2-4775-84d3-409147cae91f
+      _fromPortName: Complete
+  - _state: {fileID: -6744102724517069293}
+    _id: 06e34672-c843-4db5-8690-c5bc13082f11
+    _position: {x: 498, y: 174}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: 960489c3-accb-4431-9618-f00a715f0187
+      _fromNodeId: 06e34672-c843-4db5-8690-c5bc13082f11
+      _fromPortName: Complete
+  - _state: {fileID: -5584128036656260461}
+    _id: 960489c3-accb-4431-9618-f00a715f0187
+    _position: {x: 815, y: 174}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: 00860ce4-c3d2-45a5-9117-bda49821faa1
+      _fromNodeId: 960489c3-accb-4431-9618-f00a715f0187
+      _fromPortName: Complete
+  - _state: {fileID: -3381532422406865073}
+    _id: 00860ce4-c3d2-45a5-9117-bda49821faa1
+    _position: {x: 1146, y: 174}
+    _isEntryNode: 0
+    _connections: []

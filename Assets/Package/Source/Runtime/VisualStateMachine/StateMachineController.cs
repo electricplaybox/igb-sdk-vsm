@@ -5,6 +5,8 @@ namespace VisualStateMachine
 {
 	public class StateMachineController : MonoBehaviour
 	{
+		public event Action OnComplete;
+		
 		[SerializeField] private StateMachine _stateMachine;
 		
 		private StateMachine _stateMachineInstance;
@@ -16,19 +18,19 @@ namespace VisualStateMachine
 			
 			_stateMachineInstance = StateMachine.CreateInstance(_stateMachine);
 		}
-		
-		public void Awake()
+
+		public void SetStateMachine(StateMachine stateMachine)
+		{
+			_stateMachine = stateMachine;
+			OnValidate();
+		}
+	
+		public void Start()
 		{
 			_stateMachineIsNull = _stateMachine == null;
 			if(_stateMachineIsNull) throw new NullReferenceException("State machine is null");
 			
 			_stateMachineInstance = StateMachine.CreateInstance(_stateMachine);
-		}
-
-		public void Start()
-		{
-			if (_stateMachineIsNull) return;
-			
 			_stateMachineInstance.Initialize(this);
 		}
 
@@ -49,6 +51,11 @@ namespace VisualStateMachine
 			{
 				return _stateMachine;
 			}
+		}
+
+		public void Complete()
+		{
+			OnComplete.Invoke();
 		}
 	}
 }
