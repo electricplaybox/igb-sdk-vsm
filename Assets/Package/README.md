@@ -15,3 +15,4 @@ To install VisualStateMachine in your Unity project, follow these steps:
 1. Download the package from the [GitHub repository](https://github.com/PaulNonatomic/VisualStateMachine).
 2. Import the package into your Unity project.
 3. Follow the setup instructions to integrate it into your game.
+[README.md](..%2F..%2FREADME.md)
