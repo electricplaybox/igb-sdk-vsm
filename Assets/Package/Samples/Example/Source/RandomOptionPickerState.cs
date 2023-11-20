@@ -1,9 +1,9 @@
 ﻿using System;
-using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 using Random = UnityEngine.Random;
 
-namespace Package.Samples.Example.Source
+namespace Samples.Example
 {
 	public class RandomOptionPickerState : State
 	{

@@ -1,7 +1,8 @@
 ﻿using System;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 
-namespace Package.Samples.Example.Source
+namespace Samples.Example
 {
 	public class StateTwo : State
 	{

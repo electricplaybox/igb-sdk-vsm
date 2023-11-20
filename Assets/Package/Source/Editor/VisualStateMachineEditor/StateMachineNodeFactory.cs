@@ -7,6 +7,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine;
+using VisualStateMachine.Attributes;
 
 namespace Editor.VisualStateMachineEditor
 {

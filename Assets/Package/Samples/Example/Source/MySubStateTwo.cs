@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.States;
 
-namespace Package.Samples.Example.Source
+namespace Samples.Example
 {
 	public class MySubStateTwo : State
 	{

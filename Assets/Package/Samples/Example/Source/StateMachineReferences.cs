@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class StateMachineReferences : MonoBehaviour
+namespace Samples.Example
 {
-	public Transform Cube;
+	public class StateMachineReferences : MonoBehaviour
+	{
+		public Transform Cube;
+	}
 }

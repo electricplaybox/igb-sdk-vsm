@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
 
-namespace Package.Samples.Example.Source
+namespace VisualStateMachine.States
 {
+	[NodeColor(NodeColor.Purple), NodeLabel("Sub State Machine")]
 	public class SubStateMachine : State
 	{
 		[Transition]

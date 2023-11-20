@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 
-namespace Example
+namespace Samples.Example
 {
 	public class BarState : State
 	{
