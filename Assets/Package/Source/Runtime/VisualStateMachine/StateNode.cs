@@ -49,9 +49,14 @@ namespace VisualStateMachine
 			_state = _state.Clone(controller);
 		}
 		
-		public void AddConnection(StateConnection stateConnection)
+		public void AddConnection(StateConnection connection)
 		{
-			_connections.Add(stateConnection);
+			_connections.Add(connection);
+		}
+		
+		public void RemoveConnection(StateConnection connection)
+		{
+			_connections.Remove(connection);
 		}
 		
 		public void Enter()
@@ -101,6 +106,11 @@ namespace VisualStateMachine
 			{
 				eventInfo.RemoveEventHandler(targetObject, handler);
 			}
+		}
+
+		public void RemoveAll(Predicate<StateConnection> match)
+		{
+			_connections.RemoveAll(match);
 		}
 	}
 }

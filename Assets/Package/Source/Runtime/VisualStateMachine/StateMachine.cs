@@ -138,14 +138,24 @@ namespace VisualStateMachine
 			#if UNITY_EDITOR
 			{
 				var isEntryNode = _entryStateId == node.Id;
-				
+
 				AssetDatabase.RemoveObjectFromAsset(node.State);
+				RemoveConnectionsToNode(node.Id);
+				
 				_nodes.Remove(node);
 				Save();
 				
 				if(isEntryNode) SelectNextEntryNode();
 			}
 			#endif
+		}
+
+		public void RemoveConnectionsToNode(string nodeId)
+		{
+			foreach (var node in _nodes)
+			{
+				node.RemoveAll(connection => connection.ToNodeId == nodeId);
+			}
 		}
 
 		public void SetEntryNode(StateNode node)

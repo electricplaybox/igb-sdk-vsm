@@ -76,8 +76,7 @@ namespace Editor.VisualStateMachineEditor
 
 		private void HandleStateMachineChanged(StateMachine stateMachine)
 		{
-			//SOMETHING CHANGED
-			Debug.Log("Statemachine changed");
+			//The referenced statemachine changed
 		}
 
 		private void HandleSaveStateMachine()
