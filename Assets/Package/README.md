@@ -1,6 +1,7 @@
 ﻿# VisualStateMachine
 
 ## Overview
+Currently still a work in progress and subject to breaking changes.
 VisualStateMachine is a Unity package designed to simplify the creation and management of state machines in Unity projects. It provides a visual editor for designing state machines, making it easier to create complex behaviors without writing extensive code.
 
 ## Features
