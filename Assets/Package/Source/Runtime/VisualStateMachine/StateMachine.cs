@@ -5,14 +5,25 @@ using UnityEngine;
 
 namespace VisualStateMachine
 {
+	[Serializable]
+	public class GraphViewState
+	{
+		public Vector3 Position;
+		public float Scale;
+	}
+	
 	[CreateAssetMenu(fileName = "StateMachine", menuName = "StateMachine/StateMachine")]
 	public class StateMachine : ScriptableObject
 	{
+		public GraphViewState GraphViewState => _graphViewState;
 		public StateMachine Base { get; set; }
 		public IReadOnlyCollection<StateNode> Nodes => _nodes;
 		
 		[SerializeField] 
 		private string _entryStateId;
+
+		[SerializeField] 
+		private GraphViewState _graphViewState;
 		
 		[SerializeField]
 		private List<StateNode> _nodes = new();
@@ -32,6 +43,12 @@ namespace VisualStateMachine
 			instance.Base = stateMachine;
 			
 			return instance;
+		}
+
+		public void UpdateGraphViewState(Vector3 position, float scale)
+		{
+			_graphViewState.Position = position;
+			_graphViewState.Scale = scale;
 		}
 		
 		public void Initialize(StateMachineController controller)

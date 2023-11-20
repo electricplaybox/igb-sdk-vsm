@@ -18,6 +18,7 @@ namespace Editor.VisualStateMachineEditor
 		public StateMachineGraphView()
 		{
 			CreateEmptyGraphView();
+			LoadGraphViewState();
 		}
 		
 		public StateMachineGraphView(StateMachine stateMachine)
@@ -52,6 +53,26 @@ namespace Editor.VisualStateMachineEditor
 			
 			return compatiblePorts;
 		}
+		
+		private void SaveGraphViewState()
+		{
+			if (_stateMachine == null) return;
+
+			_stateMachine.UpdateGraphViewState(contentViewContainer.transform.position, scale);
+		}
+		
+		private void LoadGraphViewState()
+		{
+			// var positionX = EditorPrefs.GetFloat("StateMachineGraphView_PositionX", 0);
+			// var positionY = EditorPrefs.GetFloat("StateMachineGraphView_PositionY", 0);
+			// var scale = EditorPrefs.GetFloat("StateMachineGraphView_Scale", 1);
+			//
+			// contentViewContainer.transform.position = new Vector3(positionX, positionY, 0);
+			// contentViewContainer.transform.scale = new Vector3(scale, scale, scale);
+
+			contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
+			contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
+		}
 
 		private void UpdateNodes()
 		{
@@ -70,6 +91,7 @@ namespace Editor.VisualStateMachineEditor
 			_toolbar = new StateMachineToolbar(stateMachine);
 			_toolbar.OnSave += HandleSaveStateMachine;
 			_toolbar.OnStateMachineChanged += HandleStateMachineChanged;
+			_toolbar.OnStateMachineDestroyed += HandleStateMachineDestroyed;
 			
 			Add(_toolbar);
 		}
@@ -77,6 +99,11 @@ namespace Editor.VisualStateMachineEditor
 		private void HandleStateMachineChanged(StateMachine stateMachine)
 		{
 			//The referenced statemachine changed
+		}
+
+		private void HandleStateMachineDestroyed()
+		{
+			//Clean up
 		}
 
 		private void HandleSaveStateMachine()
@@ -197,10 +224,13 @@ namespace Editor.VisualStateMachineEditor
 
 		private void OnDestroy()
 		{
+			SaveGraphViewState();
+				
 			if (_toolbar != null)
 			{
 				_toolbar.OnSave -= HandleSaveStateMachine;
 				_toolbar.OnStateMachineChanged -= HandleStateMachineChanged;
+				_toolbar.OnStateMachineDestroyed -= HandleStateMachineDestroyed;
 			}
 
 			if (_contextMenu != null)
@@ -229,6 +259,7 @@ namespace Editor.VisualStateMachineEditor
 		private void LoadStateMachine(StateMachine stateMachine)
 		{
 			if (stateMachine == _stateMachine && stateMachine.Nodes.Count == nodes.Count()) return;
+			if (_stateMachine != null) SaveGraphViewState();
 			
 			_stateMachine = stateMachine;
 			_toolbar?.Update(stateMachine);

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using VisualStateMachine;
@@ -10,6 +11,7 @@ namespace Editor.VisualStateMachineEditor
 	{
 		public event Action OnSave;
 		public event Action<StateMachine> OnStateMachineChanged;
+		public event Action OnStateMachineDestroyed;
 		
 		private ObjectField _graphDataField;
 		private Button _saveButton;
@@ -29,8 +31,17 @@ namespace Editor.VisualStateMachineEditor
 			_saveButton.text = "Save";
 			_saveButton.clicked += HandleSave;
 			Add(_saveButton);
+			
+			EditorApplication.update += CheckGraphDataField;
 		}
-		
+
+		private void CheckGraphDataField()
+		{
+			if (_graphDataField.value != null) return;
+			
+			OnStateMachineDestroyed?.Invoke();
+		}
+
 		public void Update(StateMachine stateMachine)
 		{
 			_graphDataField.SetValueWithoutNotify(stateMachine);
@@ -50,6 +61,8 @@ namespace Editor.VisualStateMachineEditor
 		{
 			_graphDataField.UnregisterValueChangedCallback(HandleGraphChanged);
 			_saveButton.clicked -= HandleSave;
+			
+			EditorApplication.update -= CheckGraphDataField;
 		}
 	}
 }

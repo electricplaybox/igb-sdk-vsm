@@ -149,7 +149,7 @@ namespace Editor.VisualStateMachineEditor
 		public static void ConnectStateNode(StateNode stateNode, GraphView graphView)
 		{
 			var nodeView = graphView.Q<StateNodeView>(stateNode.Id);
-
+			
 			foreach (var connection in stateNode.Connections)
 			{
 				var connectedNodeView = graphView.Q<StateNodeView>(connection.ToNodeId);
