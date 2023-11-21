@@ -460,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df320fa969e4776b8555911db71f3b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 11400000, guid: f714682f882253047a7bf2ce072b3a6c, type: 2}
+  _stateMachine: {fileID: 11400000, guid: a2c1a541dc1ce1a49bf74024fc989bd1, type: 2}
 --- !u!114 &1301538350
 MonoBehaviour:
   m_ObjectHideFlags: 0
