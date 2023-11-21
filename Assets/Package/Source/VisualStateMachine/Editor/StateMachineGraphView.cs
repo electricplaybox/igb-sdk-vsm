@@ -220,17 +220,24 @@ namespace VisualStateMachine.Editor
 			{
 				if (stateType == null) return;
 				
-				CreateStateNode(stateType, position);
+				CreateStateNode(stateType, ScreenPointToGraphPoint(position));
 			});
 		}
 
+		public Vector3 ScreenPointToGraphPoint(Vector2 screenPoint)
+		{
+			var graphPoint = (Vector3)screenPoint - contentViewContainer.transform.position;
+			Debug.Log($"{screenPoint}, {contentViewContainer.transform.position}, {contentViewContainer.transform.scale}");
+			return graphPoint;
+		}
+		
 		public void CreateNewStateNodeFromOutputPort(Port port, Vector2 position)
 		{
 			StateSelectorWindow.Open(stateType =>
 			{
 				if (stateType == null) return;
 				
-				var newNode = CreateStateNode(stateType, position);
+				var newNode = CreateStateNode(stateType, ScreenPointToGraphPoint(position));
 				var edge = StateMachineNodeFactory.ConnectStateNode(port, newNode, this);
 
 				//TODO save edge to statemachine
