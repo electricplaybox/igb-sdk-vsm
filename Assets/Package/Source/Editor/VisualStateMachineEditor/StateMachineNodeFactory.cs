@@ -178,6 +178,6 @@ namespace Editor.VisualStateMachineEditor
 				
 				graphView.Add(edge);
 			}
-		}
+		}	
 	}
 }

@@ -12,17 +12,17 @@ namespace Samples.Example
 
 		[SerializeField] private float _things;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
 			Complete?.Invoke();
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			
 		}

@@ -64,26 +64,26 @@ namespace VisualStateMachine
 		{
 			ToggleConnectionSubscription(subscribe: true);
 			_isActive = true;
-			State.Enter();
+			State.EnterState();
 		}
 
 		public void Update()
 		{
 			if (!_isActive) return;
 			
-			State.Update();
+			State.UpdateState();
 		}
 
 		public void FixedUpdate()
 		{
-			State.FixedUpdate();
+			State.FixedUpdateState();
 		}
 
 		public void Exit()
 		{
 			ToggleConnectionSubscription(subscribe: false);
 			_isActive = false;
-			State.Exit();
+			State.ExitState();
 		}
 
 		private void ToggleConnectionSubscription(bool subscribe)

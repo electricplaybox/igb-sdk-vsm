@@ -8,11 +8,11 @@ namespace VisualStateMachine.States
 		[NonSerialized]
 		protected StateMachineController Controller;
 		
-		public abstract void Enter();
-		public abstract void Update();
-		public abstract void Exit();
+		public abstract void EnterState();
+		public abstract void UpdateState();
+		public abstract void ExitState();
 
-		public virtual void FixedUpdate() { }
+		public virtual void FixedUpdateState() { }
 
 		public State Clone(StateMachineController stateMachineController)
 		{

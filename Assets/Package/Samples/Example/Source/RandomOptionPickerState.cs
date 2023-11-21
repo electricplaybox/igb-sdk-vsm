@@ -13,7 +13,7 @@ namespace Samples.Example
 		[Transition] 
 		public event Action OptionTwo;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
 			if (Random.value >= 0.5f)
 			{
@@ -25,12 +25,12 @@ namespace Samples.Example
 			}
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			
 		}

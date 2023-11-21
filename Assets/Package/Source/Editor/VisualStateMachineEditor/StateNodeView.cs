@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,6 +6,7 @@ using VisualStateMachine;
 using System.Reflection;
 using UnityEditor;
 using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 
 namespace Editor.VisualStateMachineEditor
 {
@@ -23,6 +24,45 @@ namespace Editor.VisualStateMachineEditor
 			DrawActiveNode();
 			SetCustomLabelText();
 			CreateCustomIcon();
+			CreateRelayNode();
+		}
+
+		private void CreateRelayNode()
+		{
+			if (Data.State is not Relay) return;
+			var relayState = Data.State as Relay;
+			
+			var title = this.Q<VisualElement>("title");
+			if (title == null) return;
+			
+			title.parent.Remove(title);
+			
+			var propertyContainer = this.Q<VisualElement>("property-container");
+			if(propertyContainer == null) return;
+
+			propertyContainer.style.width = 120;
+			
+			var label = new Label();
+			// label.text = ">>";
+			
+			switch (relayState.Direction)
+			{
+				case RelayDirection.Left:
+					label.text = ">>";
+					break;
+				case RelayDirection.Right:
+					label.text = "<<";
+					var output = this.Q<VisualElement>("output");
+					output.parent.Insert(0,output);
+					
+					var input = this.Q<VisualElement>("input");
+					input.parent.Add(input);
+					break;
+			}
+			
+			label.style.unityTextAlign = TextAnchor.MiddleCenter;
+			label.style.unityFontStyleAndWeight = FontStyle.Bold;
+			propertyContainer.Add(label);
 		}
 
 		private void CreateCustomIcon()

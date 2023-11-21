@@ -16,13 +16,13 @@ namespace Samples.Example
 		private float _remainingTime;
 		private float _duration;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
 			_duration = Controller.GetComponent<Duration>().DurationTime;
 			_remainingTime = _duration;
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			if (_remainingTime > 0)
 			{
@@ -34,7 +34,7 @@ namespace Samples.Example
 			}
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			
 		}

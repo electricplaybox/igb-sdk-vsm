@@ -14,12 +14,12 @@ namespace Samples.Example
 		
 		private float _entryTime;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
 			_entryTime = Time.time;
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			if (Time.time - _entryTime > _duration)
 			{
@@ -27,7 +27,7 @@ namespace Samples.Example
 			}
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			
 		}

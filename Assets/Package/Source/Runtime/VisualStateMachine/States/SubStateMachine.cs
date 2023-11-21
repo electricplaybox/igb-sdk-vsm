@@ -19,7 +19,7 @@ namespace VisualStateMachine.States
 		private StateMachineController _subController;
 		private GameObject _subControllerGo;
 
-		public override void Enter()
+		public override void EnterState()
 		{
 			_subControllerGo = new GameObject("SubController");
 			_subController = _subControllerGo.AddComponent<StateMachineController>();
@@ -37,12 +37,12 @@ namespace VisualStateMachine.States
 			#endif
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			_subController.OnComplete -= HandleComplete;
 		}
