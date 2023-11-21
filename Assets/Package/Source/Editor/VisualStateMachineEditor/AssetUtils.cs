@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Package.Source.Editor.Utils
+namespace Editor.VisualStateMachineEditor
 {
 	public class AssetUtils
 	{

@@ -1,12 +1,11 @@
-﻿using UnityEditor;
-using UnityEngine;
-using System;
-using Package.Source.Editor.Utils;
+﻿using System;
+using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
-using VisualStateMachine;
+using VisualStateMachine.States;
 
-namespace Package.Source.Editor.VisualStateMachineEditor
+namespace Editor.VisualStateMachineEditor
 {
 	public class StateSelectorWindow : EditorWindow
 	{

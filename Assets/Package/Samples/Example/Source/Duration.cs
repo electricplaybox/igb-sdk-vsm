@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Example
+namespace Samples.Example
 {
 	public class Duration : MonoBehaviour
 	{

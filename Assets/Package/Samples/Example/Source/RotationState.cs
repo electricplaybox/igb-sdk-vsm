@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 
-namespace Example
+namespace Samples.Example
 {
 	public class RotationState : State
 	{
@@ -16,13 +17,13 @@ namespace Example
 		private StateMachineReferences _references;
 		private float _entryTime;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
 			_references = this.Controller.GetComponentInParent<StateMachineReferences>();
 			_entryTime = Time.time;
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			var speed = _speed * Time.deltaTime;
 			var axis = _axis.normalized * _speed;
@@ -35,7 +36,7 @@ namespace Example
 			}
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			
 		}

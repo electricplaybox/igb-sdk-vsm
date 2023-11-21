@@ -1,19 +1,24 @@
 ﻿using System;
 using VisualStateMachine.Attributes;
-using VisualStateMachine.States;
 
-namespace Samples.Example
+namespace VisualStateMachine.States
 {
-	public class StateOne : State
+	public enum RelayDirection
+	{
+		Left,
+		Right
+	}
+	
+	public class Relay : State
 	{
 		[Transition]
-		public event Action Complete;
-
-		public int Value;
+		public event Action Exit;
+		
+		public RelayDirection Direction { get; set; }
 		
 		public override void EnterState()
 		{
-			Complete?.Invoke();
+			Exit?.Invoke();
 		}
 
 		public override void UpdateState()

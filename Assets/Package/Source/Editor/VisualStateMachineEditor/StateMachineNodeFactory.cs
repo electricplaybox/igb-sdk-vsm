@@ -7,6 +7,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine;
+using VisualStateMachine.Attributes;
 
 namespace Editor.VisualStateMachineEditor
 {
@@ -14,9 +15,12 @@ namespace Editor.VisualStateMachineEditor
 	{
 		public static void CreateStateNode(StateNode stateNode, GraphView graphView)
 		{
+			var stateName = stateNode.State.GetType().Name;
+			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
+			
 			var node = new StateNodeView();
 			node.Data = stateNode;
-			node.title = stateNode.State.GetType().Name;
+			node.title = stateTitle;
 			node.name = stateNode.Id;
 			
 			CreateInputPort(node);
@@ -32,10 +36,15 @@ namespace Editor.VisualStateMachineEditor
 			var title = node.Query<VisualElement>("title").First();
 			var titleLabel = title.Query<VisualElement>("title-label").First();
 			var titleButton = title.Query<VisualElement>("title-button-container").First();
+			title.Remove(titleButton);
+			
+			var icon = new Image();
+			icon.name = "title-icon";
+			icon.scaleMode = ScaleMode.ScaleToFit;
 			
 			title.Add(container);
+			container.Add(icon);
 			container.Add(titleLabel);
-			container.Add(titleButton);
 
 			var progressBar = new ProgressBar();
 			progressBar.name = "progress-bar";
@@ -67,7 +76,8 @@ namespace Editor.VisualStateMachineEditor
  
 			var fields = GetVisibleSerializedFields(target.GetType());
  
-			for (var i = 0; i < fields.Length; ++i) {
+			for (var i = 0; i < fields.Length; ++i) 
+			{
 				var field = fields[i];
 				
 				if ( propertiesToExclude != null && propertiesToExclude.Contains(field.Name)) {
@@ -78,36 +88,34 @@ namespace Editor.VisualStateMachineEditor
 				if (serializedProperty != null)
 				{
 					var propertyField = new PropertyField(serializedProperty);
-					if(propertyField != null) container.Add(propertyField);
+					container.Add(propertyField);
 				}
 				else
 				{
 					Debug.LogWarning($"Property {field.Name} not found in serialized object.");
 				}
 			}
-           
-			if(serializedObject != null) container.Bind(serializedObject);
- 
- 
+			
+			container.Bind(serializedObject);
 			return container;
 		}
 		
 		public static FieldInfo[] GetVisibleSerializedFields(Type T)
 		{
-			List<FieldInfo> infoFields = new List<FieldInfo>();
+			var infoFields = new List<FieldInfo>();
  
 			var publicFields = T.GetFields(BindingFlags.Instance | BindingFlags.Public);
-			for (int i = 0; i < publicFields.Length; i++) {
-				if (publicFields[i].GetCustomAttribute<HideInInspector>() == null) {
-					infoFields.Add(publicFields[i]);
-				}
+			for (var i = 0; i < publicFields.Length; i++)
+			{
+				if (publicFields[i].GetCustomAttribute<HideInInspector>() != null) continue;
+				infoFields.Add(publicFields[i]);
 			}
  
 			var privateFields = T.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
-			for (int i = 0; i < privateFields.Length; i++) {
-				if (privateFields[i].GetCustomAttribute<SerializeField>() != null) {
-					infoFields.Add(privateFields[i]);
-				}
+			foreach (var t in privateFields)
+			{
+				if (t.GetCustomAttribute<SerializeField>() == null) continue;
+				infoFields.Add(t);
 			}
  
 			return infoFields.ToArray();
@@ -119,6 +127,7 @@ namespace Editor.VisualStateMachineEditor
 				Direction.Input, 
 				Port.Capacity.Multi,
 				typeof(Node));
+			
 			inputPort.name = inputPort.portName = "Enter";
 			node.inputContainer.Add(inputPort);
 		}
@@ -126,8 +135,9 @@ namespace Editor.VisualStateMachineEditor
 		public static void CreateOutputPorts(StateNodeView node)
 		{
 			var type = node.Data.State.GetType();
+			var events = type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
 			
-			foreach (var eventInfo in type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+			foreach (var eventInfo in events)
 			{
 				if (eventInfo.EventHandlerType != typeof(Action)) continue;
 				
@@ -142,8 +152,12 @@ namespace Editor.VisualStateMachineEditor
 				Direction.Output, 
 				Port.Capacity.Single,
 				typeof(Node));
+			
 			outputPort.name = outputPort.portName = portName;
 			node.outputContainer.Add(outputPort);
+			
+			var edgeConnector = new EdgeConnector<BezierEdge>(new BezierEdgeConnector());
+			outputPort.AddManipulator(edgeConnector);
 		}
 		
 		public static void ConnectStateNode(StateNode stateNode, GraphView graphView)
@@ -167,6 +181,6 @@ namespace Editor.VisualStateMachineEditor
 				
 				graphView.Add(edge);
 			}
-		}
+		}	
 	}
 }

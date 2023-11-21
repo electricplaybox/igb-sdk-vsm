@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 
-namespace Example
+namespace Samples.Example
 {
 	public class FooBarState : State
 	{
@@ -15,13 +16,13 @@ namespace Example
 		private float _remainingTime;
 		private float _duration;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
 			_duration = Controller.GetComponent<Duration>().DurationTime;
 			_remainingTime = _duration;
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			if (_remainingTime > 0)
 			{
@@ -33,7 +34,7 @@ namespace Example
 			}
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			
 		}

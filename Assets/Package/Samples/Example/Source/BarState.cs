@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 
-namespace Example
+namespace Samples.Example
 {
 	public class BarState : State
 	{
@@ -17,15 +18,15 @@ namespace Example
 
 		private float _remainingTime;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
-			//Debug.Log($"Enter {this.GetType().Name}, {this.GetInstanceID()}");
+			//Debug.Log($"EnterState {this.GetType().Name}, {this.GetInstanceID()}");
 			_remainingTime = _duration;
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
-			//Debug.Log($"Update {this.GetType().Name}, {this.GetInstanceID()} - {_remainingTime}/{_duration}");
+			//Debug.Log($"UpdateState {this.GetType().Name}, {this.GetInstanceID()} - {_remainingTime}/{_duration}");
 			if (_remainingTime > 0)
 			{
 				_remainingTime -= Time.deltaTime;
@@ -36,9 +37,9 @@ namespace Example
 			}
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
-			//Debug.Log($"Exit {this.GetType().Name}, {this.GetInstanceID()}");
+			//Debug.Log($"ExitState {this.GetType().Name}, {this.GetInstanceID()}");
 		}
 	}
 }
