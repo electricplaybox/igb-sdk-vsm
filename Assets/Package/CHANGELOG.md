@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.2.1-alpha] - Nov 21, 2023
+- Fix for SubStateMachine not cleaning up when exiting
+
 ## [0.2.0-alpha] - Nov 21, 2023
 - Added support for inherited properties in States
 - Added a delay and end node
