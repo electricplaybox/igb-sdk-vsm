@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Editor.VisualStateMachineEditor
+namespace VisualStateMachine.Editor
 {
 	public class ColorUtils
 	{

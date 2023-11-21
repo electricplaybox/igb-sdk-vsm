@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine.States;
 
-namespace Editor.VisualStateMachineEditor
+namespace VisualStateMachine.Editor
 {
 	public class StateSelectorWindow : EditorWindow
 	{

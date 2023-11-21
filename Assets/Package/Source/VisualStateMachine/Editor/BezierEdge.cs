@@ -1,6 +1,6 @@
 ﻿using UnityEditor.Experimental.GraphView;
 
-namespace Editor.VisualStateMachineEditor
+namespace VisualStateMachine.Editor
 {
 	public class BezierEdge : Edge
 	{

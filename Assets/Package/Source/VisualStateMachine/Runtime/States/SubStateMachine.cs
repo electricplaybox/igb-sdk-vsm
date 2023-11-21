@@ -1,10 +1,7 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 using VisualStateMachine.Attributes;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace VisualStateMachine.States
 {

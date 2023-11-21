@@ -4,9 +4,8 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VisualStateMachine;
 
-namespace Editor.VisualStateMachineEditor
+namespace VisualStateMachine.Editor
 {
 	public class StateMachineGraphView : GraphView
 	{

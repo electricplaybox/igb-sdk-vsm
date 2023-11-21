@@ -1,7 +1,7 @@
 ﻿using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-namespace Editor.VisualStateMachineEditor
+namespace VisualStateMachine.Editor
 {
 	public class BezierEdgeConnector : IEdgeConnectorListener
 	{

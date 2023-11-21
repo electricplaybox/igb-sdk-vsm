@@ -2,10 +2,9 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VisualStateMachine;
 using StateMachine = VisualStateMachine.StateMachine;
 
-namespace Editor.VisualStateMachineEditor
+namespace VisualStateMachine.Editor
 {
 	[InitializeOnLoad]
 	public class StateMachineWindow : GraphViewEditorWindow

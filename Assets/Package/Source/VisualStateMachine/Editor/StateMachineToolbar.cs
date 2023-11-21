@@ -2,10 +2,9 @@
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
-using VisualStateMachine;
 using Object = UnityEngine.Object;
 
-namespace Editor.VisualStateMachineEditor
+namespace VisualStateMachine.Editor
 {
 	public class StateMachineToolbar : Toolbar
 	{

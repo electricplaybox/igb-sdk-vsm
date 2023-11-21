@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.1.4-alpha] - Nov 21, 2023
+- Changed the directory structure and names to avoid Editor namespace conflic
+
 ## [0.1.3-alpha] - Nov 21, 2023
 - Updated the package.json unity version
 - Added support for creating nodes when dropping a ghost edge

@@ -1,14 +1,12 @@
-﻿using System;
+﻿using System.Reflection;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VisualStateMachine;
-using System.Reflection;
-using UnityEditor;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.States;
 
-namespace Editor.VisualStateMachineEditor
+namespace VisualStateMachine.Editor
 {
 	public class StateNodeView : Node
 	{
