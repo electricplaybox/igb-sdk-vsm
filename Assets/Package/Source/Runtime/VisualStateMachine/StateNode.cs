@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using VisualStateMachine.States;
 
 namespace VisualStateMachine
 {
@@ -63,24 +64,26 @@ namespace VisualStateMachine
 		{
 			ToggleConnectionSubscription(subscribe: true);
 			_isActive = true;
-			State.Enter();
+			State.EnterState();
 		}
 
 		public void Update()
 		{
-			State.Update();
+			if (!_isActive) return;
+			
+			State.UpdateState();
 		}
 
 		public void FixedUpdate()
 		{
-			State.FixedUpdate();
+			State.FixedUpdateState();
 		}
 
 		public void Exit()
 		{
 			ToggleConnectionSubscription(subscribe: false);
 			_isActive = false;
-			State.Exit();
+			State.ExitState();
 		}
 
 		private void ToggleConnectionSubscription(bool subscribe)

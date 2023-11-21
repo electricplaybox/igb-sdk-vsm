@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VisualStateMachine
+namespace VisualStateMachine.Attributes
 {
 	[AttributeUsage(AttributeTargets.Event)]
 	public class Transition : Attribute

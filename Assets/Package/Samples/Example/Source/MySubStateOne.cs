@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 
-namespace Package.Samples.Example.Source
+namespace Samples.Example
 {
 	public class MySubStateOne : State
 	{
@@ -13,12 +14,12 @@ namespace Package.Samples.Example.Source
 		
 		private float _entryTime;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
 			_entryTime = Time.time;
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			if (Time.time - _entryTime > _duration)
 			{
@@ -26,7 +27,7 @@ namespace Package.Samples.Example.Source
 			}
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			
 		}

@@ -43,6 +43,8 @@
     font-size: 14px;
     margin-left: 10px;
     margin-right: 10px;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
     -unity-font-style: Bold;
 }
 
@@ -52,6 +54,13 @@
     align-items: center;
     margin-top: 6px;
     margin-bottom: 6px;
+    flex-direction: row;
+}
+
+.node #title-button-container {
+    visibility: hidden;
+    width:0;
+    height:0;
 }
 
 .node.entry-node #title {

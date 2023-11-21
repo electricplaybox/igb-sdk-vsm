@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Package.Source.Editor.VisualStateMachineEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -131,16 +130,7 @@ namespace Editor.VisualStateMachineEditor
 			{
 				foreach (var edge in graphViewChange.edgesToCreate)
 				{
-					var sourceNode = edge.output.node as StateNodeView;
-					var targetNode = edge.input.node as StateNodeView;
-
-					var connection = new StateConnection(
-						fromNodeId: sourceNode.Data.Id,
-						fromPortName: edge.output.portName,
-						toNodeId: targetNode.Data.Id
-					);
-					
-					sourceNode.Data.AddConnection(connection);
+					AddConnectionToState(edge);
 				}
 				
 				_stateMachine.Save();
@@ -174,6 +164,20 @@ namespace Editor.VisualStateMachineEditor
 			return graphViewChange;
 		}
 
+		private void AddConnectionToState(Edge edge)
+		{
+			var sourceNode = edge.output.node as StateNodeView;
+			var targetNode = edge.input.node as StateNodeView;
+
+			var connection = new StateConnection(
+				fromNodeId: sourceNode.Data.Id,
+				fromPortName: edge.output.portName,
+				toNodeId: targetNode.Data.Id
+			);
+					
+			sourceNode.Data.AddConnection(connection);
+		}
+
 		private void CreateContextMenu()
 		{
 			_contextMenu = new StateMachineContextMenu(this);
@@ -200,21 +204,37 @@ namespace Editor.VisualStateMachineEditor
 				CreateStateNode(stateType, position);
 			});
 		}
-		
-		private void CreateStateNode(Type stateType, Vector2 position)
+
+		public void CreateNewStateNodeFromOutputPort(Port port, Vector2 position)
+		{
+			StateSelectorWindow.Open(stateType =>
+			{
+				if (stateType == null) return;
+				
+				var newNode = CreateStateNode(stateType, position);
+				var edge = StateMachineNodeFactory.ConnectStateNode(port, newNode, this);
+
+				//TODO save edge to statemachine
+				AddConnectionToState(edge);
+			});
+		}
+
+		private StateNodeView CreateStateNode(Type stateType, Vector2 position)
 		{
 			var stateNode = new StateNode(stateType, _stateMachine);
 			stateNode.SetPosition(position);
 			
 			var isEntryNode = this.nodes.ToList().Count == 0;
 			
-			StateMachineNodeFactory.CreateStateNode(stateNode, this);
+			var node = StateMachineNodeFactory.CreateStateNode(stateNode, this);
 			_stateMachine.AddNode(stateNode);
 			
 			if (isEntryNode)
 			{
 				_stateMachine.SetEntryNode(stateNode);
 			}
+
+			return node;
 		}
 
 		private void OnDestroy()
@@ -249,6 +269,7 @@ namespace Editor.VisualStateMachineEditor
 			this.AddManipulator(new SelectionDragger());
 			this.AddManipulator(new RectangleSelector());
 			this.AddManipulator(new FreehandSelector());
+			
 		}
 		
 		private void LoadStateMachine(StateMachine stateMachine)
@@ -287,17 +308,22 @@ namespace Editor.VisualStateMachineEditor
 				var edges = this.edges.Where(edge => edge.output.node == node);
 				foreach (var edge in edges)
 				{
-					var connection = new StateConnection(
-						fromNodeId: stateNodeView.Data.Id,
-						fromPortName: edge.output.portName,
-						toNodeId: (edge.output.connections.First().input.node as StateNodeView).Data.Id
-					);
-					
-					stateNodeView.Data.AddConnection(connection);
+					AddConnection(edge, stateNodeView);
 				}
 				
 				stateMachine.AddNode(stateNodeView.Data);
 			}
+		}
+
+		private void AddConnection(Edge edge, StateNodeView stateNodeView)
+		{
+			var connection = new StateConnection(
+				fromNodeId: stateNodeView.Data.Id,
+				fromPortName: edge.output.portName,
+				toNodeId: (edge.output.connections.First().input.node as StateNodeView).Data.Id
+			);
+					
+			stateNodeView.Data.AddConnection(connection);
 		}
 	}
 }

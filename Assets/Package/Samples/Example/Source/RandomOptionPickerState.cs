@@ -1,9 +1,9 @@
 ﻿using System;
-using UnityEngine;
-using VisualStateMachine;
+using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 using Random = UnityEngine.Random;
 
-namespace Package.Samples.Example.Source
+namespace Samples.Example
 {
 	public class RandomOptionPickerState : State
 	{
@@ -13,7 +13,7 @@ namespace Package.Samples.Example.Source
 		[Transition] 
 		public event Action OptionTwo;
 		
-		public override void Enter()
+		public override void EnterState()
 		{
 			if (Random.value >= 0.5f)
 			{
@@ -25,12 +25,12 @@ namespace Package.Samples.Example.Source
 			}
 		}
 
-		public override void Update()
+		public override void UpdateState()
 		{
 			
 		}
 
-		public override void Exit()
+		public override void ExitState()
 		{
 			
 		}

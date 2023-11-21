@@ -34,8 +34,6 @@ namespace VisualStateMachine
 		[NonSerialized]
 		private StateNode _currentNode;
 
-		private bool _currentNodeIsNull;
-
 		public static StateMachine CreateInstance(StateMachine stateMachine)
 		{
 			var instance = Instantiate(stateMachine);
@@ -59,7 +57,7 @@ namespace VisualStateMachine
 			if(_nodeLookup.Count == 0) throw new Exception($"StateMachine {this.name} has 0 nodes.");
 			
 			_currentNode = _nodeLookup[_entryStateId];
-			_currentNodeIsNull = _currentNode == null;
+			if (_currentNode == null) return;
 			
 			SubscribeToNode(_currentNode);
 			_currentNode.Enter();
@@ -83,9 +81,11 @@ namespace VisualStateMachine
 			}
 		}
 
+		// ReSharper disable Unity.PerformanceAnalysis
 		public void Update()
 		{
-			if (_currentNodeIsNull) return;
+			if(_currentNode == null) return;
+			
 			_currentNode.Update();
 		}
 		
@@ -126,7 +126,7 @@ namespace VisualStateMachine
 			_currentNode.Exit();
 			
 			_currentNode = nextNode;
-			_currentNodeIsNull = _currentNode == null;
+			if (_currentNode == null) return;
 			
 			SubscribeToNode(_currentNode);
 			_currentNode.Enter();
