@@ -42,11 +42,6 @@ namespace VisualStateMachine.States
 		public override void ExitState()
 		{
 			_subController.OnComplete -= HandleComplete;
-		}
-
-		private void HandleComplete()
-		{
-			OnComplete?.Invoke();
 			
 			#if UNITY_EDITOR
 			{
@@ -58,6 +53,11 @@ namespace VisualStateMachine.States
 			#endif
 			
 			Destroy(_subControllerGo);
+		}
+
+		private void HandleComplete()
+		{
+			OnComplete?.Invoke();
 		}
 	}
 }
