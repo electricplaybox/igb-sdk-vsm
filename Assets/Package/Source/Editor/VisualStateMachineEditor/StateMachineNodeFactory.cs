@@ -13,7 +13,7 @@ namespace Editor.VisualStateMachineEditor
 {
 	public class StateMachineNodeFactory
 	{
-		public static void CreateStateNode(StateNode stateNode, GraphView graphView)
+		public static StateNodeView CreateStateNode(StateNode stateNode, StateMachineGraphView graphView)
 		{
 			var stateName = stateNode.State.GetType().Name;
 			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
@@ -24,7 +24,7 @@ namespace Editor.VisualStateMachineEditor
 			node.name = stateNode.Id;
 			
 			CreateInputPort(node);
-			CreateOutputPorts(node);
+			CreateOutputPorts(node, graphView);
 			
 			node.RefreshPorts();
 			node.RefreshExpandedState();
@@ -66,6 +66,8 @@ namespace Editor.VisualStateMachineEditor
 			}
 			
 			graphView.AddElement(node);
+
+			return node;
 		}
 		
 		public static VisualElement CreateUIElementInspector(UnityEngine.Object target, List<string> propertiesToExclude = null)
@@ -132,7 +134,7 @@ namespace Editor.VisualStateMachineEditor
 			node.inputContainer.Add(inputPort);
 		}
 		
-		public static void CreateOutputPorts(StateNodeView node)
+		public static void CreateOutputPorts(StateNodeView node, StateMachineGraphView graphView)
 		{
 			var type = node.Data.State.GetType();
 			var events = type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
@@ -142,11 +144,11 @@ namespace Editor.VisualStateMachineEditor
 				if (eventInfo.EventHandlerType != typeof(Action)) continue;
 				
 				var attributes = eventInfo.GetCustomAttributes(typeof(Transition), false);
-				if (attributes.Length > 0) CreateOutputPort(node, eventInfo.Name);
+				if (attributes.Length > 0) CreateOutputPort(node, eventInfo.Name, graphView);
 			}
 		}
 		
-		public static void CreateOutputPort(StateNodeView node, string portName)
+		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView)
 		{
 			var outputPort = node.InstantiatePort(Orientation.Horizontal, 
 				Direction.Output, 
@@ -156,8 +158,25 @@ namespace Editor.VisualStateMachineEditor
 			outputPort.name = outputPort.portName = portName;
 			node.outputContainer.Add(outputPort);
 			
-			var edgeConnector = new EdgeConnector<BezierEdge>(new BezierEdgeConnector());
-			outputPort.AddManipulator(edgeConnector);
+			outputPort.AddManipulator(new EdgeConnector<BezierEdge>(new BezierEdgeConnector(graphView)));
+		}
+
+		public static Edge ConnectStateNode(Port outputPort, StateNodeView destinationNode, GraphView graphView)
+		{
+			var inputPort = destinationNode.inputContainer.Q<Port>("Enter");
+			
+			var edge = new Edge
+			{
+				input = inputPort,
+				output = outputPort
+			};
+			
+			inputPort.Connect(edge);
+			outputPort.Connect(edge);
+				
+			graphView.Add(edge);
+
+			return edge;
 		}
 		
 		public static void ConnectStateNode(StateNode stateNode, GraphView graphView)
