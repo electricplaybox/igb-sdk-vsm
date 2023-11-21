@@ -1,5 +1,10 @@
 ﻿# Change Log
 
+## [0.2.0-alpha] - Nov 21, 2023
+- Added support for inherited properties in States
+- Added a delay and end node
+- Fix a bug in the StateMachineController when sub state machines complete
+
 ## [0.1.4-alpha] - Nov 21, 2023
 - Changed the directory structure and names to avoid Editor namespace conflic
 
