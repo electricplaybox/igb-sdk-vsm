@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using VisualStateMachine.States;
 
 namespace VisualStateMachine
 {
@@ -42,6 +44,11 @@ namespace VisualStateMachine
 			
 			return instance;
 		}
+		
+		private void Reset()
+		{
+			AddEntryNode();
+		}
 
 		public void UpdateGraphViewState(Vector3 position, float scale)
 		{
@@ -62,6 +69,28 @@ namespace VisualStateMachine
 			SubscribeToNode(_currentNode);
 			_currentNode.Enter();
 		}
+		
+		public void Update()
+		{
+			_currentNode?.Update();
+		}
+		
+		public void AddEntryNode()
+		{
+			#if UNITY_EDITOR
+			{
+				if (!AssetDatabase.Contains(this)) return;
+				if (_nodes.Count > 0) return;
+
+				var stateNode = new StateNode(typeof(EntryState));
+				stateNode.SetAsEntryNode(true);
+			
+				_entryStateId = stateNode.Id;
+			
+				AddNode(stateNode);
+			}
+			#endif
+		}
 
 		private void InitalizeNodes(StateMachineController controller)
 		{
@@ -81,14 +110,6 @@ namespace VisualStateMachine
 			}
 		}
 
-		// ReSharper disable Unity.PerformanceAnalysis
-		public void Update()
-		{
-			if(_currentNode == null) return;
-			
-			_currentNode.Update();
-		}
-		
 		#region StateMachine Management
 		
 		private void SubscribeToNode(StateNode node)

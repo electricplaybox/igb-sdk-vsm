@@ -2,7 +2,6 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using StateMachine = VisualStateMachine.StateMachine;
 
 namespace VisualStateMachine.Editor
 {
@@ -18,7 +17,6 @@ namespace VisualStateMachine.Editor
 		/**
 		 * Static
 		 */
-		
 		[MenuItem("Tools/State Machine Editor")]
 		public static StateMachineWindow OpenWindow()
 		{

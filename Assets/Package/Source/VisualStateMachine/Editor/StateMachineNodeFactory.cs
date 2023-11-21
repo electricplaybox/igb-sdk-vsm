@@ -7,6 +7,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine.Attributes;
+using VisualStateMachine.States;
 
 namespace VisualStateMachine.Editor
 {
@@ -14,7 +15,8 @@ namespace VisualStateMachine.Editor
 	{
 		public static StateNodeView CreateStateNode(StateNode stateNode, StateMachineGraphView graphView)
 		{
-			var stateName = stateNode.State.GetType().Name;
+			var stateType = stateNode.State.GetType();
+			var stateName = stateType.Name;
 			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
 			
 			var node = new StateNodeView();
@@ -22,7 +24,7 @@ namespace VisualStateMachine.Editor
 			node.title = stateTitle;
 			node.name = stateNode.Id;
 			
-			CreateInputPort(node);
+			if(stateNode.State is not EntryState) CreateInputPort(node);
 			CreateOutputPorts(node, graphView);
 			
 			node.RefreshPorts();
@@ -62,6 +64,12 @@ namespace VisualStateMachine.Editor
 			{
 				var stateInspector = CreateUIElementInspector(stateNode.State);
 				propertyContainer.Add(stateInspector);
+				
+				if (stateInspector.childCount > 0)
+				{
+					propertyContainer.AddToClassList("has-properties");
+				}
+
 			}
 			
 			graphView.AddElement(node);
@@ -98,6 +106,7 @@ namespace VisualStateMachine.Editor
 			}
 			
 			container.Bind(serializedObject);
+			
 			return container;
 		}
 		
@@ -174,11 +183,11 @@ namespace VisualStateMachine.Editor
 				if (eventInfo.EventHandlerType != typeof(Action)) continue;
 				
 				var attributes = eventInfo.GetCustomAttributes(typeof(Transition), false);
-				if (attributes.Length > 0) CreateOutputPort(node, eventInfo.Name, graphView);
+				if (attributes.Length > 0) CreateOutputPort(node, eventInfo.Name, graphView, attributes[0] as Transition);
 			}
 		}
 		
-		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView)
+		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView, Transition transition)
 		{
 			var outputPort = node.InstantiatePort(Orientation.Horizontal, 
 				Direction.Output, 
@@ -186,6 +195,7 @@ namespace VisualStateMachine.Editor
 				typeof(Node));
 			
 			outputPort.name = outputPort.portName = portName;
+			outputPort.Q<Label>("type").text = transition.PortLabel;
 			node.outputContainer.Add(outputPort);
 			
 			outputPort.AddManipulator(new EdgeConnector<BezierEdge>(new BezierEdgeConnector(graphView)));
