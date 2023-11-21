@@ -38,7 +38,7 @@ namespace VisualStateMachine.Editor
 			var propertyContainer = this.Q<VisualElement>("property-container");
 			if(propertyContainer == null) return;
 
-			propertyContainer.style.width = 120;
+			// propertyContainer.style.width = 120;
 			
 			var label = new Label();
 			// label.text = ">>";

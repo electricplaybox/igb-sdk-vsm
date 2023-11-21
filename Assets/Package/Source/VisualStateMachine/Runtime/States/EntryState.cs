@@ -5,7 +5,7 @@ namespace VisualStateMachine.States
 { 
 	public class EntryState : State
 	{
-		[Transition]
+		[Transition(">>")]
 		public event Action Exit;
 		
 		public override void EnterState()

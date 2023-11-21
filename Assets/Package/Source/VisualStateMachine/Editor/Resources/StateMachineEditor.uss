@@ -108,9 +108,13 @@
 /* *********** Property Container *********** */
 #property-container {
     background-color: #2E2E2E;
-    width: 270px;
+    width: 170px;
     padding-bottom: 5px;
     padding-top: 5px;
+}
+
+#property-container.has-properties {
+    width: 270px;
 }
 
 /*.unity-label.unity-base-field__label {*/
