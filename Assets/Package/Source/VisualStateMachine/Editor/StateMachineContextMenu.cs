@@ -31,11 +31,6 @@ namespace VisualStateMachine.Editor
 		private void BuildNodeContext(ContextualMenuPopulateEvent evt)
 		{
 			var node = evt.target as StateNodeView;
-
-			// evt.menu.AppendAction("Set as Entry Node", x =>
-			// {
-			// 	OnSetAsEntryNode?.Invoke(node);
-			// });
 		}
 
 		private void BuildGraphViewContext(ContextualMenuPopulateEvent evt)

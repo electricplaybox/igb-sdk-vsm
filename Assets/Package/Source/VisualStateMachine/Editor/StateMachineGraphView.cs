@@ -190,7 +190,7 @@ namespace VisualStateMachine.Editor
 
 			var connection = new StateConnection(
 				fromNodeId: sourceNode.Data.Id,
-				fromPortName: edge.output.portName,
+				fromPortName: edge.output.name,
 				toNodeId: targetNode.Data.Id
 			);
 					
@@ -349,7 +349,7 @@ namespace VisualStateMachine.Editor
 		{
 			var connection = new StateConnection(
 				fromNodeId: stateNodeView.Data.Id,
-				fromPortName: edge.output.portName,
+				fromPortName: edge.output.name,
 				toNodeId: (edge.output.connections.First().input.node as StateNodeView).Data.Id
 			);
 					

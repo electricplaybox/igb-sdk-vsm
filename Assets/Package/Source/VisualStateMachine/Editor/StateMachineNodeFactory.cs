@@ -196,8 +196,8 @@ namespace VisualStateMachine.Editor
 			
 			var portText = string.IsNullOrEmpty(transition.PortLabel) ? portName : transition.PortLabel;
 			
-			outputPort.name = outputPort.portName = portName;
-			outputPort.Q<Label>("type").text = portText;
+			outputPort.name = portName;
+			outputPort.portName = portText;
 			outputPort.AddManipulator(new EdgeConnector<BezierEdge>(new BezierEdgeConnector(graphView)));
 			
 			node.outputContainer.Add(outputPort);
