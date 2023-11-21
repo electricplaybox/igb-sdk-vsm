@@ -194,11 +194,13 @@ namespace VisualStateMachine.Editor
 				Port.Capacity.Single,
 				typeof(Node));
 			
-			outputPort.name = outputPort.portName = portName;
-			outputPort.Q<Label>("type").text = transition.PortLabel;
-			node.outputContainer.Add(outputPort);
+			var portText = string.IsNullOrEmpty(transition.PortLabel) ? portName : transition.PortLabel;
 			
+			outputPort.name = outputPort.portName = portName;
+			outputPort.Q<Label>("type").text = portText;
 			outputPort.AddManipulator(new EdgeConnector<BezierEdge>(new BezierEdgeConnector(graphView)));
+			
+			node.outputContainer.Add(outputPort);
 		}
 
 		public static Edge ConnectStateNode(Port outputPort, StateNodeView destinationNode, GraphView graphView)
