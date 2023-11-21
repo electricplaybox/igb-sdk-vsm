@@ -1,8 +1,10 @@
-﻿using UnityEditor.Experimental.GraphView;
+﻿using System.IO;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine;
 using System.Reflection;
+using UnityEditor;
 using VisualStateMachine.Attributes;
 
 namespace Editor.VisualStateMachineEditor
@@ -20,6 +22,23 @@ namespace Editor.VisualStateMachineEditor
 			DrawCustomNodeColor();
 			DrawActiveNode();
 			SetCustomLabelText();
+			CreateCustomIcon();
+		}
+
+		private void CreateCustomIcon()
+		{
+			var stateType = Data.State.GetType();
+			
+			var nodeIcon = stateType.GetCustomAttribute<NodeIcon>();
+			if (nodeIcon == null) return;
+
+			var icon = AssetDatabase.LoadAssetAtPath<Texture2D>(nodeIcon.Path);
+			if (icon == null) return;
+
+			var image = titleContainer.Q<Image>("title-icon");
+			if (image == null) return;
+			
+			image.image = icon;
 		}
 
 		private void SetCustomLabelText()

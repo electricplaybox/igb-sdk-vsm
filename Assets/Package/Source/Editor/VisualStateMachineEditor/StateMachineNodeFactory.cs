@@ -36,10 +36,15 @@ namespace Editor.VisualStateMachineEditor
 			var title = node.Query<VisualElement>("title").First();
 			var titleLabel = title.Query<VisualElement>("title-label").First();
 			var titleButton = title.Query<VisualElement>("title-button-container").First();
+			title.Remove(titleButton);
+			
+			var icon = new Image();
+			icon.name = "title-icon";
+			icon.scaleMode = ScaleMode.ScaleToFit;
 			
 			title.Add(container);
+			container.Add(icon);
 			container.Add(titleLabel);
-			container.Add(titleButton);
 
 			var progressBar = new ProgressBar();
 			progressBar.name = "progress-bar";

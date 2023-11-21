@@ -8,7 +8,7 @@ using UnityEditor;
 
 namespace VisualStateMachine.States
 {
-	[NodeColor(NodeColor.Purple), NodeLabel("Sub State Machine")]
+	[NodeColor(NodeColor.Purple), NodeLabel("Sub State Machine"), NodeIcon("Assets/Package/Source/Editor/Resources/flow-white.png")]
 	public class SubStateMachine : State
 	{
 		[Transition]
