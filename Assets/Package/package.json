@@ -3,7 +3,7 @@
   "version": "0.1.2-alpha",
   "displayName": "Nonatomic Visual StateMachine",
   "description": "Visual StateMachine",
-  "unity": "2022.3.10",
+  "unity": "2022.3",
   "unityRelease": "1f1",
   "keywords": [
   ],
