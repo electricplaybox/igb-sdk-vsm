@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: f2ffc90f-9f56-4f41-91b6-8a24785492a7
   m_EditorClassIdentifier: 
   Value: 0
---- !u!114 &-4513578263510624313
+--- !u!114 &-3276036654602096380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,9 +22,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 781197c615974e4787f569071201b413, type: 3}
-  m_Name: 8c1d4be7-3f65-4560-93b0-b0687bcba5e0
+  m_Script: {fileID: 11500000, guid: 2da5ab3f1c564128897bdff146148418, type: 3}
+  m_Name: b23fc2fb-677d-4955-b2eb-a1e639637a32
   m_EditorClassIdentifier: 
+  _duration: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39,27 +40,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: f2ffc90f-9f56-4f41-91b6-8a24785492a7
   _graphViewState:
-    Position: {x: 0, y: 0, z: 0}
+    Position: {x: -206, y: 19, z: 0}
     Scale: 1
   _nodes:
   - _state: {fileID: -6059392232219057642}
     _id: f2ffc90f-9f56-4f41-91b6-8a24785492a7
-    _position: {x: 289, y: 300}
+    _position: {x: 284, y: 309}
     _isEntryNode: 1
     _connections:
-    - _toNodeId: 8c1d4be7-3f65-4560-93b0-b0687bcba5e0
+    - _toNodeId: b23fc2fb-677d-4955-b2eb-a1e639637a32
       _fromNodeId: f2ffc90f-9f56-4f41-91b6-8a24785492a7
       _fromPortName: Complete
-  - _state: {fileID: -4513578263510624313}
-    _id: 8c1d4be7-3f65-4560-93b0-b0687bcba5e0
-    _position: {x: 611, y: 319}
-    _isEntryNode: 0
-    _connections: []
   - _state: {fileID: 8633979327844996454}
     _id: b5ba23bd-c6f1-4456-8583-8158393ed47f
-    _position: {x: 809, y: 426}
+    _position: {x: 952, y: 328}
     _isEntryNode: 0
     _connections: []
+  - _state: {fileID: -3276036654602096380}
+    _id: b23fc2fb-677d-4955-b2eb-a1e639637a32
+    _position: {x: 613, y: 309}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: b5ba23bd-c6f1-4456-8583-8158393ed47f
+      _fromNodeId: b23fc2fb-677d-4955-b2eb-a1e639637a32
+      _fromPortName: Exit
 --- !u!114 &8633979327844996454
 MonoBehaviour:
   m_ObjectHideFlags: 0

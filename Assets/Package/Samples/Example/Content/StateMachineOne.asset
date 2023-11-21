@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: c1bf91c4-c22e-4bcf-9414-8e00bdf10f6a
   m_EditorClassIdentifier: 
   Value: 0
---- !u!114 &-8054159012527320657
+--- !u!114 &-6938650580003679187
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,9 +22,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 781197c615974e4787f569071201b413, type: 3}
-  m_Name: a9749cdf-725b-4186-a1e1-2a101c8743dd
+  m_Script: {fileID: 11500000, guid: 2da5ab3f1c564128897bdff146148418, type: 3}
+  m_Name: 24fed0f4-c464-4437-9aa1-bb06f46d7484
   m_EditorClassIdentifier: 
+  _duration: 2
 --- !u!114 &-3656084922133465870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,11 +69,31 @@ MonoBehaviour:
     _position: {x: 493, y: 311}
     _isEntryNode: 0
     _connections:
-    - _toNodeId: a9749cdf-725b-4186-a1e1-2a101c8743dd
+    - _toNodeId: 24fed0f4-c464-4437-9aa1-bb06f46d7484
       _fromNodeId: 65915c85-c5f7-4521-8fec-5a2180c43828
       _fromPortName: OnComplete
-  - _state: {fileID: -8054159012527320657}
-    _id: a9749cdf-725b-4186-a1e1-2a101c8743dd
-    _position: {x: 785, y: 421}
+  - _state: {fileID: -6938650580003679187}
+    _id: 24fed0f4-c464-4437-9aa1-bb06f46d7484
+    _position: {x: 801, y: 312}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: f09a9b35-7601-4fb9-b223-0d446d25b133
+      _fromNodeId: 24fed0f4-c464-4437-9aa1-bb06f46d7484
+      _fromPortName: Exit
+  - _state: {fileID: 2611782300083927603}
+    _id: f09a9b35-7601-4fb9-b223-0d446d25b133
+    _position: {x: 1120, y: 331}
     _isEntryNode: 0
     _connections: []
+--- !u!114 &2611782300083927603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43820891a2d94b3bbefcae0dda3cfd61, type: 3}
+  m_Name: f09a9b35-7601-4fb9-b223-0d446d25b133
+  m_EditorClassIdentifier: 

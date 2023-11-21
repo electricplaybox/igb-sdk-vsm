@@ -59,7 +59,7 @@ namespace VisualStateMachine
 		public void Complete()
 		{
 			_isComplete = true;
-			OnComplete.Invoke();
+			OnComplete?.Invoke();
 		}
 	}
 }
