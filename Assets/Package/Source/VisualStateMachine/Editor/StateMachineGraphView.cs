@@ -32,6 +32,14 @@ namespace VisualStateMachine.Editor
 			LoadStateMachine(stateMachine);
 			UpdateNodes();
 			ClearNullStateMachine();
+			EnforceEntryNode();
+		}
+
+		private void EnforceEntryNode()
+		{
+			if (_stateMachine.Nodes.Count > 0) return;
+
+			_stateMachine.AddEntryNode();
 		}
 
 		private void ClearNullStateMachine()
@@ -62,9 +70,21 @@ namespace VisualStateMachine.Editor
 		private void LoadGraphViewState()
 		{
 			if (_stateMachine == null) return;
-			
-			contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
-			contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
+
+			if (_stateMachine.Nodes.Count > 0)
+			{
+				contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
+				contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
+			}
+			else
+			{
+				var center = GetRect().center;
+				center.x -= 90;
+				center.y -= 43;
+				
+				contentViewContainer.transform.scale = Vector3.one;
+				contentViewContainer.transform.position = center;
+			}
 		}
 
 		private void UpdateNodes()
@@ -220,7 +240,7 @@ namespace VisualStateMachine.Editor
 
 		private StateNodeView CreateStateNode(Type stateType, Vector2 position)
 		{
-			var stateNode = new StateNode(stateType, _stateMachine);
+			var stateNode = new StateNode(stateType);
 			stateNode.SetPosition(position);
 			
 			var isEntryNode = this.nodes.ToList().Count == 0;
@@ -270,6 +290,15 @@ namespace VisualStateMachine.Editor
 			this.AddManipulator(new FreehandSelector());
 			
 		}
+
+		private Rect GetRect()
+		{
+			return new Rect()
+			{
+				width = resolvedStyle.width,
+				height = resolvedStyle.height
+			};
+		}
 		
 		private void LoadStateMachine(StateMachine stateMachine)
 		{
@@ -277,6 +306,8 @@ namespace VisualStateMachine.Editor
 			if (_stateMachine != null) SaveGraphViewState();
 			
 			_stateMachine = stateMachine;
+			LoadGraphViewState();
+			
 			_toolbar?.Update(stateMachine);
 			
 			DeleteElements(nodes);

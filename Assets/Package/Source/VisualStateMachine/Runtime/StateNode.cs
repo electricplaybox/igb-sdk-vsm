@@ -24,7 +24,7 @@ namespace VisualStateMachine
 		[NonSerialized]
 		private bool _isActive;
 		
-		public StateNode(Type stateType, StateMachine parent)
+		public StateNode(Type stateType)
 		{
 			if (!stateType.IsSubclassOf(typeof(State)))
 			{
