@@ -75,7 +75,7 @@ namespace VisualStateMachine.Editor
  
 			var serializedObject = new SerializedObject(target);
  
-			var fields = GetVisibleSerializedFields(target.GetType());
+			var fields = GetInheritedSerializedFields(target.GetType());
  
 			for (var i = 0; i < fields.Length; ++i) 
 			{
@@ -119,6 +119,37 @@ namespace VisualStateMachine.Editor
 				infoFields.Add(t);
 			}
  
+			return infoFields.ToArray();
+		}
+		
+		public static FieldInfo[] GetInheritedSerializedFields(Type type)
+		{
+			var infoFields = new List<FieldInfo>();
+
+			while (type != null && type != typeof(UnityEngine.Object))
+			{
+				var publicFields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+				foreach (var field in publicFields)
+				{
+					if (field.GetCustomAttribute<HideInInspector>() == null)
+					{
+						infoFields.Add(field);
+					}
+				}
+
+				var privateFields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+				foreach (var field in privateFields)
+				{
+					if (field.GetCustomAttribute<SerializeField>() != null)
+					{
+						infoFields.Add(field);
+					}
+				}
+
+				// Move to the base type
+				type = type.BaseType;
+			}
+
 			return infoFields.ToArray();
 		}
 		

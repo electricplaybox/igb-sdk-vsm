@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8697807941574221326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c71942240c472dbb82c14996285e4d, type: 3}
+  m_Name: c1bf91c4-c22e-4bcf-9414-8e00bdf10f6a
+  m_EditorClassIdentifier: 
+  Value: 0
+--- !u!114 &-8054159012527320657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781197c615974e4787f569071201b413, type: 3}
+  m_Name: a9749cdf-725b-4186-a1e1-2a101c8743dd
+  m_EditorClassIdentifier: 
+--- !u!114 &-3656084922133465870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c0d0a32b1e4e048d6b4647c45a1a39, type: 3}
+  m_Name: 65915c85-c5f7-4521-8fec-5a2180c43828
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 11400000, guid: 76cac2cf3e4641d4cb975ccdffeb2e45, type: 2}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
+  m_Name: StateMachineOne
+  m_EditorClassIdentifier: 
+  _entryStateId: c1bf91c4-c22e-4bcf-9414-8e00bdf10f6a
+  _graphViewState:
+    Position: {x: 0, y: 0, z: 0}
+    Scale: 1
+  _nodes:
+  - _state: {fileID: -8697807941574221326}
+    _id: c1bf91c4-c22e-4bcf-9414-8e00bdf10f6a
+    _position: {x: 164, y: 302}
+    _isEntryNode: 1
+    _connections:
+    - _toNodeId: 65915c85-c5f7-4521-8fec-5a2180c43828
+      _fromNodeId: c1bf91c4-c22e-4bcf-9414-8e00bdf10f6a
+      _fromPortName: Complete
+  - _state: {fileID: -3656084922133465870}
+    _id: 65915c85-c5f7-4521-8fec-5a2180c43828
+    _position: {x: 493, y: 311}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: a9749cdf-725b-4186-a1e1-2a101c8743dd
+      _fromNodeId: 65915c85-c5f7-4521-8fec-5a2180c43828
+      _fromPortName: OnComplete
+  - _state: {fileID: -8054159012527320657}
+    _id: a9749cdf-725b-4186-a1e1-2a101c8743dd
+    _position: {x: 785, y: 421}
+    _isEntryNode: 0
+    _connections: []
