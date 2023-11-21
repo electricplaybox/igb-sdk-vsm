@@ -52,7 +52,7 @@ MonoBehaviour:
       _fromPortName: Complete
   - _state: {fileID: 4466481043923095369}
     _id: d136bf71-64b9-438d-9943-efab41000101
-    _position: {x: 881, y: 280}
+    _position: {x: 696, y: 326}
     _isEntryNode: 0
     _connections:
     - _toNodeId: e796c98d-f938-4bae-8d73-3690721aa183
@@ -60,12 +60,15 @@ MonoBehaviour:
       _fromPortName: Complete
   - _state: {fileID: -5681906779868529100}
     _id: fcff5f26-64f4-4df2-b258-b1868ad140f0
-    _position: {x: 785, y: 567}
+    _position: {x: 1152, y: 296}
     _isEntryNode: 0
-    _connections: []
+    _connections:
+    - _toNodeId: 90f1f216-5108-486a-852b-333e2d72a54f
+      _fromNodeId: fcff5f26-64f4-4df2-b258-b1868ad140f0
+      _fromPortName: Complete
   - _state: {fileID: 8228336566960613820}
     _id: 9dd387a0-3dcf-4fdf-9b0b-5a15cfe275c5
-    _position: {x: 609, y: 139}
+    _position: {x: 517, y: 306}
     _isEntryNode: 0
     _connections:
     - _toNodeId: d136bf71-64b9-438d-9943-efab41000101
@@ -79,6 +82,11 @@ MonoBehaviour:
     - _toNodeId: fcff5f26-64f4-4df2-b258-b1868ad140f0
       _fromNodeId: e796c98d-f938-4bae-8d73-3690721aa183
       _fromPortName: Exit
+  - _state: {fileID: 5695529909701019244}
+    _id: 90f1f216-5108-486a-852b-333e2d72a54f
+    _position: {x: 1493, y: 326}
+    _isEntryNode: 0
+    _connections: []
 --- !u!114 &2382856560222403027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +111,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781197c615974e4787f569071201b413, type: 3}
   m_Name: d136bf71-64b9-438d-9943-efab41000101
   m_EditorClassIdentifier: 
+--- !u!114 &5695529909701019244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6ebc7a57e549928b5bfe6c1c04808d, type: 3}
+  m_Name: 90f1f216-5108-486a-852b-333e2d72a54f
+  m_EditorClassIdentifier: 
+  _things: 0
 --- !u!114 &8228336566960613820
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -155,6 +155,9 @@ namespace Editor.VisualStateMachineEditor
 			
 			outputPort.name = outputPort.portName = portName;
 			node.outputContainer.Add(outputPort);
+			
+			var edgeConnector = new EdgeConnector<BezierEdge>(new BezierEdgeConnector());
+			outputPort.AddManipulator(edgeConnector);
 		}
 		
 		public static void ConnectStateNode(StateNode stateNode, GraphView graphView)
