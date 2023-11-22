@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.3.1-alpha] - Nov 22, 2023
+- Removed some test code for manipulating edge rendering
+
 ## [0.3.0-alpha] - Nov 21, 2023
 - Improved relay nodes
 - Fix for scale and position of graph view for new statemachines
