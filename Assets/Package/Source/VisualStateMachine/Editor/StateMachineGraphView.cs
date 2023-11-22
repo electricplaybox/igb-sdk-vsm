@@ -77,7 +77,7 @@ namespace VisualStateMachine.Editor
 		{
 			if (_stateMachine == null) return;
 
-			if (_stateMachine.Nodes.Count > 0)
+			if (_stateMachine.GraphViewState.Scale > 0.1f)
 			{
 				contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
 				contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;

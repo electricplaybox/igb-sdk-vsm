@@ -10,8 +10,8 @@ namespace VisualStateMachine
 	[Serializable]
 	public class GraphViewState
 	{
-		public Vector3 Position;
-		public float Scale;
+		public Vector3 Position = Vector3.zero;
+		public float Scale = 0f;
 	}
 	
 	[CreateAssetMenu(fileName = "StateMachine", menuName = "StateMachine/StateMachine")]
