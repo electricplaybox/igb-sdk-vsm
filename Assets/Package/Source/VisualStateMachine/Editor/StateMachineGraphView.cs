@@ -159,7 +159,7 @@ namespace VisualStateMachine.Editor
 					if (element is StateNodeView)
 					{
 						var stateNodeView = element as StateNodeView;
-						RemoveAllEdgesTo(stateNodeView);
+						// RemoveAllEdgesTo(stateNodeView);
 						_stateMachine.RemoveNode(stateNodeView.Data);
 					}
 					else if (element.GetType().IsSubclassOf(typeof(Edge)))

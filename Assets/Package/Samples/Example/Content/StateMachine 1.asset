@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1611343768388699994
+--- !u!114 &-4229942739452520315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ccd63e5a1f74e6c9298415b1d203e84, type: 3}
-  m_Name: e87e91ba-8df1-49e1-863b-b9c3416b260b
+  m_Script: {fileID: 11500000, guid: 15634ad3c81c42de8fe7f9cf610117b6, type: 3}
+  m_Name: bdece82a-af22-477c-b686-74f71150c81b
   m_EditorClassIdentifier: 
-  _duration: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23,24 +22,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
-  m_Name: StateMachine
+  m_Name: StateMachine 1
   m_EditorClassIdentifier: 
-  _entryStateId: e4a17698-e165-46ac-93ba-84ecf3d89c88
+  _entryStateId: bdece82a-af22-477c-b686-74f71150c81b
   _graphViewState:
-    Position: {x: 0, y: 0, z: 0}
-    Scale: 0
+    Position: {x: 165, y: 44, z: 0}
+    Scale: 1
   _nodes:
-  - _state: {fileID: 6918194630500651300}
-    _id: e4a17698-e165-46ac-93ba-84ecf3d89c88
-    _position: {x: -127, y: -26}
+  - _state: {fileID: -4229942739452520315}
+    _id: bdece82a-af22-477c-b686-74f71150c81b
+    _position: {x: 216, y: 203}
     _isEntryNode: 1
-    _connections: []
-  - _state: {fileID: -1611343768388699994}
-    _id: e87e91ba-8df1-49e1-863b-b9c3416b260b
-    _position: {x: 102, y: 63}
+    _connections:
+    - _toNodeId: be09d926-8275-45c1-a646-fcc018e31dce
+      _fromNodeId: bdece82a-af22-477c-b686-74f71150c81b
+      _fromPortName: Exit
+  - _state: {fileID: 1194274868043391246}
+    _id: be09d926-8275-45c1-a646-fcc018e31dce
+    _position: {x: 804, y: 184}
     _isEntryNode: 0
     _connections: []
---- !u!114 &6918194630500651300
+--- !u!114 &1194274868043391246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,6 +51,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15634ad3c81c42de8fe7f9cf610117b6, type: 3}
-  m_Name: e4a17698-e165-46ac-93ba-84ecf3d89c88
+  m_Script: {fileID: 11500000, guid: 061fcb093cd748eab1b4693c5147f908, type: 3}
+  m_Name: be09d926-8275-45c1-a646-fcc018e31dce
   m_EditorClassIdentifier: 
+  _duration: 1
