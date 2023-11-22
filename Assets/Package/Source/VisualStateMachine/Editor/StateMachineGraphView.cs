@@ -33,7 +33,7 @@ namespace VisualStateMachine.Editor
 			UpdateNodes();
 			ClearNullStateMachine();
 			EnforceEntryNode();
-			MessWithEdges();
+			// MessWithEdges();
 		}
 
 		private void MessWithEdges()
