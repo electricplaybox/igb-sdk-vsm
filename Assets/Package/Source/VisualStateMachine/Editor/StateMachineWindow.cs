@@ -154,39 +154,17 @@ namespace VisualStateMachine.Editor
 		
 		private void HandleEditorUpdate()
 		{
-			if (!TryGetStateMachine(out var stateMachine)) return;
+			if (!TryGetStateMachine(out var stateMachine))
+			{
+				if (_stateMachine == null && stateMachine == null)
+				{
+					_graphView?.ClearStateMachine();
+				}
+				
+				return;
+			}
 			
 			OpenWindow(stateMachine);
 		}
-		
-		// private void OnFocus()
-		// {
-		// 	Debug.Log("OnFocus");
-		// }
-		//
-		// private void OnDestroy()
-		// {
-		// 	Debug.Log("OnDestroy");
-		// }
-
-		// private void OnBecameInvisible()
-		// {
-		// 	Debug.Log("OnBecameInvisible");
-		// }
-		//
-		// private void OnBecameVisible()
-		// {
-		// 	Debug.Log("OnBecameVisible");
-		// }
-		//
-		// private void OnLostFocus()
-		// {
-		// 	Debug.Log("OnLostFocus");
-		// }
-		//
-		// private void ModifierKeysChanged()
-		// {
-		// 	Debug.Log("ModifierKeysChanged");
-		// }
 	}
 }

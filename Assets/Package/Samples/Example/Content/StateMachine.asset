@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
   m_Name: StateMachine
   m_EditorClassIdentifier: 
-  _entryStateId: 63e45215-606d-464f-9d06-7e81222c3c2e
+  _entryStateId: 4bae08c8-4edc-478e-9e5e-515d2283dfac
   _graphViewState:
     Position: {x: 0, y: 0, z: 0}
     Scale: 0
   _nodes:
-  - _state: {fileID: 5099917957654650165}
-    _id: 63e45215-606d-464f-9d06-7e81222c3c2e
+  - _state: {fileID: 2172249122863839588}
+    _id: 4bae08c8-4edc-478e-9e5e-515d2283dfac
     _position: {x: 0, y: 0}
     _isEntryNode: 1
     _connections: []
---- !u!114 &5099917957654650165
+--- !u!114 &2172249122863839588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32,5 +32,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15634ad3c81c42de8fe7f9cf610117b6, type: 3}
-  m_Name: 63e45215-606d-464f-9d06-7e81222c3c2e
+  m_Name: 4bae08c8-4edc-478e-9e5e-515d2283dfac
   m_EditorClassIdentifier: 

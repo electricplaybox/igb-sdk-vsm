@@ -26,6 +26,13 @@ namespace VisualStateMachine.Editor
 			CreateEmptyGraphView();
 			LoadStateMachine(stateMachine);
 		}
+
+		public void ClearStateMachine()
+		{
+			ClearNullStateMachine();
+			// _stateMachine = null;
+			// CreateEmptyGraphView();
+		}
 		
 		public void Update(StateMachine stateMachine)
 		{
@@ -46,7 +53,8 @@ namespace VisualStateMachine.Editor
 		{
 			if (_stateMachine != null) return;
 			
-			Clear();
+			contentViewContainer.Clear();
+			
 		}
 
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -76,8 +84,8 @@ namespace VisualStateMachine.Editor
 		private void LoadGraphViewState()
 		{
 			if (_stateMachine == null) return;
-
-			if (_stateMachine.GraphViewState.Scale > 0.1f)
+			
+			if (_stateMachine.GraphViewState != null && _stateMachine.GraphViewState.Scale > 0.1f)
 			{
 				contentViewContainer.transform.position = Vector3.zero;
 				contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
