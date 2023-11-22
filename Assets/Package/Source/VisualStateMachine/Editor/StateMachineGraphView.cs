@@ -26,13 +26,6 @@ namespace VisualStateMachine.Editor
 			CreateEmptyGraphView();
 			LoadStateMachine(stateMachine);
 		}
-
-		public void ClearStateMachine()
-		{
-			ClearNullStateMachine();
-			// _stateMachine = null;
-			// CreateEmptyGraphView();
-		}
 		
 		public void Update(StateMachine stateMachine)
 		{
@@ -45,7 +38,7 @@ namespace VisualStateMachine.Editor
 
 		private void MessWithEdges()
 		{
-			foreach (Edge edge in edges)
+			foreach (var edge in edges)
 			{
 				var originalPoints = edge.edgeControl.controlPoints;
 				originalPoints[1] = originalPoints[0];
@@ -61,7 +54,7 @@ namespace VisualStateMachine.Editor
 			_stateMachine.AddEntryNode();
 		}
 
-		private void ClearNullStateMachine()
+		public void ClearNullStateMachine()
 		{
 			if (_stateMachine != null) return;
 			

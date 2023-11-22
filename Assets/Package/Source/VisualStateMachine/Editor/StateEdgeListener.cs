@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace VisualStateMachine.Editor
 {
-	public class BezierEdgeListener : IEdgeConnectorListener
+	public class StateEdgeListener : IEdgeConnectorListener
 	{
 		private readonly StateMachineGraphView _graphView;
 
-		public BezierEdgeListener(StateMachineGraphView graphView)
+		public StateEdgeListener(StateMachineGraphView graphView)
 		{
 			_graphView = graphView;
 		}
@@ -23,8 +23,7 @@ namespace VisualStateMachine.Editor
 
 		public void OnDrop(GraphView graphView, Edge edge)
 		{
-			// graphView.AddElement(edge);
-			// _graphView.AddConnectionToState(edge);
+			//dropped
 		}
 	}
 

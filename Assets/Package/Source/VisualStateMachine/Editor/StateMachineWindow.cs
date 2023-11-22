@@ -50,7 +50,7 @@ namespace VisualStateMachine.Editor
 			Event.current.Use();
 		}
 
-		private static void HandlePlayModeStateChanged(PlayModeStateChange obj)
+		private static void HandlePlayModeStateChanged(PlayModeStateChange mode)
 		{
 			//Do something
 		}
@@ -143,13 +143,11 @@ namespace VisualStateMachine.Editor
 		private void OnEnable()
 		{
 			EditorApplication.update += HandleEditorUpdate;
-			// someState = EditorPrefs.GetInt("MyEditorWindowState", defaultValue: 0);
 		}
 
 		private void OnDisable()
 		{
 			EditorApplication.update -= HandleEditorUpdate;
-			// EditorPrefs.SetInt("MyEditorWindowState", someState);
 		}
 		
 		private void HandleEditorUpdate()
@@ -158,7 +156,7 @@ namespace VisualStateMachine.Editor
 			{
 				if (_stateMachine == null && stateMachine == null)
 				{
-					_graphView?.ClearStateMachine();
+					_graphView?.ClearNullStateMachine();
 				}
 				
 				return;

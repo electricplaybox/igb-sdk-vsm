@@ -171,7 +171,7 @@ namespace VisualStateMachine.Editor
 			
 			inputPort.name = inputPort.portName = "Enter";
 			//inputPort.RemoveManipulator(inputPort.edgeConnector);
-			inputPort.AddManipulator(new EdgeConnector<Edge>(new BezierEdgeListener(graphView)));
+			inputPort.AddManipulator(new EdgeConnector<Edge>(new StateEdgeListener(graphView)));
 			node.inputContainer.Add(inputPort);
 		}
 		
@@ -201,7 +201,7 @@ namespace VisualStateMachine.Editor
 			outputPort.name = portName;
 			outputPort.portName = portText;
 			//outputPort.RemoveManipulator(outputPort.edgeConnector);
-			outputPort.AddManipulator(new EdgeConnector<Edge>(new BezierEdgeListener(graphView)));
+			outputPort.AddManipulator(new EdgeConnector<Edge>(new StateEdgeListener(graphView)));
 			
 			node.outputContainer.Add(outputPort);
 		}
