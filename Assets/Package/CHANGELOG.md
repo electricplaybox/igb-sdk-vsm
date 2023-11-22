@@ -1,5 +1,13 @@
 ﻿# Change Log
 
+## [0.3.0-alpha] - Nov 21, 2023
+- Improved relay nodes
+- Fix for scale and position of graph view for new statemachines
+- Fix for blank port labels
+- Removed entry port from entry node
+- Enforced use of an entry node
+- Removed option to set entry node
+
 ## [0.2.1-alpha] - Nov 21, 2023
 - Fix for SubStateMachine not cleaning up when exiting
 
