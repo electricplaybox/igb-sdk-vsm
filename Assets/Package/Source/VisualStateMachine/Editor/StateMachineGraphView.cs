@@ -54,7 +54,10 @@ namespace VisualStateMachine.Editor
 			var compatiblePorts = new List<Port>();
 			ports.ForEach(port =>
 			{
-				if (startPort != port && startPort.node != port.node) compatiblePorts.Add(port);
+				if (startPort != port && startPort.node != port.node)
+				{
+					compatiblePorts.Add(port);
+				}
 			});
 			
 			return compatiblePorts;
@@ -64,6 +67,9 @@ namespace VisualStateMachine.Editor
 		{
 			if (_stateMachine == null) return;
 
+			var position = contentViewContainer.transform.position;
+			if (float.IsNaN(position.x) || float.IsNaN(position.y) || float.IsNaN(position.z)) return;
+			
 			_stateMachine.UpdateGraphViewState(contentViewContainer.transform.position, scale);
 		}
 		
@@ -140,7 +146,7 @@ namespace VisualStateMachine.Editor
 			
 			graphViewChanged += OnGraphViewChanged;
 		}
-
+		
 		private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
 		{
 			if (_stateMachine == null) return graphViewChange;
@@ -162,7 +168,13 @@ namespace VisualStateMachine.Editor
 					if (element is StateNodeView)
 					{
 						var stateNodeView = element as StateNodeView;
+						RemoveAllEdgesTo(stateNodeView);
 						_stateMachine.RemoveNode(stateNodeView.Data);
+					}
+					else if (element.GetType().IsSubclassOf(typeof(Edge)))
+					{
+						var edge = element as Edge;
+						_stateMachine.RemoveConnection(edge.output.node.name, edge.input.node.name);
 					}
 				}
 			}
@@ -183,7 +195,20 @@ namespace VisualStateMachine.Editor
 			return graphViewChange;
 		}
 
-		private void AddConnectionToState(Edge edge)
+		private void RemoveAllEdgesTo(StateNodeView stateNodeView)
+		{
+			foreach (var node in nodes)
+			{
+				if (node is not StateNodeView stateNode) continue;
+
+				// var connections = stateNode.Data.GetConnectionsToNode(stateNodeView.Data.Id);
+				// node
+				
+				stateNode.Data.RemoveConnectionToNode(stateNode.Data.Id);
+			}
+		}
+
+		public void AddConnectionToState(Edge edge)
 		{
 			var sourceNode = edge.output.node as StateNodeView;
 			var targetNode = edge.input.node as StateNodeView;
@@ -226,9 +251,7 @@ namespace VisualStateMachine.Editor
 
 		public Vector3 ScreenPointToGraphPoint(Vector2 screenPoint)
 		{
-			var graphPoint = (Vector3)screenPoint - contentViewContainer.transform.position;
-			Debug.Log($"{screenPoint}, {contentViewContainer.transform.position}, {contentViewContainer.transform.scale}");
-			return graphPoint;
+			return (Vector3)screenPoint - contentViewContainer.transform.position;
 		}
 		
 		public void CreateNewStateNodeFromOutputPort(Port port, Vector2 position)

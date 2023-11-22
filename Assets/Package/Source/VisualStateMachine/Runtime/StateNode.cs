@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VisualStateMachine.States;
 
@@ -58,6 +59,24 @@ namespace VisualStateMachine
 		public void RemoveConnection(StateConnection connection)
 		{
 			_connections.Remove(connection);
+		}
+		
+		public List<StateConnection> GetConnectionsToNode(string nodeId)
+		{
+			return _connections.FindAll(connection => connection.ToNodeId == nodeId);
+		}
+		
+		public void RemoveConnections(IEnumerable<StateConnection> connections)
+		{
+			foreach (var connection in connections)
+			{
+				_connections.Remove(connection);
+			}
+		}
+		
+		public void RemoveConnectionToNode(string nodeId)
+		{
+			_connections.RemoveAll(connection => connection.ToNodeId == nodeId);
 		}
 		
 		public void Enter()

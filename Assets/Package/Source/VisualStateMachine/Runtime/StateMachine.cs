@@ -45,11 +45,6 @@ namespace VisualStateMachine
 			return instance;
 		}
 		
-		private void Reset()
-		{
-			AddEntryNode();
-		}
-
 		public void UpdateGraphViewState(Vector3 position, float scale)
 		{
 			_graphViewState.Position = position;
@@ -194,6 +189,12 @@ namespace VisualStateMachine
 			{
 				node.RemoveAll(connection => connection.ToNodeId == nodeId);
 			}
+		}
+
+		public void RemoveConnection(string fromNodeId, string toNodeId)
+		{
+			var fromNode = _nodes.FirstOrDefault(node => node.Id == fromNodeId);
+			fromNode.RemoveAll(connection => connection.ToNodeId == toNodeId);
 		}
 
 		public void SetEntryNode(StateNode node)

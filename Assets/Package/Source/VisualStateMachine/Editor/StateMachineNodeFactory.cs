@@ -24,7 +24,7 @@ namespace VisualStateMachine.Editor
 			node.title = stateTitle;
 			node.name = stateNode.Id;
 			
-			if(stateNode.State is not EntryState) CreateInputPort(node);
+			if(stateNode.State is not EntryState) CreateInputPort(node, graphView);
 			CreateOutputPorts(node, graphView);
 			
 			node.RefreshPorts();
@@ -162,7 +162,7 @@ namespace VisualStateMachine.Editor
 			return infoFields.ToArray();
 		}
 		
-		public static void CreateInputPort(Node node)
+		public static void CreateInputPort(Node node, StateMachineGraphView graphView)
 		{
 			var inputPort = node.InstantiatePort(Orientation.Horizontal, 
 				Direction.Input, 
@@ -170,6 +170,8 @@ namespace VisualStateMachine.Editor
 				typeof(Node));
 			
 			inputPort.name = inputPort.portName = "Enter";
+			//inputPort.RemoveManipulator(inputPort.edgeConnector);
+			inputPort.AddManipulator(new EdgeConnector<Edge>(new BezierEdgeListener(graphView)));
 			node.inputContainer.Add(inputPort);
 		}
 		
@@ -198,7 +200,8 @@ namespace VisualStateMachine.Editor
 			
 			outputPort.name = portName;
 			outputPort.portName = portText;
-			outputPort.AddManipulator(new EdgeConnector<BezierEdge>(new BezierEdgeConnector(graphView)));
+			//outputPort.RemoveManipulator(outputPort.edgeConnector);
+			outputPort.AddManipulator(new EdgeConnector<Edge>(new BezierEdgeListener(graphView)));
 			
 			node.outputContainer.Add(outputPort);
 		}
@@ -207,7 +210,7 @@ namespace VisualStateMachine.Editor
 		{
 			var inputPort = destinationNode.inputContainer.Q<Port>("Enter");
 			
-			var edge = new Edge
+			var edge = new Edge()
 			{
 				input = inputPort,
 				output = outputPort
@@ -215,7 +218,7 @@ namespace VisualStateMachine.Editor
 			
 			inputPort.Connect(edge);
 			outputPort.Connect(edge);
-				
+			
 			graphView.Add(edge);
 
 			return edge;
@@ -242,6 +245,6 @@ namespace VisualStateMachine.Editor
 				
 				graphView.Add(edge);
 			}
-		}	
+		}
 	}
 }
