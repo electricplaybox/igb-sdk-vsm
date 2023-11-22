@@ -101,36 +101,14 @@ namespace VisualStateMachine.Editor
 			{
 				if (node is not StateNodeView stateNodeView) continue;
 
-				stateNodeView?.Update();
+				stateNodeView.Update();
 			}
 		}
 
 		private void CreateToolbar(StateMachine stateMachine)
 		{
 			_toolbar = new StateMachineToolbar(stateMachine);
-			_toolbar.OnSave += HandleSaveStateMachine;
-			_toolbar.OnStateMachineChanged += HandleStateMachineChanged;
-			_toolbar.OnStateMachineDestroyed += HandleStateMachineDestroyed;
-			
 			Add(_toolbar);
-		}
-
-		private void HandleStateMachineChanged(StateMachine stateMachine)
-		{
-			//The referenced statemachine changed
-		}
-
-		private void HandleStateMachineDestroyed()
-		{
-			//Clean up
-		}
-
-		private void HandleSaveStateMachine()
-		{
-			if (Application.isPlaying) return;
-			if (_stateMachine == null) return;
-
-			SaveStateMachine(_stateMachine);
 		}
 
 		private void CreateEmptyGraphView()
@@ -200,11 +178,8 @@ namespace VisualStateMachine.Editor
 			foreach (var node in nodes)
 			{
 				if (node is not StateNodeView stateNode) continue;
-
-				// var connections = stateNode.Data.GetConnectionsToNode(stateNodeView.Data.Id);
-				// node
 				
-				stateNode.Data.RemoveConnectionToNode(stateNode.Data.Id);
+				stateNode.Data.RemoveConnectionToNode(stateNodeView.Data.Id);
 			}
 		}
 
@@ -232,11 +207,6 @@ namespace VisualStateMachine.Editor
 		private void HandleSetAsEntryNode(StateNodeView node)
 		{
 			_stateMachine.SetEntryNode(node.Data);
-		}
-
-		private void HandleDeleteStateNode(StateNodeView node)
-		{
-			Remove(node);
 		}
 
 		private void HandleCreateNewStateNode(Vector2 position)
@@ -290,13 +260,6 @@ namespace VisualStateMachine.Editor
 		{
 			SaveGraphViewState();
 				
-			if (_toolbar != null)
-			{
-				_toolbar.OnSave -= HandleSaveStateMachine;
-				_toolbar.OnStateMachineChanged -= HandleStateMachineChanged;
-				_toolbar.OnStateMachineDestroyed -= HandleStateMachineDestroyed;
-			}
-
 			if (_contextMenu != null)
 			{
 				_contextMenu.OnCreateNewStateNode -= HandleCreateNewStateNode;
@@ -352,38 +315,6 @@ namespace VisualStateMachine.Editor
 			{
 				StateMachineNodeFactory.ConnectStateNode(node, this);
 			}
-		}
-
-		private void SaveStateMachine(StateMachine stateMachine)
-		{
-			stateMachine.RemoveAllNodes();
-			
-			foreach (var node in this.nodes)
-			{
-				if (node is not StateNodeView) continue;
-				
-				var stateNodeView = node as StateNodeView;
-				stateNodeView.Data.SetPosition(node.GetPosition().position);
-		
-				var edges = this.edges.Where(edge => edge.output.node == node);
-				foreach (var edge in edges)
-				{
-					AddConnection(edge, stateNodeView);
-				}
-				
-				stateMachine.AddNode(stateNodeView.Data);
-			}
-		}
-
-		private void AddConnection(Edge edge, StateNodeView stateNodeView)
-		{
-			var connection = new StateConnection(
-				fromNodeId: stateNodeView.Data.Id,
-				fromPortName: edge.output.name,
-				toNodeId: (edge.output.connections.First().input.node as StateNodeView).Data.Id
-			);
-					
-			stateNodeView.Data.AddConnection(connection);
 		}
 	}
 }
