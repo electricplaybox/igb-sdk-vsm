@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.3.2-alpha] - Nov 22, 2023
+- Hotfix for broken edge persistence
+- 
 ## [0.3.1-alpha] - Nov 22, 2023
 - Removed some test code for manipulating edge rendering
 
