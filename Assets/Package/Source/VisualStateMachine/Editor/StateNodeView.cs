@@ -38,23 +38,28 @@ namespace VisualStateMachine.Editor
 			var propertyContainer = this.Q<VisualElement>("property-container");
 			if(propertyContainer == null) return;
 
-			// propertyContainer.style.width = 120;
+			propertyContainer.AddToClassList("relay");
 			
 			var label = new Label();
-			// label.text = ">>";
 			
 			switch (relayState.Direction)
 			{
-				case RelayDirection.Left:
+				case RelayDirection.Right:
 					label.text = ">>";
 					break;
-				case RelayDirection.Right:
+				case RelayDirection.Left:
 					label.text = "<<";
 					var output = this.Q<VisualElement>("output");
 					output.parent.Insert(0,output);
+
+					var outputPort = output.Q<Port>();
+					outputPort.style.flexDirection = FlexDirection.Row;
 					
 					var input = this.Q<VisualElement>("input");
 					input.parent.Add(input);
+
+					var inputPort = input.Q<Port>();
+					inputPort.style.flexDirection = FlexDirection.RowReverse;
 					break;
 			}
 			

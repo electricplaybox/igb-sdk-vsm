@@ -117,6 +117,10 @@
     width: 270px;
 }
 
+#property-container.relay {
+    width: 120px;
+}
+
 /*.unity-label.unity-base-field__label {*/
 /*    min-width:100px;*/
 /*}*/

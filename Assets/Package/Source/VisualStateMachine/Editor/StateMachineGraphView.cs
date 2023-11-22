@@ -40,6 +40,18 @@ namespace VisualStateMachine.Editor
 			UpdateNodes();
 			ClearNullStateMachine();
 			EnforceEntryNode();
+			MessWithEdges();
+		}
+
+		private void MessWithEdges()
+		{
+			foreach (Edge edge in edges)
+			{
+				var originalPoints = edge.edgeControl.controlPoints;
+				originalPoints[1] = originalPoints[0];
+				originalPoints[2] = originalPoints[3];
+				edge.MarkDirtyRepaint();
+			}
 		}
 
 		private void EnforceEntryNode()
