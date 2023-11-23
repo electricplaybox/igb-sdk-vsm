@@ -1,26 +1,26 @@
 ﻿{
   "name": "com.nonatomic.visualstatemachine",
-  "version": "0.1.0-alpha",
-  "displayName": "Visual StateMachine",
+  "version": "0.3.6-alpha",
+  "displayName": "Nonatomic Visual StateMachine",
   "description": "Visual StateMachine",
-  "unity": "2022.3.10",
+  "unity": "2022.3",
   "unityRelease": "1f1",
   "keywords": [
   ],
   "author": {
-    "name": "Paul Stamp",
+    "name": "Nonatomic",
     "email": "paul@nonatomic.co.uk",
-    "url": "https://electricgamebox.com/"
+    "url": "https://nonatomic.co.uk/"
   },
-  "type": "library",
+  "type": "tool",
   "repository": {
     "type": "git",
     "url": "git@github.com:PaulNonatomic/VisualStateMachine.git"
   },
   "samples": {
-    "displayName": "Visual State Machine Example",
-    "description": "A simple visual state machine example",
-    "path": "Samples/VSMExample"
+    "displayName": "State Machine Example",
+    "description": "A simple state machine example",
+    "path": "Samples/Example"
   }
 }
   
