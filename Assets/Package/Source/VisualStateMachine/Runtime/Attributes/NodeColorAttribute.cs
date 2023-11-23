@@ -2,8 +2,7 @@
 
 namespace VisualStateMachine.Attributes
 {
-	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-	public class NodeColor : Attribute
+	public static class NodeColor
 	{
 		public const string Red = "#990e23";
 		public const string Orange = "#915710";
@@ -15,10 +14,14 @@ namespace VisualStateMachine.Attributes
 		public const string Purple = "#4a0e99";
 		public const string Violet = "#740e99";
 		public const string Pink = "#990e97";
-		
+	}
+	
+	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
+	public class NodeColorAttribute : Attribute
+	{
 		public string HexColor { get; private set; }
 		
-		public NodeColor(string hexColor)
+		public NodeColorAttribute(string hexColor)
 		{
 			HexColor = hexColor;
 		}

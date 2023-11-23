@@ -3,11 +3,11 @@
 namespace VisualStateMachine.Attributes
 {
 	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-	public class NodeLabel : Attribute
+	public class NodeLabelAttribute : Attribute
 	{
 		public string Text { get; private set; }
 		
-		public NodeLabel(string text)
+		public NodeLabelAttribute(string text)
 		{
 			Text = text;
 		}

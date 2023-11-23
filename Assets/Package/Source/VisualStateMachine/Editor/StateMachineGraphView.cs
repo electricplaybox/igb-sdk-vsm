@@ -252,7 +252,9 @@ namespace VisualStateMachine.Editor
 
 		private void HandleCreateNewStateNode(Vector2 position)
 		{
-			StateSelectorWindow.Open(stateType =>
+			if (_stateMachine == null) return;
+			
+			StateSelectorWindow.Open(_stateMachine, stateType =>
 			{
 				if (stateType == null) return;
 				
@@ -267,14 +269,15 @@ namespace VisualStateMachine.Editor
 		
 		public void CreateNewStateNodeFromOutputPort(Port port, Vector2 position)
 		{
-			StateSelectorWindow.Open(stateType =>
+			if (_stateMachine == null) return;
+			
+			StateSelectorWindow.Open(_stateMachine, stateType =>
 			{
 				if (stateType == null) return;
 				
 				var newNode = CreateStateNode(stateType, ScreenPointToGraphPoint(position));
 				var edge = StateMachineNodeFactory.ConnectStateNode(port, newNode, this);
 
-				//TODO save edge to statemachine
 				AddConnectionToState(edge);
 			});
 		}

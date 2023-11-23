@@ -72,7 +72,7 @@ namespace VisualStateMachine.Editor
 		{
 			var stateType = Data.State.GetType();
 			
-			var nodeIcon = stateType.GetCustomAttribute<NodeIcon>();
+			var nodeIcon = stateType.GetCustomAttribute<NodeIconAttribute>();
 			if (nodeIcon == null) return;
 
 			var icon = AssetDatabase.LoadAssetAtPath<Texture2D>(nodeIcon.Path);
@@ -88,7 +88,7 @@ namespace VisualStateMachine.Editor
 		{
 			var stateType = Data.State.GetType();
 			
-			var nodeLabel = stateType.GetCustomAttribute<NodeLabel>();
+			var nodeLabel = stateType.GetCustomAttribute<NodeLabelAttribute>();
 			if (nodeLabel == null) return;
 			
 			titleContainer.Q<Label>().text = nodeLabel.Text;
@@ -98,7 +98,7 @@ namespace VisualStateMachine.Editor
 		{
 			var stateType = Data.State.GetType();
 			
-			var nodeColor = stateType.GetCustomAttribute<NodeColor>();
+			var nodeColor = stateType.GetCustomAttribute<NodeColorAttribute>();
 			if (nodeColor == null) return;
 
 			var color = ColorUtils.HexToColor(nodeColor.HexColor);

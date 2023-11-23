@@ -184,19 +184,19 @@ namespace VisualStateMachine.Editor
 			{
 				if (eventInfo.EventHandlerType != typeof(Action)) continue;
 				
-				var attributes = eventInfo.GetCustomAttributes(typeof(Transition), false);
-				if (attributes.Length > 0) CreateOutputPort(node, eventInfo.Name, graphView, attributes[0] as Transition);
+				var attributes = eventInfo.GetCustomAttributes(typeof(TransitionAttribute), false);
+				if (attributes.Length > 0) CreateOutputPort(node, eventInfo.Name, graphView, attributes[0] as TransitionAttribute);
 			}
 		}
 		
-		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView, Transition transition)
+		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView, TransitionAttribute transitionAttribute)
 		{
 			var outputPort = node.InstantiatePort(Orientation.Horizontal, 
 				Direction.Output, 
 				Port.Capacity.Single,
 				typeof(Node));
 			
-			var portText = string.IsNullOrEmpty(transition.PortLabel) ? portName : transition.PortLabel;
+			var portText = string.IsNullOrEmpty(transitionAttribute.PortLabel) ? portName : transitionAttribute.PortLabel;
 			
 			outputPort.name = portName;
 			outputPort.portName = portText;

@@ -3,6 +3,7 @@ using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 { 
+	[HideNode]
 	public class EntryState : State
 	{
 		[Transition(">>")]
