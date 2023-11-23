@@ -174,8 +174,9 @@ namespace VisualStateMachine.Editor
 		private List<List<Type>> GetGroupedStates()
 		{
 			var derivedTypes = AssetUtils.GetAllDerivedTypes<State>();
-			var filteredStates = derivedTypes.Where(type => !Attribute.IsDefined(type, typeof(HideNodeAttribute))).ToList();
-			var groupedStates = filteredStates
+			var filterOutAbstractStates = derivedTypes.Where(type => !type.IsAbstract).ToList();
+			var filterOutHiddenStates = filterOutAbstractStates.Where(type => !Attribute.IsDefined(type, typeof(HideNodeAttribute))).ToList();
+			var groupedStates = filterOutHiddenStates
 				.GroupBy(state => state.Namespace)
 				.Select(group => group.ToList())
 				.ToList();

@@ -9,7 +9,7 @@ namespace VisualStateMachine.States
 		Right
 	}
 	
-	public class Relay : State
+	public abstract class Relay : State
 	{
 		[Transition]
 		public event Action Exit;

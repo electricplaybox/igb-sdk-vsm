@@ -3,6 +3,9 @@
 - Graph view is now drawn on editor update even in edit mode
   - This has the advantage of removing the progress state when exiting runtime
 
+## [0.4.1-beta] - Nov 23, 2023
+- Filtered out abstract states from the state selector 
+
 ## [0.4.0-beta] - Nov 23, 2023
 - Added new state icons. Built in states are displayed at the top.
 - Added focus loss to close StateSelectorWindow. 
