@@ -37,12 +37,17 @@ namespace VisualStateMachine.Editor
 		public void Update(StateMachine stateMachine)
 		{
 			graphViewChanged -= OnGraphViewChanged;
-			
-			if(stateMachine == null) ClearGraph();
-			
-			LoadStateMachine(stateMachine);
-			UpdateNodes();
-			EnforceEntryNode();
+
+			if (stateMachine == null)
+			{
+				ClearGraph();
+			} 
+			else
+			{
+				LoadStateMachine(stateMachine);
+				UpdateNodes();
+				EnforceEntryNode();
+			}
 			
 			graphViewChanged += OnGraphViewChanged;
 		}

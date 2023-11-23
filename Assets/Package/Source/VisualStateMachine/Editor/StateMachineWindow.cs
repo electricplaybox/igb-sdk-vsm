@@ -136,7 +136,6 @@ namespace VisualStateMachine.Editor
 			if (selectedObject == null) return false;
 			
 			stateMachineController = selectedObject.GetComponent<StateMachineController>();
-			DevLog.Log($"TryGetSelectedStateController: {stateMachineController}");
 			return stateMachineController != null;
 		}
 	
@@ -213,18 +212,17 @@ namespace VisualStateMachine.Editor
 		
 		private void HandleEditorUpdate()
 		{
-			if (!TryGetStateMachine(out var stateMachine))
-			{
-				if (_stateMachine == null && stateMachine == null)
-				{
-					_graphView?.ClearGraph();
-				}
-				
-				return;
-			}
+			if (!TryGetStateMachine(out var stateMachine)) return;
 			
-			// DevLog.Log("HandleEditorUpdate");
-			// OpenWindow(stateMachine);
+			if (_stateMachine == null && stateMachine == null)
+			{
+				_graphView?.ClearGraph();
+			}
+				
+			if (Application.isPlaying)
+			{
+				Draw(stateMachine);
+			}
 		}
 	}
 }
