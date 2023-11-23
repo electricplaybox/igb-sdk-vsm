@@ -3,7 +3,7 @@ using VisualStateMachine.Attributes;
 using VisualStateMachine.States;
 using Random = UnityEngine.Random;
 
-namespace Samples.Example
+namespace Samples.ExampleTwo.Source
 {
 	public class RandomOptionPickerState : State
 	{

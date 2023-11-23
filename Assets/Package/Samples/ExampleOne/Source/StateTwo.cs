@@ -2,14 +2,12 @@
 using VisualStateMachine.Attributes;
 using VisualStateMachine.States;
 
-namespace Samples.Example
+namespace Samples.ExampleOne.Source
 {
-	public class StateOne : State
+	public class StateTwo : State
 	{
 		[Transition]
 		public event Action Complete;
-
-		public int Value;
 		
 		public override void EnterState()
 		{

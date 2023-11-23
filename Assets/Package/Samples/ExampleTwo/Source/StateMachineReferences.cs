@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Samples.Example
+namespace Samples.ExampleTwo.Source
 {
 	public class StateMachineReferences : MonoBehaviour
 	{

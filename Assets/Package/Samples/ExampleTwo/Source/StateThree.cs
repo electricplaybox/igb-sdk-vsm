@@ -3,7 +3,7 @@ using UnityEngine;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.States;
 
-namespace Samples.Example
+namespace Samples.ExampleTwo.Source
 {
 	public class StateThree : State
 	{

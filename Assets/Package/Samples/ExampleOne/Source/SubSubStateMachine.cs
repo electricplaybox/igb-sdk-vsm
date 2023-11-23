@@ -3,7 +3,7 @@ using UnityEngine;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.States;
 
-namespace Samples.Example
+namespace Samples.ExampleOne.Source
 {
 	public class SubSubStateMachine : SubStateMachine
 	{

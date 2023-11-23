@@ -1,15 +1,10 @@
-﻿using System;
-using UnityEngine;
-using VisualStateMachine.Attributes;
+﻿using UnityEngine;
 using VisualStateMachine.States;
 
-namespace Samples.Example
+namespace Samples.ExampleOne.Source
 {
-	public class MySubStateOne : State
+	public class MySubStateTwo : State
 	{
-		[Transition]
-		public event Action Complete;
-		
 		[SerializeField] private float _duration = 1f;
 		
 		private float _entryTime;
@@ -23,7 +18,7 @@ namespace Samples.Example
 		{
 			if (Time.time - _entryTime > _duration)
 			{
-				Complete?.Invoke();
+				Controller.Complete();
 			}
 		}
 

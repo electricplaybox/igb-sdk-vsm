@@ -1,7 +1,9 @@
 {
-    "name": "com.nonatomic.statemachine.example",
+    "name": "com.nonatomic.statemachine.example.one",
     "rootNamespace": "",
-    "references": ["GUID:933b2205b9e1bf44c9cf43214981a083"],
+    "references": [
+        "GUID:933b2205b9e1bf44c9cf43214981a083"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
