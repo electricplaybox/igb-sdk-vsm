@@ -219,10 +219,7 @@ namespace VisualStateMachine.Editor
 				_graphView?.ClearGraph();
 			}
 				
-			if (Application.isPlaying)
-			{
-				Draw(stateMachine);
-			}
+			Draw(stateMachine);
 		}
 	}
 }

@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8080482517832103617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061fcb093cd748eab1b4693c5147f908, type: 3}
+  m_Name: e83eace6-6bf8-4f86-9bc8-3adfb9be626d
+  m_EditorClassIdentifier: 
+  _duration: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,7 +27,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 7494d37d-4856-45dc-9268-86274819f3c4
   _graphViewState:
-    Position: {x: 327, y: 139, z: 0}
+    Position: {x: 363, y: 198, z: 0}
     Scale: 1
   _nodes:
   - _state: {fileID: 4272454837028328799}
@@ -27,7 +40,15 @@ MonoBehaviour:
       _fromPortName: Exit
   - _state: {fileID: 7301435075891764486}
     _id: 2078cb90-fb78-40b9-9429-eec1d3565137
-    _position: {x: -17, y: 9.5}
+    _position: {x: -8, y: 30}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: e83eace6-6bf8-4f86-9bc8-3adfb9be626d
+      _fromNodeId: 2078cb90-fb78-40b9-9429-eec1d3565137
+      _fromPortName: ExitTwo
+  - _state: {fileID: -8080482517832103617}
+    _id: e83eace6-6bf8-4f86-9bc8-3adfb9be626d
+    _position: {x: 331, y: 207}
     _isEntryNode: 0
     _connections: []
 --- !u!114 &4272454837028328799
