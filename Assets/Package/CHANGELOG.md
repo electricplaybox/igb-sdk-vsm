@@ -1,11 +1,14 @@
 ﻿# Change Log
+## [0.3.6-alpha] - Nov 23, 2023
+- Graph view is now drawn on editor update even in edit mode
+  - This has the advantage of removing the progress state when exiting runtime
 
-## [0.3.5-alpha] - Nov 22, 2023
+## [0.3.5-alpha] - Nov 23, 2023
 - Critical hotfix for the graphview not updating
-- 
-## [0.3.4-alpha] - Nov 22, 2023
+
+## [0.3.4-alpha] - Nov 23, 2023
 - Fixed persistence of graph view position and scale
-- 
+
 ## [0.3.3-alpha] - Nov 22, 2023
 - Fix for nodes not being drawn when the graph view is first opened
 
