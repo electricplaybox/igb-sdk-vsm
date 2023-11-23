@@ -159,6 +159,8 @@ namespace VisualStateMachine.Editor
 		private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
 		{
 			if (_stateMachine == null) return graphViewChange;
+
+			DevLog.Log($"OnGraphViewChanged: Delta:{graphViewChange.moveDelta} Elements to remove:{graphViewChange.elementsToRemove?.Count}, Edges to create:{graphViewChange.edgesToCreate?.Count}, Moved:{graphViewChange.movedElements?.Count}");
 			
 			if (graphViewChange.edgesToCreate != null)
 			{
@@ -180,7 +182,7 @@ namespace VisualStateMachine.Editor
 						// RemoveAllEdgesTo(stateNodeView);
 						_stateMachine.RemoveNode(stateNodeView.Data);
 					}
-					else if (element.GetType().IsSubclassOf(typeof(Edge)))
+					else if (element is Edge || element.GetType().IsSubclassOf(typeof(Edge)))
 					{
 						var edge = element as Edge;
 						_stateMachine.RemoveConnection(edge.output.node.name, edge.input.node.name);
