@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.3.3-alpha] - Nov 22, 2023
+- Fix for nodes not being drawn when the graph view is first opened
+
 ## [0.3.2-alpha] - Nov 22, 2023
 - Hotfix for broken edge persistence
 - 
