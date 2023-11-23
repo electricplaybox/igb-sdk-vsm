@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.3.5-alpha] - Nov 22, 2023
+- Critical hotfix for the graphview not updating
+- 
 ## [0.3.4-alpha] - Nov 22, 2023
 - Fixed persistence of graph view position and scale
 - 
