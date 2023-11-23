@@ -11,20 +11,19 @@ namespace VisualStateMachine.Editor
 		
 		protected override void RegisterCallbacksOnTarget()
 		{
-			Debug.Log("TARGET GRABBED");
 			base.RegisterCallbacksOnTarget();
-			this.target.RegisterCallback<MouseMoveEvent>(new EventCallback<MouseMoveEvent>(HandleMouseMove));
+			target.RegisterCallback(new EventCallback<MouseMoveEvent>(HandleMouseMove));
 		}
 
 		protected override void UnregisterCallbacksFromTarget()
 		{
 			base.UnregisterCallbacksFromTarget();
-			this.target.UnregisterCallback<MouseMoveEvent>(new EventCallback<MouseMoveEvent>(HandleMouseMove));
+			target.UnregisterCallback(new EventCallback<MouseMoveEvent>(HandleMouseMove));
 		}
 
 		private void HandleMouseMove(MouseMoveEvent evt)
 		{
-			if (this.target is not UnityEditor.Experimental.GraphView.GraphView target) return;
+			if (this.target is not GraphView target) return;
 			
 			OnDrag?.Invoke(target.viewTransform.position);
 		}
