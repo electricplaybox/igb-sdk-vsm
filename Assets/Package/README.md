@@ -12,7 +12,6 @@ VisualStateMachine is a Unity package designed to simplify the creation and mana
 
 ## Installation
 To install VisualStateMachine in your Unity project, follow these steps:
-1. Download the package from the [GitHub repository](https://github.com/PaulNonatomic/VisualStateMachine).
-2. Import the package into your Unity project.
-3. Follow the setup instructions to integrate it into your game.
-[README.md](..%2F..%2FREADME.md)
+1. Via package manager add a package from git url https://github.com/PaulNonatomic/VisualStateMachine.git?path=/Assets/Package#master
+    - To work with a specific version use <b><i>#0.3.6-alpha</b><i> or similar
+    - And for the lastest and greatest word in progress use <b><i>#develop</b><i> at your own risk

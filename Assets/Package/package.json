@@ -5,7 +5,11 @@
   "description": "Visual StateMachine",
   "unity": "2022.3",
   "unityRelease": "1f1",
+  "documentationUrl": "https://github.com/PaulNonatomic/VisualStateMachine/blob/develop/Assets/Package/README.md",
+  "changelogUrl": "https://github.com/PaulNonatomic/VisualStateMachine/blob/develop/Assets/Package/CHANGELOG.md",
   "keywords": [
+    "Visual",
+    "StateMachine"
   ],
   "author": {
     "name": "Nonatomic",
