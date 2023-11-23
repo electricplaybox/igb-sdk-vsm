@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,32 +13,38 @@ namespace VisualStateMachine.Editor
 		private StateMachine _stateMachine;
 		private StateMachineToolbar _toolbar;
 		private StateMachineContextMenu _contextMenu;
-		
+		private StateMachine _lastChangedStateMachine;
+
 		private const int WindowWidth = 600;
 		private const int WindowHeight = 400;
 
-		public StateMachineGraphView()
+		public StateMachineGraphView(StateMachine stateMachine = null)
 		{
-			CreateEmptyGraphView();
-			LoadGraphViewState();
-		}
-		
-		public StateMachineGraphView(StateMachine stateMachine)
-		{
-			DevLog.Log("New StateMachineGraphView");
-			_stateMachine = stateMachine;
+			graphViewChanged -= OnGraphViewChanged;
 			
 			CreateEmptyGraphView();
-			LoadStateMachine(stateMachine);
+			
+			if (stateMachine != null)
+			{
+				_stateMachine = stateMachine;
+				LoadStateMachine(stateMachine);
+			}
+			
+			graphViewChanged += OnGraphViewChanged;
 		}
-		
+
+
 		public void Update(StateMachine stateMachine)
 		{
+			graphViewChanged -= OnGraphViewChanged;
+			
 			if(stateMachine == null) ClearGraph();
 			
 			LoadStateMachine(stateMachine);
 			UpdateNodes();
 			EnforceEntryNode();
+			
+			graphViewChanged += OnGraphViewChanged;
 		}
 
 		private void MessWithEdges()
@@ -98,13 +103,17 @@ namespace VisualStateMachine.Editor
 
 			if (_stateMachine.GraphViewState.Scale < 0.01f)
 			{
-				//set the position to centre of screen
-				var center = GetRect().center;
+				var center = GetGraphRect().center;
 				center.x -= 90;
 				center.y -= 43;
-					
-				contentViewContainer.transform.scale = Vector3.one;
+
 				contentViewContainer.transform.position = center;
+				contentViewContainer.transform.scale = Vector3.one;
+			}
+			else
+			{
+				contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
+				contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
 			}
 			
 			//
@@ -115,7 +124,7 @@ namespace VisualStateMachine.Editor
 			// }
 			// else
 			// {
-			// 	var center = GetRect().center;
+			// 	var center = GetGraphRect().center;
 			// 	center.x -= 90;
 			// 	center.y -= 43;
 			// 	
@@ -152,14 +161,12 @@ namespace VisualStateMachine.Editor
 			AddManipulators();
 			CreateToolbar(_stateMachine);
 			CreateContextMenu();
-			
-			graphViewChanged += OnGraphViewChanged;
 		}
 		
 		private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
 		{
 			if (_stateMachine == null) return graphViewChange;
-
+			
 			DevLog.Log($"OnGraphViewChanged: Delta:{graphViewChange.moveDelta} Elements to remove:{graphViewChange.elementsToRemove?.Count}, Edges to create:{graphViewChange.edgesToCreate?.Count}, Moved:{graphViewChange.movedElements?.Count}");
 			
 			if (graphViewChange.edgesToCreate != null)
@@ -202,6 +209,8 @@ namespace VisualStateMachine.Editor
 					}
 				}
 			}
+
+			SaveGraphViewState();
 			
 			return graphViewChange;
 		}
@@ -303,14 +312,23 @@ namespace VisualStateMachine.Editor
 		
 		private void AddManipulators()
 		{
-			this.AddManipulator(new ContentDragger());
+			var contentDragger = new StateMachineGraphContentDragger();
+			contentDragger.OnDrag += HandleGraphDragged;
+			
+			this.AddManipulator(contentDragger);
 			this.AddManipulator(new SelectionDragger());
 			this.AddManipulator(new RectangleSelector());
 			this.AddManipulator(new FreehandSelector());
 			
+			
 		}
 
-		private Rect GetRect()
+		private void HandleGraphDragged(Vector3 position)
+		{
+			SaveGraphViewState();
+		}
+
+		private Rect GetGraphRect()
 		{
 			var rect = new Rect();
 			rect.width = float.IsNaN(resolvedStyle.width) ? WindowWidth : resolvedStyle.width;
