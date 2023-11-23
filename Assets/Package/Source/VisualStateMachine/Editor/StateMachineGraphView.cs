@@ -120,22 +120,6 @@ namespace VisualStateMachine.Editor
 				contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
 				contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
 			}
-			
-			//
-			// if (_stateMachine.GraphViewState != null && _stateMachine.GraphViewState.Scale > 0.1f)
-			// {
-			// 	contentViewContainer.transform.position = Vector3.zero;
-			// 	contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
-			// }
-			// else
-			// {
-			// 	var center = GetGraphRect().center;
-			// 	center.x -= 90;
-			// 	center.y -= 43;
-			// 	
-			// 	contentViewContainer.transform.scale = Vector3.one;
-			// 	contentViewContainer.transform.position = center;
-			// }
 		}
 
 		private void UpdateNodes()

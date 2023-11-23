@@ -18,8 +18,12 @@ namespace VisualStateMachine.Editor
 		private TextField _searchField;
 		private StateMachine _stateMachine;
 
-		private const string FlowIcon = "flow";
-		private const string FolderIcon = "folder";
+		private const string IconGreen = "statemachine-green";
+		private const string IconRed = "statemachine-red";
+		private const string IconBlue= "statemachine-blue";
+		private const string FolderGreen = "folder-green";
+		private const string FolderRed = "folder-red";
+		private const string FolderBlue = "folder-blue";
 
 		public static void Open(StateMachine stateMachine, Action<Type> onTypeSelected)
 		{
@@ -60,12 +64,18 @@ namespace VisualStateMachine.Editor
 			var groupedStates = GetGroupedStates();
 			var nearestGroupToStateMachine = FindNearestNamespaceToStateMachine(stateMachine, groupedStates);
 			
+			
 			for (var groupIndex = 0; groupIndex < groupedStates.Count; groupIndex++)
 			{
 				var group = groupedStates[groupIndex];
+
+				var firstGroup = groupIndex == 0;
+				var open = firstGroup || nearestGroupToStateMachine == groupIndex;
+				var buttonIcon = firstGroup ? IconBlue : IconGreen;
+				var folderName = firstGroup ? "VSM States" : group[0].Namespace;
+				var folderIcon = firstGroup ? FolderBlue : FolderGreen;
 				
-				var open = nearestGroupToStateMachine == groupIndex;
-				var groupBody = MakeGroupFoldout(groupIndex, group[0].Namespace, open);
+				var groupBody = MakeGroupFoldout(groupIndex, folderName, folderIcon, open);
 				container.Add(groupBody);
 
 				for (var stateIndex = 0; stateIndex < group.Count; stateIndex++)
@@ -73,7 +83,7 @@ namespace VisualStateMachine.Editor
 					var stateType = group[stateIndex];
 					if (!stateType.Name.Contains(searchQuery)) continue;
 					
-					var button = MakeStateButton(stateType, stateIndex);
+					var button = MakeStateButton(stateType, stateIndex, buttonIcon);
 					groupBody.Add(button);
 				}
 			}
@@ -103,7 +113,7 @@ namespace VisualStateMachine.Editor
 			return closestMatch;
 		}
 		
-		private Button MakeStateButton(Type stateType, int index)
+		private Button MakeStateButton(Type stateType, int index, string icon)
 		{
 			var isEven = index % 2 == 0;
 			var button = new Button(() => SelectState(stateType)) { };
@@ -113,12 +123,12 @@ namespace VisualStateMachine.Editor
 
 			button.Insert(0, new Image()
 			{
-				image = Resources.Load<Texture2D>(FlowIcon),
+				image = Resources.Load<Texture2D>(icon),
 				scaleMode = ScaleMode.ScaleToFit
 			});
 
 			var stateNamespace = stateType.Namespace;
-			var stateName = $"{stateNamespace}/{stateType.Name}";
+			var stateName = stateType.Name;
 
 			button.Add(new Label()
 			{
@@ -134,7 +144,7 @@ namespace VisualStateMachine.Editor
 			Close();
 		}
 
-		private Foldout MakeGroupFoldout(int groupIndex, string groupName, bool foldedState = false)
+		private Foldout MakeGroupFoldout(int groupIndex, string groupName, string icon, bool foldedState = false)
 		{
 			var groupBody = new Foldout();
 			groupBody.value = foldedState;
@@ -143,7 +153,7 @@ namespace VisualStateMachine.Editor
 			
 			var checkMark = groupBody.Q("unity-checkmark");
 			checkMark.parent.name = "group-header";
-			checkMark.parent.Insert(0, MakeGroupIcon());
+			checkMark.parent.Insert(0, MakeGroupIcon(icon));
 				
 			var label = new Label(groupName);
 			checkMark.parent.Insert(1, label);
@@ -151,11 +161,11 @@ namespace VisualStateMachine.Editor
 			return groupBody;
 		}
 
-		private Image MakeGroupIcon()
+		private Image MakeGroupIcon(string icon)
 		{
 			return new Image()
 			{
-				image = Resources.Load<Texture2D>(FolderIcon),
+				image = Resources.Load<Texture2D>(icon),
 				scaleMode = ScaleMode.ScaleToFit,
 				name = "group-icon"
 			};
@@ -165,10 +175,25 @@ namespace VisualStateMachine.Editor
 		{
 			var derivedTypes = AssetUtils.GetAllDerivedTypes<State>();
 			var filteredStates = derivedTypes.Where(type => !Attribute.IsDefined(type, typeof(HideNodeAttribute))).ToList();
-			return filteredStates
+			var groupedStates = filteredStates
 				.GroupBy(state => state.Namespace)
 				.Select(group => group.ToList())
 				.ToList();
+
+			MoveListWithNamespaceToFront(groupedStates, "VisualStateMachine.States");
+			
+			return groupedStates;
+		}
+		
+		public static void MoveListWithNamespaceToFront(List<List<Type>> lists, string namespaceName)
+		{
+			var matchingList = lists.FirstOrDefault(list => list.Any() && list[0].Namespace == namespaceName);
+
+			if (matchingList != null)
+			{
+				lists.Remove(matchingList);
+				lists.Insert(0, matchingList);
+			}
 		}
 		
 		public static string GetScriptPath(Type type)
