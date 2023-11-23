@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.3.4-alpha] - Nov 22, 2023
+- Fixed persistence of graph view position and scale
+- 
 ## [0.3.3-alpha] - Nov 22, 2023
 - Fix for nodes not being drawn when the graph view is first opened
 
