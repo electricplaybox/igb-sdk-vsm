@@ -21,10 +21,17 @@
     "type": "git",
     "url": "git@github.com:PaulNonatomic/VisualStateMachine.git"
   },
-  "samples": {
-    "displayName": "State Machine Example",
-    "description": "A simple state machine example",
-    "path": "Samples/Example"
-  }
+  "samples": [
+    {
+      "displayName": "State Machine Example",
+      "description": "A simple state machine example",
+      "path": "Samples/ExampleOne"
+    },
+    {
+      "displayName": "State Machine Example",
+      "description": "A simple state machine example",
+      "path": "Samples/ExampleTwo"
+    }
+  ]
 }
   
