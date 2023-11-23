@@ -73,7 +73,7 @@ namespace VisualStateMachine.Editor
 			}
 			
 			graphView.AddElement(node);
-
+			
 			return node;
 		}
 		

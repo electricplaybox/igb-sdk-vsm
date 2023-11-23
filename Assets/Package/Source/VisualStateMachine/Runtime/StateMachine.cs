@@ -17,7 +17,8 @@ namespace VisualStateMachine
 	[CreateAssetMenu(fileName = "StateMachine", menuName = "StateMachine/StateMachine")]
 	public class StateMachine : ScriptableObject
 	{
-		public GraphViewState GraphViewState => _graphViewState;
+		public GraphViewState GraphViewState => _graphViewState ??= new GraphViewState();
+		
 		public StateMachine Base { get; set; }
 		public IReadOnlyCollection<StateNode> Nodes => _nodes;
 		
@@ -47,6 +48,7 @@ namespace VisualStateMachine
 		
 		public void UpdateGraphViewState(Vector3 position, float scale)
 		{
+			_graphViewState ??= new GraphViewState();
 			_graphViewState.Position = position;
 			_graphViewState.Scale = scale;
 		}

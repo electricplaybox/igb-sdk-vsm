@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.Editor
 {
@@ -12,6 +14,9 @@ namespace VisualStateMachine.Editor
 		private StateMachine _stateMachine;
 		private StateMachineToolbar _toolbar;
 		private StateMachineContextMenu _contextMenu;
+		
+		private const int WindowWidth = 600;
+		private const int WindowHeight = 400;
 
 		public StateMachineGraphView()
 		{
@@ -21,6 +26,7 @@ namespace VisualStateMachine.Editor
 		
 		public StateMachineGraphView(StateMachine stateMachine)
 		{
+			DevLog.Log("New StateMachineGraphView");
 			_stateMachine = stateMachine;
 			
 			CreateEmptyGraphView();
@@ -29,11 +35,11 @@ namespace VisualStateMachine.Editor
 		
 		public void Update(StateMachine stateMachine)
 		{
+			if(stateMachine == null) ClearGraph();
+			
 			LoadStateMachine(stateMachine);
 			UpdateNodes();
-			ClearNullStateMachine();
 			EnforceEntryNode();
-			// MessWithEdges();
 		}
 
 		private void MessWithEdges()
@@ -54,12 +60,12 @@ namespace VisualStateMachine.Editor
 			_stateMachine.AddEntryNode();
 		}
 
-		public void ClearNullStateMachine()
+		public void ClearGraph()
 		{
-			if (_stateMachine != null) return;
+			if (contentViewContainer.childCount == 0) return;
 			
-			contentViewContainer.Clear();
-			
+			DeleteElements(nodes);
+			DeleteElements(edges);
 		}
 
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -89,21 +95,33 @@ namespace VisualStateMachine.Editor
 		private void LoadGraphViewState()
 		{
 			if (_stateMachine == null) return;
-			
-			if (_stateMachine.GraphViewState != null && _stateMachine.GraphViewState.Scale > 0.1f)
+
+			if (_stateMachine.GraphViewState.Scale < 0.01f)
 			{
-				contentViewContainer.transform.position = Vector3.zero;
-				contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
-			}
-			else
-			{
+				//set the position to centre of screen
 				var center = GetRect().center;
 				center.x -= 90;
 				center.y -= 43;
-				
+					
 				contentViewContainer.transform.scale = Vector3.one;
 				contentViewContainer.transform.position = center;
 			}
+			
+			//
+			// if (_stateMachine.GraphViewState != null && _stateMachine.GraphViewState.Scale > 0.1f)
+			// {
+			// 	contentViewContainer.transform.position = Vector3.zero;
+			// 	contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
+			// }
+			// else
+			// {
+			// 	var center = GetRect().center;
+			// 	center.x -= 90;
+			// 	center.y -= 43;
+			// 	
+			// 	contentViewContainer.transform.scale = Vector3.one;
+			// 	contentViewContainer.transform.position = center;
+			// }
 		}
 
 		private void UpdateNodes()
@@ -214,12 +232,6 @@ namespace VisualStateMachine.Editor
 		{
 			_contextMenu = new StateMachineContextMenu(this);
 			_contextMenu.OnCreateNewStateNode += HandleCreateNewStateNode;
-			_contextMenu.OnSetAsEntryNode += HandleSetAsEntryNode;
-		}
-
-		private void HandleSetAsEntryNode(StateNodeView node)
-		{
-			_stateMachine.SetEntryNode(node.Data);
 		}
 
 		private void HandleCreateNewStateNode(Vector2 position)
@@ -276,7 +288,6 @@ namespace VisualStateMachine.Editor
 			if (_contextMenu != null)
 			{
 				_contextMenu.OnCreateNewStateNode -= HandleCreateNewStateNode;
-				_contextMenu.OnSetAsEntryNode -= HandleSetAsEntryNode;
 			}
 		}
 
@@ -299,32 +310,36 @@ namespace VisualStateMachine.Editor
 
 		private Rect GetRect()
 		{
-			return new Rect()
-			{
-				width = resolvedStyle.width,
-				height = resolvedStyle.height
-			};
+			var rect = new Rect();
+			rect.width = float.IsNaN(resolvedStyle.width) ? WindowWidth : resolvedStyle.width;
+			rect.height = float.IsNaN(resolvedStyle.height) ? WindowHeight : resolvedStyle.height;
+			
+			return rect;
 		}
 		
 		private void LoadStateMachine(StateMachine stateMachine)
 		{
-			if (stateMachine == _stateMachine && stateMachine.Nodes.Count == nodes.Count()) return;
-			if (_stateMachine != null) SaveGraphViewState();
+			var nodeCount = stateMachine.Nodes.Count;
+			if (nodeCount == 0)
+			{
+				stateMachine.AddEntryNode();
+			}
+			
+			if (stateMachine == _stateMachine && nodeCount == nodes.Count()) return;
 			
 			_stateMachine = stateMachine;
 			LoadGraphViewState();
 			
 			_toolbar?.Update(stateMachine);
+
+			ClearGraph();
 			
-			DeleteElements(nodes);
-			DeleteElements(edges);
-			
-			foreach (var node in stateMachine.Nodes)
+			foreach (var node in _stateMachine.Nodes)
 			{
 				StateMachineNodeFactory.CreateStateNode(node, this);
 			}
 			
-			foreach (var node in stateMachine.Nodes)
+			foreach (var node in _stateMachine.Nodes)
 			{
 				StateMachineNodeFactory.ConnectStateNode(node, this);
 			}

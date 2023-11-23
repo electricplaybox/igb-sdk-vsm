@@ -7,7 +7,6 @@ namespace VisualStateMachine.Editor
 	public class StateMachineContextMenu
 	{
 		public event Action<Vector2> OnCreateNewStateNode;
-		public event Action<StateNodeView> OnSetAsEntryNode;
 		
 		private readonly StateMachineGraphView _graphView;
 
