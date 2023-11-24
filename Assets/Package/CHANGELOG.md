@@ -1,6 +1,6 @@
 ﻿# Change Log
 
-## [0.4.3-alpha] - Nov 24, 2023
+## [0.4.3-beta] - Nov 24, 2023
 - Hotfix for hidden state icons
 - 
 ## [0.4.2-beta] - Nov 24, 2023
