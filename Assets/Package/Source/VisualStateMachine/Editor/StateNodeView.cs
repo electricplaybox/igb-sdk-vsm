@@ -105,10 +105,16 @@ namespace VisualStateMachine.Editor
 		{
 			var stateType = Data.State.GetType();
 			
-			var nodeColor = stateType.GetCustomAttribute<NodeColorAttribute>();
-			if (nodeColor == null) return;
+			var nodeColor = AttributeUtils.GetInheritedCustomAttribute<NodeColorAttribute>(stateType);
+			var color = ColorUtils.HexToColor(NodeColor.Grey);
+			
+			if (nodeColor != null)
+			{
+				color = ColorUtils.HexToColor(nodeColor.HexColor);
+			}
 
-			var color = ColorUtils.HexToColor(nodeColor.HexColor);
+			color.a = 0.8f;
+			
 			titleContainer.style.backgroundColor = color;
 
 			var selectionBorder = this.Q("selection-border");

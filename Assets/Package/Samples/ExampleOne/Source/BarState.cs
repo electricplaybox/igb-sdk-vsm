@@ -5,6 +5,7 @@ using VisualStateMachine.States;
 
 namespace Samples.ExampleOne.Source
 {
+	[NodeColor(NodeColor.Teal)]
 	public class BarState : State
 	{
 		[Transition]

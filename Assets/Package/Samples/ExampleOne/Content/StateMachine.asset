@@ -40,7 +40,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 7494d37d-4856-45dc-9268-86274819f3c4
   _graphViewState:
-    Position: {x: -371, y: 287, z: 0}
+    Position: {x: 323, y: 229, z: 0}
     Scale: 1
   _nodes:
   - _state: {fileID: 4272454837028328799}
@@ -72,6 +72,25 @@ MonoBehaviour:
     _position: {x: 360, y: -25}
     _isEntryNode: 0
     _connections: []
+  - _state: {fileID: 132887880663478664}
+    _id: 398cff52-a622-4988-b9f3-ba1a7596e4cf
+    _position: {x: 694, y: 383}
+    _isEntryNode: 0
+    _connections: []
+--- !u!114 &132887880663478664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c0d0a32b1e4e048d6b4647c45a1a39, type: 3}
+  m_Name: 398cff52-a622-4988-b9f3-ba1a7596e4cf
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
+  _duration: 0
 --- !u!114 &4272454837028328799
 MonoBehaviour:
   m_ObjectHideFlags: 0

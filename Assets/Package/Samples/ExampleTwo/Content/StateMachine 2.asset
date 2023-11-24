@@ -26,7 +26,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: ee843e30-d069-4bbf-8b06-954f1fc6e987
   _graphViewState:
-    Position: {x: 133, y: 133, z: 0}
+    Position: {x: -245, y: 167, z: 0}
     Scale: 1
   _nodes:
   - _state: {fileID: -4442837894726827734}
@@ -41,7 +41,10 @@ MonoBehaviour:
     _id: 1b1e9ce3-b3e0-4b2a-a5bb-1e0b07109ab2
     _position: {x: 236, y: 70}
     _isEntryNode: 0
-    _connections: []
+    _connections:
+    - _toNodeId: bebc238b-9153-4dfe-a2b1-fec162d03c21
+      _fromNodeId: 1b1e9ce3-b3e0-4b2a-a5bb-1e0b07109ab2
+      _fromPortName: Complete
   - _state: {fileID: 4881516277506332268}
     _id: bebc238b-9153-4dfe-a2b1-fec162d03c21
     _position: {x: 654, y: 217}
@@ -59,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf83958b7e14cb0af0bdf27e5d29bba, type: 3}
   m_Name: bebc238b-9153-4dfe-a2b1-fec162d03c21
   m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
+  _stateMachine: {fileID: 11400000, guid: d3037db69f3933640829cd4efd28f35d, type: 2}
 --- !u!114 &6300946473240135091
 MonoBehaviour:
   m_ObjectHideFlags: 0

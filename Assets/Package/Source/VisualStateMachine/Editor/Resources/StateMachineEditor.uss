@@ -63,10 +63,6 @@
     height:0;
 }
 
-.node.entry-node #title {
-    background-color: var(--active-background);
-}
-
 .node.expanded #selection-border {
     border-color: var(--inactive-highlight);
 }
