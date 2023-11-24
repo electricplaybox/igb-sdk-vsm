@@ -24,11 +24,13 @@ namespace VisualStateMachine.Editor
 			CreateCustomIcon();
 			CreateRelayNode();
 		}
-
+		
 		private void CreateRelayNode()
 		{
 			if (Data.State is not Relay) return;
 			var relayState = Data.State as Relay;
+			
+			this.AddToClassList("relay-node");
 			
 			var title = this.Q<VisualElement>("title");
 			if (title == null) return;
@@ -37,35 +39,61 @@ namespace VisualStateMachine.Editor
 			
 			var propertyContainer = this.Q<VisualElement>("property-container");
 			if(propertyContainer == null) return;
-
-			propertyContainer.AddToClassList("relay");
 			
-			var label = new Label();
-			
-			switch (relayState.Direction)
-			{
-				case RelayDirection.Right:
-					label.text = ">>";
-					break;
-				case RelayDirection.Left:
-					label.text = "<<";
-					var output = this.Q<VisualElement>("output");
-					output.parent.Insert(0,output);
+			propertyContainer.parent.Remove(propertyContainer);
 
-					var outputPort = output.Q<Port>();
-					outputPort.style.flexDirection = FlexDirection.Row;
-					
-					var input = this.Q<VisualElement>("input");
-					input.parent.Add(input);
-
-					var inputPort = input.Q<Port>();
-					inputPort.style.flexDirection = FlexDirection.RowReverse;
-					break;
-			}
+			var contents = this.Q("contents");
+			var top = contents.Q("top");
 			
-			label.style.unityTextAlign = TextAnchor.MiddleCenter;
-			label.style.unityFontStyleAndWeight = FontStyle.Bold;
-			propertyContainer.Add(label);
+			var input = contents.Q("input");
+			var inputPort = input.Q<Port>();
+			inputPort.style.flexDirection = FlexDirection.Column;
+			
+			var output = contents.Q("output");
+			var outputPort = output.Q<Port>();
+			outputPort.style.flexDirection = FlexDirection.ColumnReverse;
+			
+			var contentDivider = contents.Q("divider");
+			contentDivider.parent.Remove(contentDivider);
+			
+			var topDivider = top.Q("divider");
+			topDivider.parent.Remove(topDivider);
+			
+			var bottom = new VisualElement();
+			bottom.name = "bottom";
+			bottom.Insert(0, inputPort);
+			contents.Insert(0, bottom);
+			
+			var topInput = top.Q("input");
+			top.Remove(topInput);
+
+
+			//var label = new Label();
+
+			// switch (relayState.Direction)
+			// {
+			// 	case RelayDirection.Right:
+			// 		label.text = ">>";
+			// 		break;
+			// 	case RelayDirection.Left:
+			// 		label.text = "<<";
+			// 		var output = this.Q<VisualElement>("output");
+			// 		output.parent.Insert(0,output);
+			//
+			// 		var outputPort = output.Q<Port>();
+			// 		outputPort.style.flexDirection = FlexDirection.Row;
+			// 		
+			// 		var input = this.Q<VisualElement>("input");
+			// 		input.parent.Add(input);
+			//
+			// 		var inputPort = input.Q<Port>();
+			// 		inputPort.style.flexDirection = FlexDirection.RowReverse;
+			// 		break;
+			// }
+			//
+			// label.style.unityTextAlign = TextAnchor.MiddleCenter;
+			// label.style.unityFontStyleAndWeight = FontStyle.Bold;
+			// propertyContainer.Add(label);
 		}
 
 		private void CreateCustomIcon()
@@ -73,7 +101,7 @@ namespace VisualStateMachine.Editor
 			var stateType = Data.State.GetType();
 			var image = titleContainer.Q<Image>("title-icon");
 			
-			var nodeIcon = stateType.GetCustomAttribute<NodeIconAttribute>();
+			var nodeIcon = AttributeUtils.GetInheritedCustomAttribute<NodeIconAttribute>(stateType);
 			if (nodeIcon == null)
 			{
 				if(image != null) image.parent.Remove(image);
@@ -106,7 +134,7 @@ namespace VisualStateMachine.Editor
 			var stateType = Data.State.GetType();
 			
 			var nodeColor = AttributeUtils.GetInheritedCustomAttribute<NodeColorAttribute>(stateType);
-			var color = ColorUtils.HexToColor(NodeColor.Tundora);
+			var color = ColorUtils.HexToColor(NodeColor.Grey);
 			
 			if (nodeColor != null)
 			{

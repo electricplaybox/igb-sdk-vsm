@@ -169,15 +169,19 @@ namespace VisualStateMachine.Editor
 			return infoFields.ToArray();
 		}
 		
-		public static void CreateInputPort(Node node, StateMachineGraphView graphView)
+		public static void CreateInputPort(StateNodeView node, StateMachineGraphView graphView)
 		{
-			var inputPort = node.InstantiatePort(Orientation.Horizontal, 
-				Direction.Input, 
-				Port.Capacity.Multi,
-				typeof(Node));
+			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(node.Data.State.GetType());
+			var orientation = orientationAtt != null ? orientationAtt.Orientation : Orientation.Horizontal;
+
+			if (orientation == Orientation.Horizontal)
+			{
+				Debug.Log($"HOR: {node.name}");
+			}
+			
+			var inputPort = node.InstantiatePort(orientation, Direction.Input, Port.Capacity.Multi, typeof(Node));
 			
 			inputPort.name = inputPort.portName = "Enter";
-			//inputPort.RemoveManipulator(inputPort.edgeConnector);
 			inputPort.AddManipulator(new EdgeConnector<Edge>(new StateEdgeListener(graphView)));
 			node.inputContainer.Add(inputPort);
 		}
@@ -198,7 +202,15 @@ namespace VisualStateMachine.Editor
 		
 		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView, TransitionAttribute transitionAttribute)
 		{
-			var outputPort = node.InstantiatePort(Orientation.Horizontal, 
+			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(node.Data.State.GetType());
+			var orientation = orientationAtt != null ? orientationAtt.Orientation : Orientation.Horizontal;
+
+			if (orientation == Orientation.Horizontal)
+			{
+				Debug.Log($"HOR: {node.name}");
+			}
+			
+			var outputPort = node.InstantiatePort(orientation, 
 				Direction.Output, 
 				Port.Capacity.Single,
 				typeof(Node));

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor.Experimental.GraphView;
 using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
@@ -9,6 +10,7 @@ namespace VisualStateMachine.States
 		Right
 	}
 	
+	[PortOrientation(Orientation.Vertical)]
 	public abstract class Relay : State
 	{
 		[Transition]

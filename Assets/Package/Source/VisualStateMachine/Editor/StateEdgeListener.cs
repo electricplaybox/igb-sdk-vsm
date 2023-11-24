@@ -15,6 +15,7 @@ namespace VisualStateMachine.Editor
 		
 		public void OnDropOutsidePort(Edge edge, Vector2 position)
 		{
+			if (edge.output == null) return;
 			if(edge.output.connections.ToList().Count > 0) return;
 			
 			var port = edge.output;
