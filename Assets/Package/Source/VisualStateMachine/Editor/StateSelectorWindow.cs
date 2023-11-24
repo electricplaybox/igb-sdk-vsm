@@ -18,13 +18,6 @@ namespace VisualStateMachine.Editor
 		private TextField _searchField;
 		private StateMachine _stateMachine;
 
-		private const string IconGreen = "statemachine-green";
-		private const string IconRed = "statemachine-red";
-		private const string IconBlue= "statemachine-blue";
-		private const string FolderGreen = "folder-green";
-		private const string FolderRed = "folder-red";
-		private const string FolderBlue = "folder-blue";
-
 		public static void Open(StateMachine stateMachine, Action<Type> onTypeSelected)
 		{
 			var window = GetWindow<StateSelectorWindow>("Select State Type");
@@ -71,9 +64,9 @@ namespace VisualStateMachine.Editor
 
 				var firstGroup = groupIndex == 0;
 				var open = firstGroup || nearestGroupToStateMachine == groupIndex;
-				var buttonIcon = firstGroup ? IconBlue : IconGreen;
+				var buttonIcon = firstGroup ? NodeIcon.VsmBlue : NodeIcon.VsmGreen;
 				var folderName = firstGroup ? "VSM States" : group[0].Namespace;
-				var folderIcon = firstGroup ? FolderBlue : FolderGreen;
+				var folderIcon = firstGroup ? NodeIcon.FolderBlue : NodeIcon.FolderGreen;
 				
 				var groupBody = MakeGroupFoldout(groupIndex, folderName, folderIcon, open);
 				container.Add(groupBody);

@@ -121,10 +121,6 @@
     width: 120px;
 }
 
-/*.unity-label.unity-base-field__label {*/
-/*    min-width:100px;*/
-/*}*/
-
 #unity-content {
     margin:5px;
 }
@@ -144,3 +140,9 @@
     width: 100px;
 }
 
+/* *********** Title Icon *********** */
+#title-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}

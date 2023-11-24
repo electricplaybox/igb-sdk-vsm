@@ -75,7 +75,7 @@ namespace VisualStateMachine.Editor
 			var nodeIcon = stateType.GetCustomAttribute<NodeIconAttribute>();
 			if (nodeIcon == null) return;
 
-			var icon = AssetDatabase.LoadAssetAtPath<Texture2D>(nodeIcon.Path);
+			var icon = nodeIcon.FetchTexture();
 			if (icon == null) return;
 
 			var image = titleContainer.Q<Image>("title-icon");

@@ -63,13 +63,20 @@ namespace VisualStateMachine.Editor
 			if (stateNode.State != null)
 			{
 				var stateInspector = CreateUIElementInspector(stateNode.State);
+                stateInspector.name = "state-inspector";
 				propertyContainer.Add(stateInspector);
 				
 				if (stateInspector.childCount > 0)
 				{
 					propertyContainer.AddToClassList("has-properties");
 				}
-
+				
+				//adjust the node size
+				var nodeWidth = stateType.GetCustomAttribute<NodeWidthAttribute>();
+				if (nodeWidth != null)
+				{
+					propertyContainer.style.width = nodeWidth.Width;
+				}
 			}
 			
 			graphView.AddElement(node);
