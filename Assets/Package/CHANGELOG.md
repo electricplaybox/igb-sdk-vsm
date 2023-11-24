@@ -1,7 +1,9 @@
 ﻿# Change Log
-## [0.3.6-alpha] - Nov 23, 2023
-- Graph view is now drawn on editor update even in edit mode
-  - This has the advantage of removing the progress state when exiting runtime
+
+## [0.4.2-beta] - Nov 24, 2023
+- The StateSelectorWindow now focuses on the ToolbarSearchField for instant searching
+- Added a more dedicated service for icons and moved some icon directories around
+- Added an editor tool to toggle the samples directory tilde prefix to make my life easier
 
 ## [0.4.1-beta] - Nov 23, 2023
 - Filtered out abstract states from the state selector 
@@ -11,6 +13,10 @@
 - Added focus loss to close StateSelectorWindow. 
 - Added new state selector styling. 
 - Added state selector state grouping.
+
+## [0.3.6-alpha] - Nov 23, 2023
+- Graph view is now drawn on editor update even in edit mode
+    - This has the advantage of removing the progress state when exiting runtime
 
 ## [0.3.5-alpha] - Nov 23, 2023
 - Critical hotfix for the graphview not updating
