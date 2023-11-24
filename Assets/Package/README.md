@@ -15,3 +15,7 @@ To install VisualStateMachine in your Unity project, follow these steps:
 1. Via package manager add a package from git url https://github.com/PaulNonatomic/VisualStateMachine.git?path=/Assets/Package#master
     - To work with a specific version use <b><i>#0.3.6-alpha</b><i> or similar
     - And for the lastest and greatest word in progress use <b><i>#develop</b><i> at your own risk
+
+# Known Issues
+- Renaming transition events will break statemachine at present. 
+  - I'm working on a fix for this were a combination of event name and order will be used to identify events.

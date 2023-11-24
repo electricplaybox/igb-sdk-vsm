@@ -42,6 +42,24 @@ MonoBehaviour:
     _position: {x: 236, y: 70}
     _isEntryNode: 0
     _connections: []
+  - _state: {fileID: 4881516277506332268}
+    _id: bebc238b-9153-4dfe-a2b1-fec162d03c21
+    _position: {x: 654, y: 217}
+    _isEntryNode: 0
+    _connections: []
+--- !u!114 &4881516277506332268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf83958b7e14cb0af0bdf27e5d29bba, type: 3}
+  m_Name: bebc238b-9153-4dfe-a2b1-fec162d03c21
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
 --- !u!114 &6300946473240135091
 MonoBehaviour:
   m_ObjectHideFlags: 0

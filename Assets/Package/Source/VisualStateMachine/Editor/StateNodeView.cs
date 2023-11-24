@@ -71,16 +71,23 @@ namespace VisualStateMachine.Editor
 		private void CreateCustomIcon()
 		{
 			var stateType = Data.State.GetType();
+			var image = titleContainer.Q<Image>("title-icon");
 			
 			var nodeIcon = stateType.GetCustomAttribute<NodeIconAttribute>();
-			if (nodeIcon == null) return;
+			if (nodeIcon == null)
+			{
+				if(image != null) image.parent.Remove(image);
+				return;
+			}
 
 			var icon = nodeIcon.FetchTexture();
-			if (icon == null) return;
-
-			var image = titleContainer.Q<Image>("title-icon");
-			if (image == null) return;
+			if (icon == null)
+			{
+				if(image != null) image.parent.Remove(image);
+				return;
+			}
 			
+			if (image == null) return;
 			image.image = icon;
 		}
 
