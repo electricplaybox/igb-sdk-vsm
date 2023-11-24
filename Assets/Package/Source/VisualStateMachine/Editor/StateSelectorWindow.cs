@@ -36,10 +36,15 @@ namespace VisualStateMachine.Editor
 			var root = rootVisualElement;
 
 			var searchField = new ToolbarSearchField();
+			searchField.name = "search-field";
 			searchField.AddToClassList("search-bar");
 			searchField.RegisterValueChangedCallback(evt =>
 			{
 				SearchStates(_stateMachine, evt.newValue);
+			});
+			searchField.RegisterCallback<GeometryChangedEvent>(evt =>
+			{
+				searchField.Q<TextField>().Q("unity-text-input").Focus();
 			});
 			root.Add(searchField);
 
@@ -47,7 +52,7 @@ namespace VisualStateMachine.Editor
 			root.Add(results);
 			results.Clear();
 		}
-
+		
 		private void SearchStates(StateMachine stateMachine, string searchQuery)
 		{
 			_stateMachine = stateMachine;
