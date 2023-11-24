@@ -9,8 +9,9 @@ namespace VisualStateMachine.Attributes
 		public const string Orange = "#915710";
 		public const string LimeGreen = "#6d9111";
 		public const string Green = "#116f1c";
-		public const string Teal = "#08704a";
-		public const string LightBlue = "#086d70";
+		public const string ForestGreen = "#08704a";
+		public const string Teal = "#066670";
+		public const string LightBlue = "#037091";
 		public const string Blue = "#084870";
 		public const string Purple = "#4a0e99";
 		public const string Violet = "#740e99";

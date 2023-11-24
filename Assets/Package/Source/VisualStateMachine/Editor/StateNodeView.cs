@@ -106,7 +106,7 @@ namespace VisualStateMachine.Editor
 			var stateType = Data.State.GetType();
 			
 			var nodeColor = AttributeUtils.GetInheritedCustomAttribute<NodeColorAttribute>(stateType);
-			var color = ColorUtils.HexToColor(NodeColor.Grey);
+			var color = ColorUtils.HexToColor(NodeColor.Tundora);
 			
 			if (nodeColor != null)
 			{

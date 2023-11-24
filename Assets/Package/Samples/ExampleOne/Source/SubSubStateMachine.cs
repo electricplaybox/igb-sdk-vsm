@@ -5,6 +5,7 @@ using VisualStateMachine.States;
 
 namespace Samples.ExampleOne.Source
 {
+	[NodeColor(NodeColor.Violet)]
 	public class SubSubStateMachine : SubStateMachine
 	{
 		[Transition]
