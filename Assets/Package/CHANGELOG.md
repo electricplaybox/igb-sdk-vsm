@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.4.3-alpha] - Nov 24, 2023
+- Hotfix for hidden state icons
+- 
 ## [0.4.2-beta] - Nov 24, 2023
 - The StateSelectorWindow now focuses on the ToolbarSearchField for instant searching
 - Added a more dedicated service for icons and moved some icon directories around
