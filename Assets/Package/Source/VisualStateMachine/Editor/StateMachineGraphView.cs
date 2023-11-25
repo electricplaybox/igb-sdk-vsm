@@ -205,17 +205,6 @@ namespace VisualStateMachine.Editor
 			return graphViewChange;
 		}
 
-		private void RemoveAllEdgesTo(StateNodeView stateNodeView)
-		{
-			foreach (var node in nodes)
-			{
-				if (node is not StateNodeView stateNode) continue;
-				
-				stateNode.Data.RemoveConnectionToNode(stateNodeView.Data.Id);
-				DevLog.Log($"REMOVE CONNECTION 2");
-			}
-		}
-
 		public void AddConnectionToState(Edge edge)
 		{
 			var sourceNode = edge.output.node as StateNodeView;
@@ -314,8 +303,6 @@ namespace VisualStateMachine.Editor
 			this.AddManipulator(new SelectionDragger());
 			this.AddManipulator(new RectangleSelector());
 			this.AddManipulator(new FreehandSelector());
-			
-			
 		}
 
 		private void HandleGraphDragged(Vector3 position)

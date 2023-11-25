@@ -12,42 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
   m_Name: StateMachine 1
   m_EditorClassIdentifier: 
-  _entryStateId: a0075a03-b77a-40c6-9fcd-f2f22469fce9
+  _entryStateId: 
   _graphViewState:
-    Position: {x: 389.5, y: 247, z: 0}
-    Scale: 1
-  _nodes:
-  - _state: {fileID: 2772954378379400588}
-    _id: a0075a03-b77a-40c6-9fcd-f2f22469fce9
-    _position: {x: 0, y: 0}
-    _isEntryNode: 1
-    _connections: []
-  - _state: {fileID: 3063816703303248784}
-    _id: e309892c-1b11-4fac-84c9-9f74e31fd23f
-    _position: {x: 252.5, y: 26}
-    _isEntryNode: 0
-    _connections: []
---- !u!114 &2772954378379400588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15634ad3c81c42de8fe7f9cf610117b6, type: 3}
-  m_Name: a0075a03-b77a-40c6-9fcd-f2f22469fce9
-  m_EditorClassIdentifier: 
---- !u!114 &3063816703303248784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43820891a2d94b3bbefcae0dda3cfd61, type: 3}
-  m_Name: e309892c-1b11-4fac-84c9-9f74e31fd23f
-  m_EditorClassIdentifier: 
+    Position: {x: 0, y: 0, z: 0}
+    Scale: 0
+  _nodes: []
