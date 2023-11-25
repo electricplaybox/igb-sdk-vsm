@@ -153,9 +153,14 @@ namespace VisualStateMachine.Editor
 				input = inputPort,
 				output = outputPort
 			};
+
+			var position = edge.GetPosition();
+			position.position -= (Vector2)graphView.contentViewContainer.transform.position;
+			edge.SetPosition(position); 
+			
 			
 			inputPort.Connect(edge);
-			outputPort.Connect(edge);
+			outputPort.Connect(edge); 
 			graphView.Add(edge);
 
 			return edge;
