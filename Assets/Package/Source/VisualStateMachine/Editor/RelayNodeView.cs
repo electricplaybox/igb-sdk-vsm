@@ -8,9 +8,9 @@ using VisualStateMachine.States;
 
 namespace VisualStateMachine.Editor
 {
-	public class RelayNode : StateNodeView
+	public class RelayNodeView : StateNodeView
 	{
-		public RelayNode(StateNode stateNode, string stateTitle, string stateName, StateMachineGraphView graphView) : base(stateNode, stateTitle, stateName, graphView)
+		public RelayNodeView(StateNode stateNode, string stateTitle, string stateName, StateMachineGraphView graphView) : base(stateNode, stateTitle, stateName, graphView)
 		{
 		}
 

@@ -15,12 +15,23 @@ namespace VisualStateMachine.Editor
 	{
 		public const string DefaultInputNodeName = "Enter";
 		
+		public static StateNodeView CreateStateNode(StateNode stateNode, StateMachineGraphView graphView)
+		{
+			var stateType = stateNode.State.GetType();
+			var stateName = stateType.Name;
+			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
+			var node = new StateNodeView(stateNode, stateTitle, stateNode.Id, graphView);
+			
+			graphView.AddElement(node);
+			return node;
+		}
+		
 		public static T CreateStateNode<T>(StateNode stateNode, StateMachineGraphView graphView) where T : StateNodeView
 		{
 			var stateType = stateNode.State.GetType();
 			var stateName = stateType.Name;
 			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
-			var node = Activator.CreateInstance(typeof(T), new object[] {null, stateTitle, stateName, graphView}) as T;
+			var node = Activator.CreateInstance(typeof(T), new object[] {stateNode, stateTitle, stateName, graphView}) as T;
 			
 			graphView.AddElement(node);
 			return node;

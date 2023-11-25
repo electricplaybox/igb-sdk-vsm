@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using VisualStateMachine.Attributes;
 using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.Editor
@@ -52,7 +53,7 @@ namespace VisualStateMachine.Editor
 			graphViewChanged += OnGraphViewChanged;
 		}
 
-		private void MessWithEdges()
+		private void StraightenEdges()
 		{
 			foreach (var edge in edges)
 			{
@@ -175,13 +176,13 @@ namespace VisualStateMachine.Editor
 					if (element is StateNodeView)
 					{
 						var stateNodeView = element as StateNodeView;
-						// RemoveAllEdgesTo(stateNodeView);
 						_stateMachine.RemoveNode(stateNodeView.Data);
 					}
 					else if (element is Edge || element.GetType().IsSubclassOf(typeof(Edge)))
 					{
 						var edge = element as Edge;
 						_stateMachine.RemoveConnection(edge.output.node.name, edge.input.node.name);
+						DevLog.Log($"REMOVE CONNECTION 1");
 					}
 				}
 			}
@@ -211,6 +212,7 @@ namespace VisualStateMachine.Editor
 				if (node is not StateNodeView stateNode) continue;
 				
 				stateNode.Data.RemoveConnectionToNode(stateNodeView.Data.Id);
+				DevLog.Log($"REMOVE CONNECTION 2");
 			}
 		}
 
@@ -226,6 +228,7 @@ namespace VisualStateMachine.Editor
 			);
 					
 			sourceNode.Data.AddConnection(connection);
+			DevLog.Log("AddConnectionToState");
 		}
 
 		private void CreateContextMenu()
@@ -272,8 +275,8 @@ namespace VisualStateMachine.Editor
 			stateNode.SetPosition(position);
 			
 			var isEntryNode = this.nodes.ToList().Count == 0;
-			
-			var node = StateMachineNodeFactory.CreateStateNode<StateNodeView>(stateNode, this);
+
+			var node = CreateNode(stateNode);
 			_stateMachine.AddNode(stateNode);
 			
 			if (isEntryNode)
@@ -348,12 +351,28 @@ namespace VisualStateMachine.Editor
 			
 			foreach (var node in _stateMachine.Nodes)
 			{
-				StateMachineNodeFactory.CreateStateNode<StateNodeView>(node, this);
+				CreateNode(node);
 			}
 			
 			foreach (var node in _stateMachine.Nodes)
 			{
 				StateMachineNodeFactory.ConnectStateNode(node, this);
+			}
+		}
+
+		private StateNodeView CreateNode(StateNode stateNode)
+		{
+			var stateNodeType = stateNode.State.GetType();
+			var nodeType = AttributeUtils.GetInheritedCustomAttribute<NodeTypeAttribute>(stateNodeType);
+			var type = nodeType?.NodeType ?? NodeType.None;
+			
+			switch (type)
+			{
+				case NodeType.Relay:
+					return StateMachineNodeFactory.CreateStateNode<RelayNodeView>(stateNode, this);
+				case NodeType.None:
+				default:
+					return StateMachineNodeFactory.CreateStateNode<StateNodeView>(stateNode, this);
 			}
 		}
 	}

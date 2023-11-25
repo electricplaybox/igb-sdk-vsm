@@ -17,7 +17,7 @@ namespace VisualStateMachine.Editor
 		{
 			Data = stateNode;
 			this.title = stateTitle;
-			this.name = stateName;
+			this.name = stateNode.Id;
 			
 			if(stateNode.State is not EntryState) StateMachineNodeFactory.CreateInputPort(this, graphView);
 			StateMachineNodeFactory.CreateOutputPorts(this, graphView);

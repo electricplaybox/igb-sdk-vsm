@@ -10,6 +10,7 @@ namespace VisualStateMachine.States
 		Right
 	}
 	
+	[NodeType(NodeType.Relay)]
 	[PortOrientation(Orientation.Vertical)]
 	public abstract class Relay : State
 	{
