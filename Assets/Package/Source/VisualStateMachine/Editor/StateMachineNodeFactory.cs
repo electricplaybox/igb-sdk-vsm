@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -7,98 +8,34 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine.Attributes;
-using VisualStateMachine.States;
 
 namespace VisualStateMachine.Editor
 {
 	public class StateMachineNodeFactory
 	{
-		public static StateNodeView CreateStateNode(StateNode stateNode, StateMachineGraphView graphView)
+		public const string DefaultInputNodeName = "Enter";
+		
+		public static T CreateStateNode<T>(StateNode stateNode, StateMachineGraphView graphView) where T : StateNodeView
 		{
 			var stateType = stateNode.State.GetType();
 			var stateName = stateType.Name;
 			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
-			
-			var node = new StateNodeView();
-			node.Data = stateNode;
-			node.title = stateTitle;
-			node.name = stateNode.Id;
-			
-			if(stateNode.State is not EntryState) CreateInputPort(node, graphView);
-			CreateOutputPorts(node, graphView);
-			
-			node.RefreshPorts();
-			node.RefreshExpandedState();
-			node.SetPosition(new Rect(stateNode.Position, Vector2.one));
-			
-			var container = new VisualElement();
-			container.name = "title-container";
-			
-			var title = node.Query<VisualElement>("title").First();
-			var titleLabel = title.Query<VisualElement>("title-label").First();
-			var titleButton = title.Query<VisualElement>("title-button-container").First();
-			title.Remove(titleButton);
-			
-			var icon = new Image();
-			icon.name = "title-icon";
-			icon.scaleMode = ScaleMode.ScaleToFit;
-			
-			title.Add(container);
-			container.Add(icon);
-			container.Add(titleLabel);
-
-			var progressBar = new ProgressBar();
-			progressBar.name = "progress-bar";
-			title.Add(progressBar);
-			
-			var contents = node.Query<VisualElement>("contents").First();
-			var propertyContainer = new VisualElement()
-			{
-				name = "property-container"
-			};
-			
-			propertyContainer.AddToClassList("full-width");
-			contents.Insert(0, propertyContainer);
-
-			if (stateNode.State != null)
-			{
-				var stateInspector = CreateUIElementInspector(stateNode.State);
-                stateInspector.name = "state-inspector";
-				propertyContainer.Add(stateInspector);
-				
-				if (stateInspector.childCount > 0)
-				{
-					propertyContainer.AddToClassList("has-properties");
-				}
-				
-				//adjust the node size
-				var nodeWidth = stateType.GetCustomAttribute<NodeWidthAttribute>();
-				if (nodeWidth != null)
-				{
-					propertyContainer.style.width = nodeWidth.Width;
-				}
-			}
+			var node = Activator.CreateInstance(typeof(T), new object[] {null, stateTitle, stateName, graphView}) as T;
 			
 			graphView.AddElement(node);
-			
 			return node;
 		}
 		
-		public static VisualElement CreateUIElementInspector(UnityEngine.Object target, List<string> propertiesToExclude = null)
+		public static VisualElement CreateUIElementInspector(UnityEngine.Object target, 
+			List<string> propertiesToExclude = null)
 		{
 			var container = new VisualElement();
- 
 			var serializedObject = new SerializedObject(target);
- 
 			var fields = GetInheritedSerializedFields(target.GetType());
  
-			for (var i = 0; i < fields.Length; ++i) 
+			foreach (var field in fields)
 			{
-				var field = fields[i];
-				
-				if ( propertiesToExclude != null && propertiesToExclude.Contains(field.Name)) {
-					continue;
-				}
+				if ( propertiesToExclude != null && propertiesToExclude.Contains(field.Name)) continue;
 
 				var serializedProperty = serializedObject.FindProperty(field.Name);
 				if (serializedProperty != null)
@@ -119,48 +56,26 @@ namespace VisualStateMachine.Editor
 		
 		public static FieldInfo[] GetVisibleSerializedFields(Type T)
 		{
-			var infoFields = new List<FieldInfo>();
- 
 			var publicFields = T.GetFields(BindingFlags.Instance | BindingFlags.Public);
-			for (var i = 0; i < publicFields.Length; i++)
-			{
-				if (publicFields[i].GetCustomAttribute<HideInInspector>() != null) continue;
-				infoFields.Add(publicFields[i]);
-			}
- 
+			var infoFields = publicFields.Where(t => t.GetCustomAttribute<HideInInspector>() == null).ToList();
 			var privateFields = T.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
-			foreach (var t in privateFields)
-			{
-				if (t.GetCustomAttribute<SerializeField>() == null) continue;
-				infoFields.Add(t);
-			}
- 
+			
+			infoFields.AddRange(privateFields.Where(t => t.GetCustomAttribute<SerializeField>() != null));
+
 			return infoFields.ToArray();
 		}
 		
-		public static FieldInfo[] GetInheritedSerializedFields(Type type)
+		public static IEnumerable<FieldInfo> GetInheritedSerializedFields(Type type)
 		{
 			var infoFields = new List<FieldInfo>();
 
 			while (type != null && type != typeof(UnityEngine.Object))
 			{
 				var publicFields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-				foreach (var field in publicFields)
-				{
-					if (field.GetCustomAttribute<HideInInspector>() == null)
-					{
-						infoFields.Add(field);
-					}
-				}
-
+				infoFields.AddRange(publicFields.Where(field => field.GetCustomAttribute<HideInInspector>() == null));
+				
 				var privateFields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-				foreach (var field in privateFields)
-				{
-					if (field.GetCustomAttribute<SerializeField>() != null)
-					{
-						infoFields.Add(field);
-					}
-				}
+				infoFields.AddRange(privateFields.Where(field => field.GetCustomAttribute<SerializeField>() != null));
 
 				// Move to the base type
 				type = type.BaseType;
@@ -168,24 +83,19 @@ namespace VisualStateMachine.Editor
 
 			return infoFields.ToArray();
 		}
-		
+
 		public static void CreateInputPort(StateNodeView node, StateMachineGraphView graphView)
 		{
-			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(node.Data.State.GetType());
-			var orientation = orientationAtt != null ? orientationAtt.Orientation : Orientation.Horizontal;
-
-			if (orientation == Orientation.Horizontal)
-			{
-				Debug.Log($"HOR: {node.name}");
-			}
-			
+			var nodeType = node.Data.State.GetType();
+			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(nodeType);
+			var orientation = orientationAtt?.Orientation ?? Orientation.Horizontal;
 			var inputPort = node.InstantiatePort(orientation, Direction.Input, Port.Capacity.Multi, typeof(Node));
-			
-			inputPort.name = inputPort.portName = "Enter";
+
+			inputPort.name = inputPort.portName = DefaultInputNodeName;
 			inputPort.AddManipulator(new EdgeConnector<Edge>(new StateEdgeListener(graphView)));
 			node.inputContainer.Add(inputPort);
 		}
-		
+
 		public static void CreateOutputPorts(StateNodeView node, StateMachineGraphView graphView)
 		{
 			var type = node.Data.State.GetType();
@@ -200,26 +110,24 @@ namespace VisualStateMachine.Editor
 			}
 		}
 		
-		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView, TransitionAttribute transitionAttribute)
+		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView, 
+			TransitionAttribute transitionAttribute)
 		{
-			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(node.Data.State.GetType());
+			var nodeType = node.Data.State.GetType();
+			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(nodeType);
 			var orientation = orientationAtt != null ? orientationAtt.Orientation : Orientation.Horizontal;
-
-			if (orientation == Orientation.Horizontal)
-			{
-				Debug.Log($"HOR: {node.name}");
-			}
 			
 			var outputPort = node.InstantiatePort(orientation, 
 				Direction.Output, 
 				Port.Capacity.Single,
 				typeof(Node));
 			
-			var portText = string.IsNullOrEmpty(transitionAttribute.PortLabel) ? portName : transitionAttribute.PortLabel;
+			var portText = string.IsNullOrEmpty(transitionAttribute.PortLabel) 
+				? portName 
+				: transitionAttribute.PortLabel;
 			
 			outputPort.name = portName;
 			outputPort.portName = portText;
-			//outputPort.RemoveManipulator(outputPort.edgeConnector);
 			outputPort.AddManipulator(new EdgeConnector<Edge>(new StateEdgeListener(graphView)));
 			
 			node.outputContainer.Add(outputPort);
@@ -237,7 +145,6 @@ namespace VisualStateMachine.Editor
 			
 			inputPort.Connect(edge);
 			outputPort.Connect(edge);
-			
 			graphView.Add(edge);
 
 			return edge;

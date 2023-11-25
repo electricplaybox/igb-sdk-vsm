@@ -13,7 +13,70 @@ namespace VisualStateMachine.Editor
 		public StateNode Data;
 		public StateMachine StateMachine;
 
-		public void Update()
+		public StateNodeView(StateNode stateNode, string stateTitle, string stateName, StateMachineGraphView graphView)
+		{
+			Data = stateNode;
+			this.title = stateTitle;
+			this.name = stateName;
+			
+			if(stateNode.State is not EntryState) StateMachineNodeFactory.CreateInputPort(this, graphView);
+			StateMachineNodeFactory.CreateOutputPorts(this, graphView);
+			
+			this.RefreshPorts();
+			this.RefreshExpandedState();
+			this.SetPosition(new Rect(stateNode.Position, Vector2.one));
+			
+			var container = new VisualElement();
+			container.name = "title-container";
+			
+			var title = this.Query<VisualElement>("title").First();
+			var titleLabel = title.Query<VisualElement>("title-label").First();
+			var titleButton = title.Query<VisualElement>("title-button-container").First();
+			title.Remove(titleButton);
+			
+			var icon = new Image();
+			icon.name = "title-icon";
+			icon.scaleMode = ScaleMode.ScaleToFit;
+			
+			title.Add(container);
+			container.Add(icon);
+			container.Add(titleLabel);
+
+			var progressBar = new ProgressBar();
+			progressBar.name = "progress-bar";
+			title.Add(progressBar);
+			
+			var contents = this.Query<VisualElement>("contents").First();
+			var propertyContainer = new VisualElement()
+			{
+				name = "property-container"
+			};
+			
+			propertyContainer.AddToClassList("full-width");
+			contents.Insert(0, propertyContainer);
+
+			if (stateNode.State != null)
+			{
+				var stateInspector = StateMachineNodeFactory.CreateUIElementInspector(stateNode.State);
+				stateInspector.name = "state-inspector";
+				propertyContainer.Add(stateInspector);
+				
+				if (stateInspector.childCount > 0)
+				{
+					propertyContainer.AddToClassList("has-properties");
+				}
+				
+				//adjust the node size
+				var stateType = stateNode.State.GetType();
+				var nodeWidth = stateType.GetCustomAttribute<NodeWidthAttribute>();
+				if (nodeWidth != null)
+				{
+					propertyContainer.style.width = nodeWidth.Width;
+				}
+			}
+		}
+
+		public virtual void Update()
 		{
 			if (Data == null) return;
 			
@@ -24,8 +87,8 @@ namespace VisualStateMachine.Editor
 			CreateCustomIcon();
 			CreateRelayNode();
 		}
-		
-		private void CreateRelayNode()
+
+		private void CreateVerticalRelayNode()
 		{
 			if (Data.State is not Relay) return;
 			var relayState = Data.State as Relay;
@@ -66,6 +129,11 @@ namespace VisualStateMachine.Editor
 			
 			var topInput = top.Q("input");
 			top.Remove(topInput);
+		}
+		
+		private void CreateRelayNode()
+		{
+			
 
 
 			//var label = new Label();
@@ -177,6 +245,15 @@ namespace VisualStateMachine.Editor
 			{
 				RemoveFromClassList("entry-node");
 			}
+		}
+		
+		public override Port InstantiatePort(
+			Orientation orientation,
+			Direction direction,
+			Port.Capacity capacity,
+			System.Type type)
+		{
+			return StatePort.Create<Edge>(orientation, direction, capacity, type);
 		}
 	}
 }

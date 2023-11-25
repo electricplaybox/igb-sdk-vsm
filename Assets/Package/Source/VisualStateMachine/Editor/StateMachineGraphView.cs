@@ -273,7 +273,7 @@ namespace VisualStateMachine.Editor
 			
 			var isEntryNode = this.nodes.ToList().Count == 0;
 			
-			var node = StateMachineNodeFactory.CreateStateNode(stateNode, this);
+			var node = StateMachineNodeFactory.CreateStateNode<StateNodeView>(stateNode, this);
 			_stateMachine.AddNode(stateNode);
 			
 			if (isEntryNode)
@@ -348,7 +348,7 @@ namespace VisualStateMachine.Editor
 			
 			foreach (var node in _stateMachine.Nodes)
 			{
-				StateMachineNodeFactory.CreateStateNode(node, this);
+				StateMachineNodeFactory.CreateStateNode<StateNodeView>(node, this);
 			}
 			
 			foreach (var node in _stateMachine.Nodes)
