@@ -21,6 +21,7 @@ namespace VisualStateMachine.Editor
 
 		public StateMachineGraphView(StateMachine stateMachine = null)
 		{
+			DevLog.Log($"StateMachineGraphView({stateMachine})");
 			graphViewChanged -= OnGraphViewChanged;
 			
 			CreateEmptyGraphView();
@@ -37,14 +38,17 @@ namespace VisualStateMachine.Editor
 
 		public void Update(StateMachine stateMachine)
 		{
+			// DevLog.Log($"StateMachineGraphView.Update({stateMachine})");
 			graphViewChanged -= OnGraphViewChanged;
 
 			if (stateMachine == null)
 			{
+				DevLog.Log($"StateMachineGraphView.Update 1b");
 				ClearGraph();
 			} 
 			else
 			{
+				// DevLog.Log($"StateMachineGraphView.Update 1c");
 				LoadStateMachine(stateMachine);
 				UpdateNodes();
 				EnforceEntryNode();
@@ -73,6 +77,7 @@ namespace VisualStateMachine.Editor
 
 		public void ClearGraph()
 		{
+			DevLog.Log($"StateMachineGraphView.ClearGraph nodes:{nodes.ToList().Count}, edges:{edges.ToList().Count}");
 			if (contentViewContainer.childCount == 0) return;
 			
 			DeleteElements(nodes);
@@ -105,6 +110,7 @@ namespace VisualStateMachine.Editor
 		
 		private void LoadGraphViewState()
 		{
+			DevLog.Log($"StateMachineGraphView.LoadGraphViewState");
 			if (_stateMachine == null) return;
 
 			if (_stateMachine.GraphViewState.Scale < 0.01f)
@@ -321,15 +327,22 @@ namespace VisualStateMachine.Editor
 		
 		private void LoadStateMachine(StateMachine stateMachine)
 		{
+			if (stateMachine != _stateMachine)
+			{
+				stateMachine?.Save();
+			}
+			
 			var nodeCount = stateMachine.Nodes.Count;
 			if (nodeCount == 0)
 			{
+				DevLog.Log($"StateMachineGraphView.LoadStateMachine AddEntryNode");
 				stateMachine.AddEntryNode();
 			}
 			
 			if (stateMachine == _stateMachine && nodeCount == nodes.Count()) return;
-			
+			DevLog.Log($"StateMachineGraphView.LoadStateMachine({stateMachine})");
 			_stateMachine = stateMachine;
+			
 			LoadGraphViewState();
 			
 			_toolbar?.Update(stateMachine);
@@ -349,6 +362,7 @@ namespace VisualStateMachine.Editor
 
 		private StateNodeView CreateNode(StateNode stateNode)
 		{
+			DevLog.Log($"StateMachineGraphView.CreateNode({stateNode})");
 			var stateNodeType = stateNode.State.GetType();
 			var nodeType = AttributeUtils.GetInheritedCustomAttribute<NodeTypeAttribute>(stateNodeType);
 			var type = nodeType?.NodeType ?? NodeType.None;
