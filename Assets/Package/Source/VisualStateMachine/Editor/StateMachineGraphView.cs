@@ -285,11 +285,6 @@ namespace VisualStateMachine.Editor
 		private void OnDestroy()
 		{
 			SaveGraphViewState();
-				
-			if (_contextMenu != null)
-			{
-				_contextMenu.OnCreateNewStateNode -= HandleCreateNewStateNode;
-			}
 		}
 
 		private void CreateGrid()

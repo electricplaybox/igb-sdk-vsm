@@ -12,19 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15634ad3c81c42de8fe7f9cf610117b6, type: 3}
   m_Name: 981bb347-c81c-43fd-a563-81069dde38df
   m_EditorClassIdentifier: 
---- !u!114 &-4608303806938702361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 115fca3636f24cff8630dd8daa3b5e48, type: 3}
-  m_Name: 14d61a39-4abb-4dd4-ac52-18f767dfc6e0
-  m_EditorClassIdentifier: 
-  _duration: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,12 +33,4 @@ MonoBehaviour:
     _id: 981bb347-c81c-43fd-a563-81069dde38df
     _position: {x: 0, y: 0}
     _isEntryNode: 1
-    _connections:
-    - _toNodeId: 14d61a39-4abb-4dd4-ac52-18f767dfc6e0
-      _fromNodeId: 981bb347-c81c-43fd-a563-81069dde38df
-      _fromPortName: Exit
-  - _state: {fileID: -4608303806938702361}
-    _id: 14d61a39-4abb-4dd4-ac52-18f767dfc6e0
-    _position: {x: 264.5, y: 114}
-    _isEntryNode: 0
     _connections: []

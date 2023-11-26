@@ -75,8 +75,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 1c4cb83f-9c53-427c-92ae-c59a8b66d166
   _graphViewState:
-    Position: {x: 1009, y: -122.11997, z: 0}
-    Scale: 1
+    Position: {x: 784, y: 90, z: 0}
+    Scale: 0.8695652
   _nodes:
   - _state: {fileID: 7445181071092816189}
     _id: 1c4cb83f-9c53-427c-92ae-c59a8b66d166
@@ -98,10 +98,7 @@ MonoBehaviour:
     _id: 8918db57-87c2-46fc-bb5a-7156450d7484
     _position: {x: -10, y: 213}
     _isEntryNode: 0
-    _connections:
-    - _toNodeId: 78ae48b1-a4dc-4f63-b19f-62f30ed0ad85
-      _fromNodeId: 8918db57-87c2-46fc-bb5a-7156450d7484
-      _fromPortName: Exit
+    _connections: []
   - _state: {fileID: -3529655702573529826}
     _id: 3ae10036-196f-4717-8752-f277254934b8
     _position: {x: -481, y: 135}
