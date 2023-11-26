@@ -87,15 +87,25 @@ namespace VisualStateMachine.Editor
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
 		{
 			var compatiblePorts = new List<Port>();
-			ports.ForEach(port =>
+			foreach (var port in ports)
 			{
+				if (DoElementsBothContainClass(port, startPort, "output")) continue;
+				if (DoElementsBothContainClass(port, startPort, "input")) continue;
+				
 				if (startPort != port && startPort.node != port.node)
 				{
 					compatiblePorts.Add(port);
 				}
-			});
+			}
 			
 			return compatiblePorts;
+		}
+
+		private bool DoElementsBothContainClass(VisualElement elementA, VisualElement elementB, string className)
+		{
+			var elementAHasClass = elementA.GetClasses().Contains(className);
+			var elementBHasClass = elementB.GetClasses().Contains(className);
+			return elementAHasClass == elementBHasClass;
 		}
 		
 		private void SaveGraphViewState()

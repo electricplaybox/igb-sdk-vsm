@@ -49,6 +49,9 @@ namespace VisualStateMachine.Editor
 					edgeControl.controlPoints[1].x -= 55;
 					edgeControl.controlPoints[2].x += 55;
 					break;
+				case FlexDirection.ColumnReverse:
+					edgeControl.controlPoints[2].y += 55;
+					break;
 			}
 		}
 		
@@ -69,6 +72,10 @@ namespace VisualStateMachine.Editor
 					edgeControl.controlPoints[1].x -= 5;
 					edgeControl.controlPoints[2].x += 5;
 					break;
+				case FlexDirection.Column:
+					edgeControl.controlPoints[1].y -= 55;
+					edgeControl.controlPoints[2].y += 55;
+					break;
 			}
 		}
 
@@ -83,7 +90,11 @@ namespace VisualStateMachine.Editor
 			switch (inputDirection)
 			{
 				case FlexDirection.RowReverse:
+					edgeControl.controlPoints[1].x += 5;
 					edgeControl.controlPoints[2].x += 55;
+					break;
+				case FlexDirection.ColumnReverse:
+					edgeControl.controlPoints[2].y += 55;
 					break;
 			}
 			
@@ -94,6 +105,9 @@ namespace VisualStateMachine.Editor
 					break;
 				case FlexDirection.RowReverse:
 					edgeControl.controlPoints[1].x += 5;
+					break;
+				case FlexDirection.Column:
+					edgeControl.controlPoints[1].y -= 55;
 					break;
 			}
 		}

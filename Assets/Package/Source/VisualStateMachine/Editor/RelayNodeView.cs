@@ -61,28 +61,6 @@ namespace VisualStateMachine.Editor
 			{
 				SetPortFlexDirection(FlexDirection.Row, FlexDirection.RowReverse);
 			}
-
-			// var input = contents.Q("input");
-			// var inputPort = input.Q<Port>();
-			// inputPort.style.flexDirection = FlexDirection.Column;
-			//
-			// var output = contents.Q("output");
-			// var outputPort = output.Q<Port>();
-			// outputPort.style.flexDirection = FlexDirection.Column;
-			//
-			// var contentDivider = contents.Q("divider");
-			// contentDivider.parent.Remove(contentDivider);
-			//
-			// var topDivider = top.Q("divider");
-			// topDivider.parent.Remove(topDivider);
-			//
-			// var bottom = new VisualElement();
-			// bottom.name = "bottom";
-			// bottom.Insert(0, inputPort);
-			// contents.Insert(0, bottom);
-			//
-			// var topInput = top.Q("input");
-			// top.Remove(topInput);
 		}
 
 		private void SwapNodes()
