@@ -1,13 +1,11 @@
-﻿using System;
-using UnityEditor.Experimental.GraphView;
+﻿using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
-using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.Editor
 {
 	public class StateNodeEdge : Edge
 	{
-		protected override EdgeControl CreateEdgeControl() => new StateNodeEdgeControl(this)
+		protected override EdgeControl CreateEdgeControl() => new StateNodeEdgeControl()
 		{
 			capRadius = 4f,
 			interceptWidth = 6f
@@ -18,28 +16,60 @@ namespace VisualStateMachine.Editor
 			edgeControl.RegisterCallback<GeometryChangedEvent>(HandleGeometryChange);
 		}
 
-		public override bool UpdateEdgeControl()
-		{
-			if (!base.UpdateEdgeControl()) return false;
-
-			UpdateEdge();
-			return true;
-		}
-
 		private void HandleGeometryChange(GeometryChangedEvent evt)
 		{
-				if (output != null && input == null)
-				{
-					SetControlPointsForDragging(output);
-				}
-				else if (input != null && output == null)
-				{
-					SetControlPointsForDragging(input);
-				}
-				else if (input != null && output != null)
-				{
-					SetControlPointsForConnectedEdge(input, output);
-				}
+			if (output != null && input == null)
+			{
+				SetControlPointsForOutputDragging(output);
+			}
+			else if (input != null && output == null)
+			{
+				SetControlPointsForInputDragging(input);
+			}
+			if (input != null && output != null)
+			{
+				SetControlPointsForConnectedEdge(input, output);
+			}
+		}
+
+		private void SetControlPointsForInputDragging(Port port)
+		{
+			var points = edgeControl.controlPoints;
+			if (points == null) return;
+			
+			var direction = port.resolvedStyle.flexDirection;
+			
+			switch (direction)
+			{
+				case FlexDirection.Row:
+					edgeControl.controlPoints[1].x += 5;
+					edgeControl.controlPoints[2].x -= 5;
+					break;
+				case FlexDirection.RowReverse:
+					edgeControl.controlPoints[1].x -= 55;
+					edgeControl.controlPoints[2].x += 55;
+					break;
+			}
+		}
+		
+		private void SetControlPointsForOutputDragging(Port port)
+		{
+			var points = edgeControl.controlPoints;
+			if (points == null) return;
+			
+			var direction = port.resolvedStyle.flexDirection;
+			
+			switch (direction)
+			{
+				case FlexDirection.Row:
+					edgeControl.controlPoints[1].x -= 55;
+					edgeControl.controlPoints[2].x += 55;
+					break;
+				case FlexDirection.RowReverse:
+					edgeControl.controlPoints[1].x -= 5;
+					edgeControl.controlPoints[2].x += 5;
+					break;
+			}
 		}
 
 		private void SetControlPointsForConnectedEdge(Port input, Port output)
@@ -52,12 +82,6 @@ namespace VisualStateMachine.Editor
 			
 			switch (inputDirection)
 			{
-				case FlexDirection.Column:
-					break;
-				case FlexDirection.ColumnReverse:
-					break;
-				case FlexDirection.Row:
-					break;
 				case FlexDirection.RowReverse:
 					edgeControl.controlPoints[2].x += 55;
 					break;
@@ -65,10 +89,6 @@ namespace VisualStateMachine.Editor
 			
 			switch (outputDirection)
 			{
-				case FlexDirection.Column:
-					break;
-				case FlexDirection.ColumnReverse:
-					break;
 				case FlexDirection.Row:
 					edgeControl.controlPoints[1].x -= 55;
 					break;
@@ -76,32 +96,6 @@ namespace VisualStateMachine.Editor
 					edgeControl.controlPoints[1].x += 5;
 					break;
 			}
-		}
-
-		private void SetControlPointsForDragging(Port originPort)
-		{
-			var points = edgeControl.controlPoints;
-			if (points == null) return;
-			
-			var direction = originPort.resolvedStyle.flexDirection;
-
-			switch (direction)
-			{
-				case FlexDirection.Column:
-					break;
-				case FlexDirection.ColumnReverse:
-					break;
-				case FlexDirection.Row:
-					// edgeControl.controlPoints[1].x -= 60;
-					break;
-				case FlexDirection.RowReverse:
-					break;
-			}
-		}
-
-		private void UpdateEdge()
-		{
-			
 		}
 	}
 }

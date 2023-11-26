@@ -17,6 +17,7 @@ namespace Samples.ExampleOne.Source
 		public override void EnterState()
 		{
 			_entryTime = Time.time;
+			Debug.Log("Enter MySubStateOne");
 		}
 
 		public override void UpdateState()
@@ -29,7 +30,7 @@ namespace Samples.ExampleOne.Source
 
 		public override void ExitState()
 		{
-			
+			Debug.Log("Exit MySubStateOne");
 		}
 	}
 }
