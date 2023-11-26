@@ -1,15 +1,14 @@
 ﻿using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.Editor
 {
 	public class StatePort : Port
 	{
-		private int _portSizeIncrease = 24;
-		private int _offsetX = 0;
-		private int _offsetY = -5;
-		
+		private int _portSizeIncrease = 0;
+	
 		protected StatePort(Orientation portOrientation, Direction portDirection, Capacity portCapacity, Type type) : base(portOrientation, portDirection, portCapacity, type)
 		{
 			
@@ -22,12 +21,14 @@ namespace VisualStateMachine.Editor
 
 		public override bool ContainsPoint(Vector2 localPoint)
 		{
-			Rect expandedBounds = new Rect(
-				this.resolvedStyle.left - (_portSizeIncrease* 0.5f) + _offsetX,
-				this.resolvedStyle.top - (_portSizeIncrease* 0.5f) + _offsetY,
+			var expandedBounds = new Rect(
+				this.resolvedStyle.left - (_portSizeIncrease* 0.5f),
+				-(_portSizeIncrease* 0.5f),
 				this.resolvedStyle.width + _portSizeIncrease,
 				this.resolvedStyle.height + _portSizeIncrease
 			);
+			
+			// DevLog.Log($"ContainsPoint: {localPoint}, center:{expandedBounds.center}, offset:({_offsetX},{_offsetY}), top:{this.resolvedStyle.top}, height:{this.resolvedStyle.height}");
 
 			return expandedBounds.Contains(localPoint);
 		}

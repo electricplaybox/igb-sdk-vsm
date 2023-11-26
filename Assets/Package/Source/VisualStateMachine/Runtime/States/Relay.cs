@@ -7,7 +7,9 @@ namespace VisualStateMachine.States
 	public enum RelayDirection
 	{
 		Left,
-		Right
+		Right,
+		Down,
+		Up
 	}
 	
 	[NodeType(NodeType.Relay)]

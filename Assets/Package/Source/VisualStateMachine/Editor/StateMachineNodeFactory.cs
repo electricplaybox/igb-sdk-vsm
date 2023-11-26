@@ -103,7 +103,7 @@ namespace VisualStateMachine.Editor
 			var inputPort = node.InstantiatePort(orientation, Direction.Input, Port.Capacity.Multi, typeof(Node));
 
 			inputPort.name = inputPort.portName = DefaultInputNodeName;
-			inputPort.AddManipulator(new EdgeConnector<Edge>(new StateEdgeListener(graphView)));
+			inputPort.AddManipulator(new EdgeConnector<StateNodeEdge>(new StateEdgeListener(graphView)));
 			node.inputContainer.Add(inputPort);
 		}
 
@@ -139,7 +139,7 @@ namespace VisualStateMachine.Editor
 			
 			outputPort.name = portName;
 			outputPort.portName = portText;
-			outputPort.AddManipulator(new EdgeConnector<Edge>(new StateEdgeListener(graphView)));
+			outputPort.AddManipulator(new EdgeConnector<StateNodeEdge>(new StateEdgeListener(graphView)));
 			
 			node.outputContainer.Add(outputPort);
 		}
