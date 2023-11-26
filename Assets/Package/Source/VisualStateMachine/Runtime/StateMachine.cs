@@ -47,11 +47,6 @@ namespace VisualStateMachine
 			return instance;
 		}
 
-		public void OnValidate()
-		{
-			Debug.Log($"ONVALIDATE: {this.name}, {_nodes.Count}, {_nodes.Sum(node => node.Connections.Count)}");
-		}
-
 		public void UpdateGraphViewState(Vector3 position, float scale)
 		{
 			_graphViewState ??= new GraphViewState();

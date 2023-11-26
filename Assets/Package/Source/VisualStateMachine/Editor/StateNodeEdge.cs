@@ -1,5 +1,5 @@
-﻿using UnityEditor.Experimental.GraphView;
-using UnityEngine;
+﻿using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using VisualStateMachine.Tools;
 
@@ -7,67 +7,100 @@ namespace VisualStateMachine.Editor
 {
 	public class StateNodeEdge : Edge
 	{
+		protected override EdgeControl CreateEdgeControl() => new StateNodeEdgeControl(this)
+		{
+			capRadius = 4f,
+			interceptWidth = 6f
+		};
+
+		public StateNodeEdge()
+		{
+			edgeControl.RegisterCallback<GeometryChangedEvent>(HandleGeometryChange);
+		}
+
 		public override bool UpdateEdgeControl()
 		{
-			Vector2 startPosition;
-			Vector2 endPosition;
+			if (!base.UpdateEdgeControl()) return false;
 
-			// Check if we are dragging the edge from output to input
-			if (output != null && input == null)
-			{
-				startPosition = output.GetGlobalCenter();
-				endPosition = edgeControl.to; // Use current end position of the edge control
-				// Apply custom logic for dragging from output
-				SetControlPointsForDragging(output,startPosition, endPosition, true);
-			}
-			// Check if we are dragging the edge from input to output
-			else if (input != null && output == null)
-			{
-				startPosition = edgeControl.from; // Use current start position of the edge control
-				endPosition = input.GetGlobalCenter();
-				// Apply custom logic for dragging from input
-				SetControlPointsForDragging(input, startPosition, endPosition, false);
-			}
-			else if (input != null && output != null)
-			{
-				// // Normal edge drawing logic when both ports are connected
-				// startPosition = output.GetGlobalCenter();
-				// endPosition = input.GetGlobalCenter();
-				// SetControlPointsForConnectedEdge(startPosition, endPosition);
-			}
-			
-			return base.UpdateEdgeControl();
+			UpdateEdge();
+			return true;
 		}
-		
-		private void SetControlPointsForDragging(Port originPort, Vector2 start, Vector2 end, bool isOutputDragging)
-		{
-			var points = this.edgeControl.controlPoints;
-			if (points == null) return;
 
-			var direction = originPort.style.flexDirection;
+		private void HandleGeometryChange(GeometryChangedEvent evt)
+		{
+				if (output != null && input == null)
+				{
+					SetControlPointsForDragging(output);
+				}
+				else if (input != null && output == null)
+				{
+					SetControlPointsForDragging(input);
+				}
+				else if (input != null && output != null)
+				{
+					SetControlPointsForConnectedEdge(input, output);
+				}
+		}
+
+		private void SetControlPointsForConnectedEdge(Port input, Port output)
+		{
+			var points = edgeControl.controlPoints;
+			if (points == null) return;
+				
+			var inputDirection = input.resolvedStyle.flexDirection;
+			var outputDirection = output.resolvedStyle.flexDirection;
 			
-			switch (direction.value)
+			switch (inputDirection)
 			{
-				case FlexDirection.Row:
-					points[1].x = -30;
-					points[2].x += 30;
-					break;
-				case FlexDirection.RowReverse:
-					
-					break;
 				case FlexDirection.Column:
-					
 					break;
 				case FlexDirection.ColumnReverse:
-					
+					break;
+				case FlexDirection.Row:
+					break;
+				case FlexDirection.RowReverse:
+					edgeControl.controlPoints[2].x += 55;
+					break;
+			}
+			
+			switch (outputDirection)
+			{
+				case FlexDirection.Column:
+					break;
+				case FlexDirection.ColumnReverse:
+					break;
+				case FlexDirection.Row:
+					edgeControl.controlPoints[1].x -= 55;
+					break;
+				case FlexDirection.RowReverse:
+					edgeControl.controlPoints[1].x += 5;
 					break;
 			}
 		}
 
-		private void SetControlPointsForConnectedEdge(Vector2 start, Vector2 end)
+		private void SetControlPointsForDragging(Port originPort)
 		{
-			var points = this.edgeControl.controlPoints;
+			var points = edgeControl.controlPoints;
 			if (points == null) return;
+			
+			var direction = originPort.resolvedStyle.flexDirection;
+
+			switch (direction)
+			{
+				case FlexDirection.Column:
+					break;
+				case FlexDirection.ColumnReverse:
+					break;
+				case FlexDirection.Row:
+					// edgeControl.controlPoints[1].x -= 60;
+					break;
+				case FlexDirection.RowReverse:
+					break;
+			}
+		}
+
+		private void UpdateEdge()
+		{
 			
 		}
 	}

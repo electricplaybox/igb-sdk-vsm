@@ -146,9 +146,9 @@ namespace VisualStateMachine.Editor
 
 		public static Edge ConnectStateNode(Port outputPort, StateNodeView destinationNode, GraphView graphView)
 		{
-			var inputPort = destinationNode.inputContainer.Q<Port>("Enter");
+			var inputPort = destinationNode.Q<Port>(null, "port", "input");
 			
-			var edge = new Edge()
+			var edge = new StateNodeEdge()
 			{
 				input = inputPort,
 				output = outputPort
@@ -173,10 +173,10 @@ namespace VisualStateMachine.Editor
 			foreach (var connection in stateNode.Connections)
 			{
 				var connectedNodeView = graphView.Q<StateNodeView>(connection.ToNodeId);
-				var outputPort = nodeView.outputContainer.Q<Port>(connection.FromPortName);
-				var inputPort = connectedNodeView.inputContainer.Q<Port>("Enter");
+				var outputPort = nodeView.Q<Port>(connection.FromPortName);
+				var inputPort = connectedNodeView.Q<Port>(null, "port", "input");
 				
-				var edge = new Edge
+				var edge = new StateNodeEdge
 				{
 					input = inputPort,
 					output = outputPort
