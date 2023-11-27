@@ -4,6 +4,8 @@
 Currently still a work in progress and subject to breaking changes.
 VisualStateMachine is a Unity package designed to simplify the creation and management of state machines in Unity projects. It provides a visual editor for designing state machines, making it easier to create complex behaviors without writing extensive code.
 
+![Unity_p60bnCUncK](https://github.com/PaulNonatomic/VisualStateMachine/assets/4581647/ebb5e1c4-2e98-490c-be78-9350c6d96703)
+
 ## Features
 - **Visual Editor**: Design state machines using a user-friendly graphical interface.
 - **Unity Integration**: Seamlessly integrates with Unity, allowing for easy implementation in your game projects.
@@ -12,6 +14,69 @@ VisualStateMachine is a Unity package designed to simplify the creation and mana
 
 ## Installation
 To install VisualStateMachine in your Unity project, follow these steps:
-1. Download the package from the [GitHub repository](https://github.com/PaulNonatomic/VisualStateMachine).
-2. Import the package into your Unity project.
-3. Follow the setup instructions to integrate it into your game.
+1. Via package manager add a package from git url https://github.com/PaulNonatomic/VisualStateMachine.git?path=/Assets/Package#master
+    - To work with a specific version use <b><i>#0.3.6-alpha</b><i> or similar
+    - And for the lastest and greatest word in progress use <b><i>#develop</b><i> at your own risk
+  
+## Usage
+1. Create a state machine asset from the project panel. Right click -> Create -> State Machine -> State Machine
+2. Either right click and select "Add State" or drag out from the Entry State
+
+![Unity_60Wgj8SOzV](https://github.com/PaulNonatomic/VisualStateMachine/assets/4581647/c4fd46a1-2773-454a-9a59-82b9844f101c)
+
+3. The State Selection window appears listing all available states.
+   - States are grouped by namespace with the inbuilt states appearing at the top.
+   - The group of states nearest to the location of the state machine asset will open by default but all states remain accessible.
+
+![NVyFxN3rny](https://github.com/PaulNonatomic/VisualStateMachine/assets/4581647/ac9540d7-1207-49f4-9a22-f3de04ceeb3d)
+
+4. Create a custom state. Here's the built in DelayState as an example.
+  - Add a Transition attribute to an exposed event Action in order for it to appear upon the states node in the State Machine Editor
+  - Serialized and public properties are also exposed in the states node in the State Machine Editor. Note fields should be populated with value types and assets and not scene types.
+
+```cs
+[NodeColor(NodeColor.Pink)]
+public class DelayState : State
+{
+    [Transition]
+    public event Action Exit;
+    
+    [SerializeField] 
+    private float _duration = 1f;
+    
+    [NonSerialized]
+    private float _time;
+
+    public override void EnterState()
+    {
+        _time = Time.time;
+    }
+
+    public override void UpdateState()
+    {
+        if(Time.time - _time > _duration) Exit?.Invoke();
+    }
+
+    public override void ExitState()
+    {
+        
+    }
+}
+```
+
+5. Create a game object with a StateMachineController component upon it and assign it your new state machine asset.
+6. Run the application with the StateMachineController selected to see the state of your state machine within the State Machine Editor window.
+
+
+
+# Known Issues
+- Renaming transition events will break state machine at present. 
+  - I'm working on a fix for this were a combination of event name and order will be used to identify events.
+- There are residual issues with selecting edge connections between certain nodes. This can be overcome by area selecting the edge.
+- On occasions the nodes will loose there code driven styling.
+
+# Roadmap
+- Support for sticky notes
+- Grouping of nodes
+- Visual cooldown feedback of state execution (a dissipating glow perhaps)
+
