@@ -1,5 +1,4 @@
-﻿using UnityEditor.Experimental.GraphView;
-using VisualStateMachine.Attributes;
+﻿using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 {

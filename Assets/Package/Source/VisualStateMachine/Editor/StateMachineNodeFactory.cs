@@ -99,7 +99,7 @@ namespace VisualStateMachine.Editor
 		{
 			var nodeType = node.Data.State.GetType();
 			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(nodeType);
-			var orientation = orientationAtt?.Orientation ?? Orientation.Horizontal;
+			var orientation = orientationAtt != null ? (Orientation)orientationAtt.PortOrientation : Orientation.Horizontal;
 			var inputPort = node.InstantiatePort(orientation, Direction.Input, Port.Capacity.Multi, typeof(Node));
 
 			inputPort.name = inputPort.portName = DefaultInputNodeName;
@@ -126,7 +126,7 @@ namespace VisualStateMachine.Editor
 		{
 			var nodeType = node.Data.State.GetType();
 			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(nodeType);
-			var orientation = orientationAtt != null ? orientationAtt.Orientation : Orientation.Horizontal;
+			var orientation = orientationAtt != null ? (Orientation)orientationAtt.PortOrientation : Orientation.Horizontal;
 			
 			var outputPort = node.InstantiatePort(orientation, 
 				Direction.Output, 

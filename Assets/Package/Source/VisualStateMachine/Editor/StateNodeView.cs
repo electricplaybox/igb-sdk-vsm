@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
-using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine.Attributes;
+using VisualStateMachine.Editor.Services;
 using VisualStateMachine.States;
 
 namespace VisualStateMachine.Editor
@@ -85,85 +85,8 @@ namespace VisualStateMachine.Editor
 			DrawActiveNode();
 			SetCustomLabelText();
 			CreateCustomIcon();
-			CreateRelayNode();
-		}
-
-		private void CreateVerticalRelayNode()
-		{
-			if (Data.State is not Relay) return;
-			var relayState = Data.State as Relay;
-			
-			this.AddToClassList("relay-node");
-			
-			var title = this.Q<VisualElement>("title");
-			if (title == null) return;
-			
-			title.parent.Remove(title);
-			
-			var propertyContainer = this.Q<VisualElement>("property-container");
-			if(propertyContainer == null) return;
-			
-			propertyContainer.parent.Remove(propertyContainer);
-
-			var contents = this.Q("contents");
-			var top = contents.Q("top");
-			
-			var input = contents.Q("input");
-			var inputPort = input.Q<Port>();
-			inputPort.style.flexDirection = FlexDirection.Column;
-			
-			var output = contents.Q("output");
-			var outputPort = output.Q<Port>();
-			outputPort.style.flexDirection = FlexDirection.ColumnReverse;
-			
-			var contentDivider = contents.Q("divider");
-			contentDivider.parent.Remove(contentDivider);
-			
-			var topDivider = top.Q("divider");
-			topDivider.parent.Remove(topDivider);
-			
-			var bottom = new VisualElement();
-			bottom.name = "bottom";
-			bottom.Insert(0, inputPort);
-			contents.Insert(0, bottom);
-			
-			var topInput = top.Q("input");
-			top.Remove(topInput);
 		}
 		
-		private void CreateRelayNode()
-		{
-			
-
-
-			//var label = new Label();
-
-			// switch (relayState.Direction)
-			// {
-			// 	case RelayDirection.Right:
-			// 		label.text = ">>";
-			// 		break;
-			// 	case RelayDirection.Left:
-			// 		label.text = "<<";
-			// 		var output = this.Q<VisualElement>("output");
-			// 		output.parent.Insert(0,output);
-			//
-			// 		var outputPort = output.Q<Port>();
-			// 		outputPort.style.flexDirection = FlexDirection.Row;
-			// 		
-			// 		var input = this.Q<VisualElement>("input");
-			// 		input.parent.Add(input);
-			//
-			// 		var inputPort = input.Q<Port>();
-			// 		inputPort.style.flexDirection = FlexDirection.RowReverse;
-			// 		break;
-			// }
-			//
-			// label.style.unityTextAlign = TextAnchor.MiddleCenter;
-			// label.style.unityFontStyleAndWeight = FontStyle.Bold;
-			// propertyContainer.Add(label);
-		}
-
 		private void CreateCustomIcon()
 		{
 			var stateType = Data.State.GetType();
@@ -175,8 +98,8 @@ namespace VisualStateMachine.Editor
 				if(image != null) image.parent.Remove(image);
 				return;
 			}
-
-			var icon = nodeIcon.FetchTexture();
+			
+			var icon = ImageService.FetchTexture(nodeIcon.Path, nodeIcon.Source);
 			if (icon == null)
 			{
 				if(image != null) image.parent.Remove(image);

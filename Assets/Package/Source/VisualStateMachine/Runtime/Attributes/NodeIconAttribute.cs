@@ -1,6 +1,4 @@
 ﻿using System;
-using UnityEngine;
-using VisualStateMachine.Editor;
 
 namespace VisualStateMachine.Attributes
 {
@@ -14,11 +12,6 @@ namespace VisualStateMachine.Attributes
 		{
 			Source = source;
 			Path = path;
-		}
-		
-		public Texture2D FetchTexture()
-		{
-			return ImageService.FetchTexture(Path, Source);
 		}
 	}
 }

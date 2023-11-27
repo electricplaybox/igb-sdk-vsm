@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.5.2-beta] - Nov 28, 2023
+- Fix for introduced build errors
+
 ## [0.5.1-beta] - Nov 28, 2023
 - Hid the samples directory (which still needs actual samples)
 - 

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using VisualStateMachine.Attributes;
 
-namespace VisualStateMachine.Editor
+namespace VisualStateMachine.Editor.Services
 {
 	public class ImageService
 	{

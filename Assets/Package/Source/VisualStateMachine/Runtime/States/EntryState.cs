@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEditor.Graphs;
 using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
