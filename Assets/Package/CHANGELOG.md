@@ -1,5 +1,19 @@
 ﻿# Change Log
 
+## [0.5.0-beta] - Nov 27, 2023
+- Support for vertical and flipped directional relay nodes
+- The state selection menu now appears where the mouse was when it was opened
+- Fix for input and output ports being able to connect to their own kind
+- Fix for the create state button becoming broken when docking/undocking the state machine editor
+- Added a fix for edge positions when dragging out
+- Fix for inverted edges. This was a real challenge to understand.
+- Fix for bug where connection data could be lost when switching state machines
+- Fixed the adding and positioning of new edges by moving the creation process into the StateEdgeListener. 
+  This required the graph views position to be used to offset the new edge.
+- Support for custom state nodes
+- Added revised node colours
+- Added support for inherited attributes
+
 ## [0.4.3-beta] - Nov 24, 2023
 - Hotfix for hidden state icons
 - 

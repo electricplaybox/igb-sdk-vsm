@@ -17,5 +17,12 @@ To install VisualStateMachine in your Unity project, follow these steps:
     - And for the lastest and greatest word in progress use <b><i>#develop</b><i> at your own risk
 
 # Known Issues
-- Renaming transition events will break statemachine at present. 
+- Renaming transition events will break state machine at present. 
   - I'm working on a fix for this were a combination of event name and order will be used to identify events.
+- There are residual issues with selecting edge connections between certain nodes. This can be overcome by area selecting the edge.
+- On occasions the nodes will loose there code driven styling.
+
+# Roadmap
+- Support for sticky notes
+- Grouping of nodes
+- Visual cooldown feedback of state execution (a dissipating glow perhaps)

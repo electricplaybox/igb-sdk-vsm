@@ -75,8 +75,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 1c4cb83f-9c53-427c-92ae-c59a8b66d166
   _graphViewState:
-    Position: {x: 0, y: 0, z: 0}
-    Scale: 0.25
+    Position: {x: 812, y: 78, z: 0}
+    Scale: 1
   _nodes:
   - _state: {fileID: 7445181071092816189}
     _id: 1c4cb83f-9c53-427c-92ae-c59a8b66d166
@@ -96,9 +96,12 @@ MonoBehaviour:
       _fromPortName: Exit
   - _state: {fileID: -4704907718612549592}
     _id: 8918db57-87c2-46fc-bb5a-7156450d7484
-    _position: {x: -10, y: 213}
+    _position: {x: -7, y: 281}
     _isEntryNode: 0
-    _connections: []
+    _connections:
+    - _toNodeId: 1d9a61ff-94f3-42b6-ab15-a0cea24bd19c
+      _fromNodeId: 8918db57-87c2-46fc-bb5a-7156450d7484
+      _fromPortName: Exit
   - _state: {fileID: -3529655702573529826}
     _id: 3ae10036-196f-4717-8752-f277254934b8
     _position: {x: -481, y: 135}
@@ -157,9 +160,12 @@ MonoBehaviour:
       _fromPortName: Exit
   - _state: {fileID: 4566392478237066499}
     _id: 1d9a61ff-94f3-42b6-ab15-a0cea24bd19c
-    _position: {x: -133, y: 324}
+    _position: {x: -110, y: 281}
     _isEntryNode: 0
-    _connections: []
+    _connections:
+    - _toNodeId: 78ae48b1-a4dc-4f63-b19f-62f30ed0ad85
+      _fromNodeId: 1d9a61ff-94f3-42b6-ab15-a0cea24bd19c
+      _fromPortName: Exit
 --- !u!114 &53947916072057153
 MonoBehaviour:
   m_ObjectHideFlags: 0
