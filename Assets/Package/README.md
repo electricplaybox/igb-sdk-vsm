@@ -28,7 +28,35 @@ To install VisualStateMachine in your Unity project, follow these steps:
    - States are grouped by namespace with the inbuilt states appearing at the top.
    - The group of states nearest to the location of the state machine asset will open by default but all states remain accessible.
 
-![NVyFxN3rny](https://github.com/PaulNonatomic/VisualStateMachine/assets/4581647/ac9540d7-1207-49f4-9a22-f3de04ceeb3d)
+```cs
+[NodeColor(NodeColor.Pink)]
+public class DelayState : State
+{
+    [Transition]
+    public event Action Exit;
+    
+    [SerializeField] 
+    private float _duration = 1f;
+    
+    [NonSerialized]
+    private float _time;
+
+    public override void EnterState()
+    {
+        _time = Time.time;
+    }
+
+    public override void UpdateState()
+    {
+        if(Time.time - _time > _duration) Exit?.Invoke();
+    }
+
+    public override void ExitState()
+    {
+        
+    }
+}
+```
 
 4. Create a custom state. Here's the built in DelayState as an example.
   - Add a Transition attribute to an exposed event Action in order for it to appear upon the states node in the State Machine Editor
