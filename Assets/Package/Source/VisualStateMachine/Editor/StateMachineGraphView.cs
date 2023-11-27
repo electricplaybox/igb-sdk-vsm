@@ -246,7 +246,7 @@ namespace VisualStateMachine.Editor
 		{
 			if (_stateMachine == null) return;
 			
-			StateSelectorWindow.Open(_stateMachine, stateType =>
+			StateSelectorWindow.Open(_stateMachine, position, stateType =>
 			{
 				if (stateType == null) return;
 				
@@ -263,7 +263,7 @@ namespace VisualStateMachine.Editor
 		{
 			if (_stateMachine == null) return;
 			
-			StateSelectorWindow.Open(_stateMachine, stateType =>
+			StateSelectorWindow.Open(_stateMachine, position, stateType =>
 			{
 				if (stateType == null) return;
 				
