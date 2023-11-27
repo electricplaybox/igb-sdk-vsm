@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using VisualStateMachine.Attributes;
 using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.Editor
@@ -20,6 +21,7 @@ namespace VisualStateMachine.Editor
 
 		public StateMachineGraphView(StateMachine stateMachine = null)
 		{
+			DevLog.Log($"StateMachineGraphView({stateMachine})");
 			graphViewChanged -= OnGraphViewChanged;
 			
 			CreateEmptyGraphView();
@@ -36,14 +38,17 @@ namespace VisualStateMachine.Editor
 
 		public void Update(StateMachine stateMachine)
 		{
+			// DevLog.Log($"StateMachineGraphView.Update({stateMachine})");
 			graphViewChanged -= OnGraphViewChanged;
 
 			if (stateMachine == null)
 			{
+				DevLog.Log($"StateMachineGraphView.Update 1b");
 				ClearGraph();
 			} 
 			else
 			{
+				// DevLog.Log($"StateMachineGraphView.Update 1c");
 				LoadStateMachine(stateMachine);
 				UpdateNodes();
 				EnforceEntryNode();
@@ -52,7 +57,7 @@ namespace VisualStateMachine.Editor
 			graphViewChanged += OnGraphViewChanged;
 		}
 
-		private void MessWithEdges()
+		private void StraightenEdges()
 		{
 			foreach (var edge in edges)
 			{
@@ -72,6 +77,7 @@ namespace VisualStateMachine.Editor
 
 		public void ClearGraph()
 		{
+			DevLog.Log($"StateMachineGraphView.ClearGraph nodes:{nodes.ToList().Count}, edges:{edges.ToList().Count}");
 			if (contentViewContainer.childCount == 0) return;
 			
 			DeleteElements(nodes);
@@ -81,15 +87,25 @@ namespace VisualStateMachine.Editor
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
 		{
 			var compatiblePorts = new List<Port>();
-			ports.ForEach(port =>
+			foreach (var port in ports)
 			{
+				if (DoElementsBothContainClass(port, startPort, "output")) continue;
+				if (DoElementsBothContainClass(port, startPort, "input")) continue;
+				
 				if (startPort != port && startPort.node != port.node)
 				{
 					compatiblePorts.Add(port);
 				}
-			});
+			}
 			
 			return compatiblePorts;
+		}
+
+		private bool DoElementsBothContainClass(VisualElement elementA, VisualElement elementB, string className)
+		{
+			var elementAHasClass = elementA.GetClasses().Contains(className);
+			var elementBHasClass = elementB.GetClasses().Contains(className);
+			return elementAHasClass == elementBHasClass;
 		}
 		
 		private void SaveGraphViewState()
@@ -104,6 +120,7 @@ namespace VisualStateMachine.Editor
 		
 		private void LoadGraphViewState()
 		{
+			DevLog.Log($"StateMachineGraphView.LoadGraphViewState");
 			if (_stateMachine == null) return;
 
 			if (_stateMachine.GraphViewState.Scale < 0.01f)
@@ -120,22 +137,6 @@ namespace VisualStateMachine.Editor
 				contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
 				contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
 			}
-			
-			//
-			// if (_stateMachine.GraphViewState != null && _stateMachine.GraphViewState.Scale > 0.1f)
-			// {
-			// 	contentViewContainer.transform.position = Vector3.zero;
-			// 	contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
-			// }
-			// else
-			// {
-			// 	var center = GetGraphRect().center;
-			// 	center.x -= 90;
-			// 	center.y -= 43;
-			// 	
-			// 	contentViewContainer.transform.scale = Vector3.one;
-			// 	contentViewContainer.transform.position = center;
-			// }
 		}
 
 		private void UpdateNodes()
@@ -191,13 +192,13 @@ namespace VisualStateMachine.Editor
 					if (element is StateNodeView)
 					{
 						var stateNodeView = element as StateNodeView;
-						// RemoveAllEdgesTo(stateNodeView);
 						_stateMachine.RemoveNode(stateNodeView.Data);
 					}
 					else if (element is Edge || element.GetType().IsSubclassOf(typeof(Edge)))
 					{
 						var edge = element as Edge;
 						_stateMachine.RemoveConnection(edge.output.node.name, edge.input.node.name);
+						DevLog.Log($"REMOVE CONNECTION 1");
 					}
 				}
 			}
@@ -220,16 +221,6 @@ namespace VisualStateMachine.Editor
 			return graphViewChange;
 		}
 
-		private void RemoveAllEdgesTo(StateNodeView stateNodeView)
-		{
-			foreach (var node in nodes)
-			{
-				if (node is not StateNodeView stateNode) continue;
-				
-				stateNode.Data.RemoveConnectionToNode(stateNodeView.Data.Id);
-			}
-		}
-
 		public void AddConnectionToState(Edge edge)
 		{
 			var sourceNode = edge.output.node as StateNodeView;
@@ -242,6 +233,7 @@ namespace VisualStateMachine.Editor
 			);
 					
 			sourceNode.Data.AddConnection(connection);
+			DevLog.Log("AddConnectionToState");
 		}
 
 		private void CreateContextMenu()
@@ -252,7 +244,9 @@ namespace VisualStateMachine.Editor
 
 		private void HandleCreateNewStateNode(Vector2 position)
 		{
-			StateSelectorWindow.Open(stateType =>
+			if (_stateMachine == null) return;
+			
+			StateSelectorWindow.Open(_stateMachine, position, stateType =>
 			{
 				if (stateType == null) return;
 				
@@ -267,14 +261,15 @@ namespace VisualStateMachine.Editor
 		
 		public void CreateNewStateNodeFromOutputPort(Port port, Vector2 position)
 		{
-			StateSelectorWindow.Open(stateType =>
+			if (_stateMachine == null) return;
+			
+			StateSelectorWindow.Open(_stateMachine, position, stateType =>
 			{
 				if (stateType == null) return;
 				
 				var newNode = CreateStateNode(stateType, ScreenPointToGraphPoint(position));
 				var edge = StateMachineNodeFactory.ConnectStateNode(port, newNode, this);
 
-				//TODO save edge to statemachine
 				AddConnectionToState(edge);
 			});
 		}
@@ -285,8 +280,8 @@ namespace VisualStateMachine.Editor
 			stateNode.SetPosition(position);
 			
 			var isEntryNode = this.nodes.ToList().Count == 0;
-			
-			var node = StateMachineNodeFactory.CreateStateNode(stateNode, this);
+
+			var node = CreateNode(stateNode);
 			_stateMachine.AddNode(stateNode);
 			
 			if (isEntryNode)
@@ -300,11 +295,6 @@ namespace VisualStateMachine.Editor
 		private void OnDestroy()
 		{
 			SaveGraphViewState();
-				
-			if (_contextMenu != null)
-			{
-				_contextMenu.OnCreateNewStateNode -= HandleCreateNewStateNode;
-			}
 		}
 
 		private void CreateGrid()
@@ -324,8 +314,6 @@ namespace VisualStateMachine.Editor
 			this.AddManipulator(new SelectionDragger());
 			this.AddManipulator(new RectangleSelector());
 			this.AddManipulator(new FreehandSelector());
-			
-			
 		}
 
 		private void HandleGraphDragged(Vector3 position)
@@ -344,15 +332,22 @@ namespace VisualStateMachine.Editor
 		
 		private void LoadStateMachine(StateMachine stateMachine)
 		{
+			if (stateMachine != _stateMachine)
+			{
+				stateMachine?.Save();
+			}
+			
 			var nodeCount = stateMachine.Nodes.Count;
 			if (nodeCount == 0)
 			{
+				DevLog.Log($"StateMachineGraphView.LoadStateMachine AddEntryNode");
 				stateMachine.AddEntryNode();
 			}
 			
 			if (stateMachine == _stateMachine && nodeCount == nodes.Count()) return;
-			
+			DevLog.Log($"StateMachineGraphView.LoadStateMachine({stateMachine})");
 			_stateMachine = stateMachine;
+			
 			LoadGraphViewState();
 			
 			_toolbar?.Update(stateMachine);
@@ -361,12 +356,29 @@ namespace VisualStateMachine.Editor
 			
 			foreach (var node in _stateMachine.Nodes)
 			{
-				StateMachineNodeFactory.CreateStateNode(node, this);
+				CreateNode(node);
 			}
 			
 			foreach (var node in _stateMachine.Nodes)
 			{
 				StateMachineNodeFactory.ConnectStateNode(node, this);
+			}
+		}
+
+		private StateNodeView CreateNode(StateNode stateNode)
+		{
+			DevLog.Log($"StateMachineGraphView.CreateNode({stateNode})");
+			var stateNodeType = stateNode.State.GetType();
+			var nodeType = AttributeUtils.GetInheritedCustomAttribute<NodeTypeAttribute>(stateNodeType);
+			var type = nodeType?.NodeType ?? NodeType.None;
+			
+			switch (type)
+			{
+				case NodeType.Relay:
+					return StateMachineNodeFactory.CreateStateNode<RelayNodeView>(stateNode, this);
+				case NodeType.None:
+				default:
+					return StateMachineNodeFactory.CreateStateNode<StateNodeView>(stateNode, this);
 			}
 		}
 	}

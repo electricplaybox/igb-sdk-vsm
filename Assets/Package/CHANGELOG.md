@@ -1,7 +1,39 @@
 ﻿# Change Log
+
+## [0.5.0-beta] - Nov 27, 2023
+- Support for vertical and flipped directional relay nodes
+- The state selection menu now appears where the mouse was when it was opened
+- Fix for input and output ports being able to connect to their own kind
+- Fix for the create state button becoming broken when docking/undocking the state machine editor
+- Added a fix for edge positions when dragging out
+- Fix for inverted edges. This was a real challenge to understand.
+- Fix for bug where connection data could be lost when switching state machines
+- Fixed the adding and positioning of new edges by moving the creation process into the StateEdgeListener. 
+  This required the graph views position to be used to offset the new edge.
+- Support for custom state nodes
+- Added revised node colours
+- Added support for inherited attributes
+
+## [0.4.3-beta] - Nov 24, 2023
+- Hotfix for hidden state icons
+- 
+## [0.4.2-beta] - Nov 24, 2023
+- The StateSelectorWindow now focuses on the ToolbarSearchField for instant searching
+- Added a more dedicated service for icons and moved some icon directories around
+- Added an editor tool to toggle the samples directory tilde prefix to make my life easier
+
+## [0.4.1-beta] - Nov 23, 2023
+- Filtered out abstract states from the state selector 
+
+## [0.4.0-beta] - Nov 23, 2023
+- Added new state icons. Built in states are displayed at the top.
+- Added focus loss to close StateSelectorWindow. 
+- Added new state selector styling. 
+- Added state selector state grouping.
+
 ## [0.3.6-alpha] - Nov 23, 2023
 - Graph view is now drawn on editor update even in edit mode
-  - This has the advantage of removing the progress state when exiting runtime
+    - This has the advantage of removing the progress state when exiting runtime
 
 ## [0.3.5-alpha] - Nov 23, 2023
 - Critical hotfix for the graphview not updating

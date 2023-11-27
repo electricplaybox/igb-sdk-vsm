@@ -1,8 +1,10 @@
 ﻿using System;
+using UnityEditor.Graphs;
 using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 { 
+	[HideNode, NodeColor(NodeColor.Green)]
 	public class EntryState : State
 	{
 		[Transition(">>")]

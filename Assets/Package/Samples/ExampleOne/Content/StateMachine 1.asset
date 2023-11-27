@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8327710596837087941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15634ad3c81c42de8fe7f9cf610117b6, type: 3}
+  m_Name: 981bb347-c81c-43fd-a563-81069dde38df
+  m_EditorClassIdentifier: 
+--- !u!114 &-1696571928861785075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43820891a2d94b3bbefcae0dda3cfd61, type: 3}
+  m_Name: 75c51629-fbfe-430a-b3b2-56b0ec16cd16
+  m_EditorClassIdentifier: 
+--- !u!114 &-1481367462508670456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da5ab3f1c564128897bdff146148418, type: 3}
+  m_Name: 20d16316-54fc-413d-ab07-6dfda238ae66
+  m_EditorClassIdentifier: 
+  _duration: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
+  m_Name: StateMachine 1
+  m_EditorClassIdentifier: 
+  _entryStateId: 981bb347-c81c-43fd-a563-81069dde38df
+  _graphViewState:
+    Position: {x: 324, y: 146, z: 0}
+    Scale: 1
+  _nodes:
+  - _state: {fileID: -8327710596837087941}
+    _id: 981bb347-c81c-43fd-a563-81069dde38df
+    _position: {x: -270, y: -41}
+    _isEntryNode: 1
+    _connections:
+    - _toNodeId: 20d16316-54fc-413d-ab07-6dfda238ae66
+      _fromNodeId: 981bb347-c81c-43fd-a563-81069dde38df
+      _fromPortName: Exit
+  - _state: {fileID: -1481367462508670456}
+    _id: 20d16316-54fc-413d-ab07-6dfda238ae66
+    _position: {x: -35.5, y: 47}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: 75c51629-fbfe-430a-b3b2-56b0ec16cd16
+      _fromNodeId: 20d16316-54fc-413d-ab07-6dfda238ae66
+      _fromPortName: Exit
+  - _state: {fileID: -1696571928861785075}
+    _id: 75c51629-fbfe-430a-b3b2-56b0ec16cd16
+    _position: {x: 315, y: -44}
+    _isEntryNode: 0
+    _connections: []

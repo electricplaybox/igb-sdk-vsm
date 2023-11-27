@@ -1,0 +1,16 @@
+{
+    "name": "com.nonatomic.statemachine.example.two",
+    "rootNamespace": "",
+    "references": [
+        "GUID:933b2205b9e1bf44c9cf43214981a083"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

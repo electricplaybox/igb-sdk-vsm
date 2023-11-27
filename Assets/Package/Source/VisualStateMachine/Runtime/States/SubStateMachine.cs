@@ -5,7 +5,7 @@ using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 {
-	[NodeColor(NodeColor.Purple), NodeLabel("Sub State Machine"), NodeIcon("Assets/Package/Source/Editor/Resources/flow-white.png")]
+	[NodeColor(NodeColor.Purple), NodeLabel("Sub State Machine"), NodeIcon(NodeIcon.VsmFlatWhite)]
 	public class SubStateMachine : State
 	{
 		[Transition]

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using VisualStateMachine.States;
+using VisualStateMachine.Tools;
 
 namespace VisualStateMachine
 {
@@ -45,7 +46,7 @@ namespace VisualStateMachine
 			
 			return instance;
 		}
-		
+
 		public void UpdateGraphViewState(Vector3 position, float scale)
 		{
 			_graphViewState ??= new GraphViewState();
@@ -229,6 +230,7 @@ namespace VisualStateMachine
 			{
 				EditorUtility.SetDirty(this);
 				AssetDatabase.SaveAssetIfDirty(this);
+				Debug.Log($"StateMachine.Save: {this.name}, {_nodes.Count}, {_nodes.Sum(node => node.Connections.Count)}");
 			}
 			#endif
 		}

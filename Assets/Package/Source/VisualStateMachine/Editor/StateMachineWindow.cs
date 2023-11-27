@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -170,14 +171,18 @@ namespace VisualStateMachine.Editor
 		 */
 		private void Draw()
 		{
+			DevLog.Log("StateMachineWindow Draw .");
+			
 			if (_stateMachine != null)
 			{
+				DevLog.Log("StateMachineWindow Draw 1a");
 				Draw(_stateMachine);
 				return;
 			}
 
 			if (_graphView == null)
 			{
+				DevLog.Log("StateMachineWindow Draw 1b");
 				_graphView = new StateMachineGraphView();
 				rootVisualElement.Clear();
 				rootVisualElement.Add(_graphView);
@@ -186,16 +191,19 @@ namespace VisualStateMachine.Editor
 		
 		private void Draw(StateMachine stateMachine)
 		{
+			// DevLog.Log($"StateMachineWindow Draw(stateMachine) 1a - {stateMachine.Nodes.Sum(node => node.Connections.Count)}");
 			_stateMachine = stateMachine;
 			
 			if (_graphView == null)
 			{
+				DevLog.Log($"StateMachineWindow Draw(stateMachine) 1b");
 				_graphView = new StateMachineGraphView(_stateMachine);
 				rootVisualElement.Clear();
 				rootVisualElement.Add(_graphView);
 			}
 			else
 			{
+				// DevLog.Log($"StateMachineWindow Draw(stateMachine) 1c");
 				_graphView.Update(_stateMachine);
 			}
 		}

@@ -12,7 +12,17 @@ VisualStateMachine is a Unity package designed to simplify the creation and mana
 
 ## Installation
 To install VisualStateMachine in your Unity project, follow these steps:
-1. Download the package from the [GitHub repository](https://github.com/PaulNonatomic/VisualStateMachine).
-2. Import the package into your Unity project.
-3. Follow the setup instructions to integrate it into your game.
-[README.md](..%2F..%2FREADME.md)
+1. Via package manager add a package from git url https://github.com/PaulNonatomic/VisualStateMachine.git?path=/Assets/Package#master
+    - To work with a specific version use <b><i>#0.3.6-alpha</b><i> or similar
+    - And for the lastest and greatest word in progress use <b><i>#develop</b><i> at your own risk
+
+# Known Issues
+- Renaming transition events will break state machine at present. 
+  - I'm working on a fix for this were a combination of event name and order will be used to identify events.
+- There are residual issues with selecting edge connections between certain nodes. This can be overcome by area selecting the edge.
+- On occasions the nodes will loose there code driven styling.
+
+# Roadmap
+- Support for sticky notes
+- Grouping of nodes
+- Visual cooldown feedback of state execution (a dissipating glow perhaps)

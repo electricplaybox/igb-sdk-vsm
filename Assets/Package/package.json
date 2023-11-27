@@ -1,11 +1,15 @@
 ﻿{
   "name": "com.nonatomic.visualstatemachine",
-  "version": "0.3.6-alpha",
+  "version": "0.5.0-beta",
   "displayName": "Nonatomic Visual StateMachine",
   "description": "Visual StateMachine",
   "unity": "2022.3",
   "unityRelease": "1f1",
+  "documentationUrl": "https://github.com/PaulNonatomic/VisualStateMachine/blob/develop/Assets/Package/README.md",
+  "changelogUrl": "https://github.com/PaulNonatomic/VisualStateMachine/blob/develop/Assets/Package/CHANGELOG.md",
   "keywords": [
+    "Visual",
+    "StateMachine"
   ],
   "author": {
     "name": "Nonatomic",
@@ -17,10 +21,17 @@
     "type": "git",
     "url": "git@github.com:PaulNonatomic/VisualStateMachine.git"
   },
-  "samples": {
-    "displayName": "State Machine Example",
-    "description": "A simple state machine example",
-    "path": "Samples/Example"
-  }
+  "samples": [
+    {
+      "displayName": "State Machine Example",
+      "description": "A simple state machine example",
+      "path": "Samples/ExampleOne"
+    },
+    {
+      "displayName": "State Machine Example",
+      "description": "A simple state machine example",
+      "path": "Samples/ExampleTwo"
+    }
+  ]
 }
   

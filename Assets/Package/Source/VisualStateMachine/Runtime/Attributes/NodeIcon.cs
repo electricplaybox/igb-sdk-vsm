@@ -1,15 +1,13 @@
-﻿using System;
-
-namespace VisualStateMachine.Attributes
+﻿namespace VisualStateMachine.Attributes
 {
-	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-	public class NodeIcon : Attribute
+	public abstract class NodeIcon
 	{
-		public string Path { get; private set; }
-		
-		public NodeIcon(string path)
-		{
-			Path = path;
-		}
+		public const string VsmFlatWhite = "Icons/statemachine-flat-white";
+		public const string VsmGreen = "Icons/statemachine-green";
+		public const string VsmRed = "Icons/statemachine-red";
+		public const string VsmBlue= "Icons/statemachine-blue";
+		public const string FolderGreen = "Icons/folder-green";
+		public const string FolderRed = "Icons/folder-red";
+		public const string FolderBlue = "Icons/folder-blue";
 	}
 }
