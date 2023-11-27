@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.5.1-beta] - Nov 28, 2023
+- Hid the samples directory (which still needs actual samples)
+- 
 ## [0.5.0-beta] - Nov 27, 2023
 - Support for vertical and flipped directional relay nodes
 - The state selection menu now appears where the mouse was when it was opened
