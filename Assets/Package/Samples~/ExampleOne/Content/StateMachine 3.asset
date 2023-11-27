@@ -54,7 +54,10 @@ MonoBehaviour:
     _id: 4cbc09f6-0dda-4837-b6c7-9bf7f84613cc
     _position: {x: -191, y: -107}
     _isEntryNode: 0
-    _connections: []
+    _connections:
+    - _toNodeId: 1c8ec15e-e740-4591-a50a-8b6e870bdea2
+      _fromNodeId: 4cbc09f6-0dda-4837-b6c7-9bf7f84613cc
+      _fromPortName: Exit
   - _state: {fileID: 5140439836209928145}
     _id: 1c8ec15e-e740-4591-a50a-8b6e870bdea2
     _position: {x: 190.5, y: 66}

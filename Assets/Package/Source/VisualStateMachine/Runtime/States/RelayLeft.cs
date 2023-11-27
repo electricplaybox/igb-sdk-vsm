@@ -2,7 +2,7 @@
 
 namespace VisualStateMachine.States
 {
-	[PortOrientation(Orientation.Horizontal)]
+	[PortOrientation(PortOrientation.Horizontal)]
 	public class RelayLeft : Relay
 	{
 		public RelayLeft()
