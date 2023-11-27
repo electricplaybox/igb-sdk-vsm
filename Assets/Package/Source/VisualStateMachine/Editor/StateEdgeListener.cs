@@ -15,6 +15,7 @@ namespace VisualStateMachine.Editor
 		
 		public void OnDropOutsidePort(Edge edge, Vector2 position)
 		{
+			if (edge.output == null) return;
 			if(edge.output.connections.ToList().Count > 0) return;
 			
 			var port = edge.output;
@@ -23,7 +24,14 @@ namespace VisualStateMachine.Editor
 
 		public void OnDrop(GraphView graphView, Edge edge)
 		{
-			//dropped
+			if (edge.output == null) return;
+			if(edge.output.connections.ToList().Count > 0) return;
+			
+			var port = edge.output;
+			var inputNode = edge.input.node as StateNodeView;
+			
+			var connectedEdge = StateMachineNodeFactory.ConnectStateNode(port, inputNode, _graphView);
+			_graphView.AddConnectionToState(connectedEdge);
 		}
 	}
 

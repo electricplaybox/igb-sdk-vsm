@@ -2,11 +2,11 @@
 
 namespace VisualStateMachine.Editor
 {
-	public class BezierEdge : Edge
+	public class StateNodeEdgeControl : EdgeControl
 	{
-		protected override void DrawEdge()
+		public StateNodeEdgeControl() : base()
 		{
-			base.DrawEdge();
+			
 		}
 	}
 }

@@ -26,6 +26,15 @@ namespace VisualStateMachine.Editor
 			window.SearchStates(stateMachine, string.Empty);
 		}
 		
+		public static void Open(StateMachine stateMachine, Vector2 position, Action<Type> onTypeSelected)
+		{
+			var window = GetWindow<StateSelectorWindow>("Select State Type");
+			window.rootVisualElement.styleSheets.Add(Resources.Load<StyleSheet>("StateSelectorWindow"));
+			window.OnTypeSelected = onTypeSelected;
+			window.SearchStates(stateMachine, string.Empty);
+			window.position = new Rect(position, window.position.size);
+		}
+		
 		private void OnLostFocus()
 		{
 			this.Close();

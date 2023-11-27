@@ -142,3 +142,35 @@
     height: 20px;
     margin-right: 10px;
 }
+
+/* *********** Relay Node *********** */
+.relay-node {
+    width:70px;
+    height:auto;
+}
+
+.relay-node.horizontal {
+    width:auto;
+    height:auto;
+}
+
+.relay-node #bottom {
+    background-color: var(--unity-colors-window-background);
+    height:36px;
+    justify-content: center;
+}
+
+.relay-node #top {
+    background-color: var(--unity-colors-window-background);
+    height:36px;
+    justify-content: center;
+}
+
+.relay-node #node-border {
+    background-color: var(--unity-colors-window-border);
+}
+
+.relay-node #contents {
+    margin: 3px;
+}
+
