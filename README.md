@@ -34,7 +34,35 @@ To install VisualStateMachine in your Unity project, follow these steps:
   - Add a Transition attribute to an exposed event Action in order for it to appear upon the states node in the State Machine Editor
   - Serialized and public properties are also exposed in the states node in the State Machine Editor. Note fields should be populated with value types and assets and not scene types.
 
-![codeimage-snippet_27](https://github.com/PaulNonatomic/VisualStateMachine/assets/4581647/5745438d-942e-4d53-949f-d56fb6b2e964)
+```cs
+[NodeColor(NodeColor.Pink)]
+public class DelayState : State
+{
+    [Transition]
+    public event Action Exit;
+    
+    [SerializeField] 
+    private float _duration = 1f;
+    
+    [NonSerialized]
+    private float _time;
+
+    public override void EnterState()
+    {
+        _time = Time.time;
+    }
+
+    public override void UpdateState()
+    {
+        if(Time.time - _time > _duration) Exit?.Invoke();
+    }
+
+    public override void ExitState()
+    {
+        
+    }
+}
+```
 
 5. Create a game object with a StateMachineController component upon it and assign it your new state machine asset.
 6. Run the application with the StateMachineController selected to see the state of your state machine within the State Machine Editor window.
