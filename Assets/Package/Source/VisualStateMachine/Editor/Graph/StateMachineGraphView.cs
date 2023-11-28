@@ -4,11 +4,8 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VisualStateMachine.Attributes;
-using VisualStateMachine.Editor.ContextMenu;
 using VisualStateMachine.Editor.Manipulators;
 using VisualStateMachine.Editor.Nodes;
-using VisualStateMachine.Editor.Utils;
 using VisualStateMachine.Editor.Windows;
 using VisualStateMachine.Tools;
 
@@ -17,6 +14,7 @@ namespace VisualStateMachine.Editor
 	public class StateMachineGraphView : GraphView
 	{
 		public StateMachine StateMachine => _stateMachine;
+		public GraphStateManager StateManager => _stateManager;
 		
 		private StateMachine _stateMachine;
 		private StateMachine _lastChangedStateMachine;
@@ -24,7 +22,7 @@ namespace VisualStateMachine.Editor
 		private readonly GraphUIManager _uiManager;
 		private readonly GraphStateManager _stateManager;
 
-		private const int WindowWidth = 600;t
+		private const int WindowWidth = 600;
 		private const int WindowHeight = 400;
 
 		public StateMachineGraphView(StateMachine stateMachine = null)
@@ -53,44 +51,16 @@ namespace VisualStateMachine.Editor
 
 			if (stateMachine == null)
 			{
-				ClearGraph();
+				_stateManager.ClearGraph();
 			} 
 			else
 			{
 				_stateManager.LoadStateMachine(stateMachine);
 				_stateManager.UpdateNodes();
-				
-				EnforceEntryNode();
+				_stateManager.EnforceEntryNode();
 			}
 			
 			graphViewChanged += OnGraphViewChanged;
-		}
-
-		private void StraightenEdges()
-		{
-			foreach (var edge in edges)
-			{
-				var originalPoints = edge.edgeControl.controlPoints;
-				originalPoints[1] = originalPoints[0];
-				originalPoints[2] = originalPoints[3];
-				edge.MarkDirtyRepaint();
-			}
-		}
-
-		private void EnforceEntryNode()
-		{
-			if (_stateMachine.Nodes.Count > 0) return;
-
-			_stateMachine.AddEntryNode();
-		}
-
-		public void ClearGraph()
-		{
-			DevLog.Log($"StateMachineGraphView.ClearGraph nodes:{nodes.ToList().Count}, edges:{edges.ToList().Count}");
-			if (contentViewContainer.childCount == 0) return;
-			
-			DeleteElements(nodes);
-			DeleteElements(edges);
 		}
 
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -117,27 +87,6 @@ namespace VisualStateMachine.Editor
 			return elementAHasClass == elementBHasClass;
 		}
 	
-		public void LoadGraphViewState()
-		{
-			DevLog.Log($"StateMachineGraphView.LoadGraphViewState");
-			if (_stateMachine == null) return;
-
-			if (_stateMachine.GraphViewState.Scale < 0.01f)
-			{
-				var center = GetGraphRect().center;
-				center.x -= 90;
-				center.y -= 43;
-
-				contentViewContainer.transform.position = center;
-				contentViewContainer.transform.scale = Vector3.one;
-			}
-			else
-			{
-				contentViewContainer.transform.position = _stateMachine.GraphViewState.Position;
-				contentViewContainer.transform.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
-			}
-		}
-
 		private void CreateEmptyGraphView()
 		{
 			AddToClassList("stretch-to-parent-size");
@@ -154,49 +103,10 @@ namespace VisualStateMachine.Editor
 		{
 			if (_stateMachine == null) return graphViewChange;
 			
-			DevLog.Log($"OnGraphViewChanged: Delta:{graphViewChange.moveDelta} Elements to remove:{graphViewChange.elementsToRemove?.Count}, Edges to create:{graphViewChange.edgesToCreate?.Count}, Moved:{graphViewChange.movedElements?.Count}");
-			
-			if (graphViewChange.edgesToCreate != null)
-			{
-				foreach (var edge in graphViewChange.edgesToCreate)
-				{
-					AddConnectionToState(edge);
-				}
-				
-				_stateMachine.Save();
-			}
-			
-			if (graphViewChange.elementsToRemove != null)
-			{
-				foreach (var element in graphViewChange.elementsToRemove)
-				{
-					if (element is StateNodeView)
-					{
-						var stateNodeView = element as StateNodeView;
-						_stateMachine.RemoveNode(stateNodeView.Data);
-					}
-					else if (element is Edge || element.GetType().IsSubclassOf(typeof(Edge)))
-					{
-						var edge = element as Edge;
-						_stateMachine.RemoveConnection(edge.output.node.name, edge.input.node.name);
-						DevLog.Log($"REMOVE CONNECTION 1");
-					}
-				}
-			}
-			
-			if (graphViewChange.movedElements != null)
-			{
-				foreach (var element in graphViewChange.movedElements)
-				{
-					if (element is StateNodeView)
-					{
-						var stateNodeView = element as StateNodeView;
-						var position = element.GetPosition().position;
-						stateNodeView.Data.SetPosition(position);
-					}
-				}
-			}
-
+			_stateManager.CreateEdges(graphViewChange.edgesToCreate);
+			_stateManager.RemoveNodes(graphViewChange.elementsToRemove);
+			_stateManager.RemoveEdges(graphViewChange.elementsToRemove);
+			_stateManager.MoveNodes(graphViewChange.movedElements);
 			_stateManager.SaveGraphViewState();
 			
 			return graphViewChange;
@@ -215,18 +125,6 @@ namespace VisualStateMachine.Editor
 					
 			sourceNode.Data.AddConnection(connection);
 			DevLog.Log("AddConnectionToState");
-		}
-
-		public void CreateNewStateNodeFromContextMenu(Vector2 position)
-		{
-			if (_stateMachine == null) return;
-			
-			StateSelectorWindow.Open(_stateMachine, position, stateType =>
-			{
-				if (stateType == null) return;
-				
-				CreateStateNode(stateType, ScreenPointToGraphPoint(position));
-			});
 		}
 
 		public Vector3 ScreenPointToGraphPoint(Vector2 screenPoint)
@@ -249,7 +147,7 @@ namespace VisualStateMachine.Editor
 			});
 		}
 
-		private StateNodeView CreateStateNode(Type stateType, Vector2 position)
+		public StateNodeView CreateStateNode(Type stateType, Vector2 position)
 		{
 			var stateNode = new StateNode(stateType);
 			stateNode.SetPosition(position);
@@ -296,7 +194,7 @@ namespace VisualStateMachine.Editor
 			_stateManager.SaveGraphViewState();
 		}
 
-		private Rect GetGraphRect()
+		public Rect GetGraphRect()
 		{
 			var rect = new Rect();
 			rect.width = float.IsNaN(resolvedStyle.width) ? WindowWidth : resolvedStyle.width;
@@ -323,11 +221,11 @@ namespace VisualStateMachine.Editor
 			DevLog.Log($"StateMachineGraphView.LoadStateMachine({stateMachine})");
 			_stateMachine = stateMachine;
 			
-			LoadGraphViewState();
+			_stateManager.LoadGraphViewState();
 			
 			_uiManager.UpdateToolbar();
 
-			ClearGraph();
+			_stateManager.ClearGraph();
 			
 			foreach (var node in _stateMachine.Nodes)
 			{

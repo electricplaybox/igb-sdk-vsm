@@ -27,7 +27,7 @@ namespace VisualStateMachine.Editor
 		public void CreateContextMenu() 
 		{
 			_contextMenu = new StateMachineContextMenu(_graphView);
-			_contextMenu.OnCreateNewStateNode += _graphView.CreateNewStateNodeFromContextMenu;
+			_contextMenu.OnCreateNewStateNode += _graphView.StateManager.CreateNewStateNodeFromContextMenu;
 		}
 	}
 }

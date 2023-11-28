@@ -222,7 +222,7 @@ namespace VisualStateMachine.Editor.Windows
 			
 			if (_stateMachine == null && stateMachine == null)
 			{
-				_graphView?.ClearGraph();
+				_graphView?.StateManager.ClearGraph();
 			}
 				
 			Draw(stateMachine);

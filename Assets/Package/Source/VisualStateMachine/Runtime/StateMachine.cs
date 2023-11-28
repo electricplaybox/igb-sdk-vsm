@@ -200,6 +200,7 @@ namespace VisualStateMachine
 			if (fromNode == null)
 			{
 				Debug.LogError($"Attempting to remove connection between node {fromNodeId} to {toNodeId} failed as the fromNode is not present");
+				return;
 			}
 			
 			fromNode.RemoveAll(connection => connection.ToNodeId == toNodeId);
