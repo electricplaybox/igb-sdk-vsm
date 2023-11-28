@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VisualStateMachine.Editor.Manipulators;
 using VisualStateMachine.Editor.Nodes;
 using VisualStateMachine.Editor.Windows;
 using VisualStateMachine.Tools;
@@ -13,40 +12,32 @@ namespace VisualStateMachine.Editor
 {
 	public class StateMachineGraphView : GraphView
 	{
-		public StateMachine StateMachine => _stateMachine;
 		public GraphStateManager StateManager => _stateManager;
-		
-		private StateMachine _stateMachine;
+		public GraphUIManager UIManager => _uiManager;
 		private StateMachine _lastChangedStateMachine;
 		
 		private readonly GraphUIManager _uiManager;
 		private readonly GraphStateManager _stateManager;
 
-		private const int WindowWidth = 600;
-		private const int WindowHeight = 400;
-
 		public StateMachineGraphView(StateMachine stateMachine = null)
 		{
-			_uiManager = new GraphUIManager(this);
-			_stateManager = new GraphStateManager(this);
-			
 			graphViewChanged -= OnGraphViewChanged;
 			
-			CreateEmptyGraphView();
+			_stateManager = new GraphStateManager(this);
+			_uiManager = new GraphUIManager(this);
+			_uiManager.CreateEmptyGraphView();
 			
 			if (stateMachine != null)
 			{
-				_stateMachine = stateMachine;
 				_stateManager.LoadStateMachine(stateMachine);
 			}
-			
+
 			graphViewChanged += OnGraphViewChanged;
 		}
 
 
 		public void Update(StateMachine stateMachine)
 		{
-			// DevLog.Log($"StateMachineGraphView.Update({stateMachine})");
 			graphViewChanged -= OnGraphViewChanged;
 
 			if (stateMachine == null)
@@ -87,22 +78,8 @@ namespace VisualStateMachine.Editor
 			return elementAHasClass == elementBHasClass;
 		}
 	
-		private void CreateEmptyGraphView()
-		{
-			AddToClassList("stretch-to-parent-size");
-			RegisterCallback<DetachFromPanelEvent>(evt => OnDestroy());
-			
-			CreateGrid();
-			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
-			AddManipulators();
-			_uiManager.CreateToolbar();
-			_uiManager.CreateContextMenu();
-		}
-		
 		private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
 		{
-			if (_stateMachine == null) return graphViewChange;
-			
 			_stateManager.CreateEdges(graphViewChange.edgesToCreate);
 			_stateManager.RemoveNodes(graphViewChange.elementsToRemove);
 			_stateManager.RemoveEdges(graphViewChange.elementsToRemove);
@@ -134,9 +111,9 @@ namespace VisualStateMachine.Editor
 		
 		public void CreateNewStateNodeFromOutputPort(Port port, Vector2 position)
 		{
-			if (_stateMachine == null) return;
+			if (_stateManager.StateMachine == null) return;
 			
-			StateSelectorWindow.Open(_stateMachine, position, stateType =>
+			StateSelectorWindow.Open(_stateManager.StateMachine, position, stateType =>
 			{
 				if (stateType == null) return;
 				
@@ -155,41 +132,22 @@ namespace VisualStateMachine.Editor
 			var isEntryNode = this.nodes.ToList().Count == 0;
 
 			var node = _stateManager.AddNode(stateNode);
-			_stateMachine.AddNode(stateNode);
+			_stateManager.StateMachine.AddNode(stateNode);
 			
 			if (isEntryNode)
 			{
-				_stateMachine.SetEntryNode(stateNode);
+				_stateManager.StateMachine.SetEntryNode(stateNode);
 			}
 
 			return node;
 		}
 
-		private void OnDestroy()
+		public void OnDestroy()
 		{
 			_stateManager.SaveGraphViewState();
 		}
-
-		private void CreateGrid()
-		{
-			var grid = new GridBackground();
-			grid.name = "grid";
-			grid.AddToClassList("stretch-to-parent-size");
-			Insert(0, grid);
-		}
 		
-		private void AddManipulators()
-		{
-			var contentDragger = new StateMachineGraphContentDragger();
-			contentDragger.OnDrag += HandleGraphDragged;
-			
-			this.AddManipulator(contentDragger);
-			this.AddManipulator(new SelectionDragger());
-			this.AddManipulator(new RectangleSelector());
-			this.AddManipulator(new FreehandSelector());
-		}
-
-		private void HandleGraphDragged(Vector3 position)
+		public void HandleGraphDragged(Vector3 position)
 		{
 			_stateManager.SaveGraphViewState();
 		}
@@ -197,51 +155,10 @@ namespace VisualStateMachine.Editor
 		public Rect GetGraphRect()
 		{
 			var rect = new Rect();
-			rect.width = float.IsNaN(resolvedStyle.width) ? WindowWidth : resolvedStyle.width;
-			rect.height = float.IsNaN(resolvedStyle.height) ? WindowHeight : resolvedStyle.height;
+			rect.width = float.IsNaN(resolvedStyle.width) ? StateMachineWindow.WindowWidth : resolvedStyle.width;
+			rect.height = float.IsNaN(resolvedStyle.height) ? StateMachineWindow.WindowHeight : resolvedStyle.height;
 			
 			return rect;
-		}
-		
-		private void LoadStateMachine(StateMachine stateMachine)
-		{
-			if (stateMachine != _stateMachine)
-			{
-				stateMachine?.Save();
-			}
-			
-			var nodeCount = stateMachine.Nodes.Count;
-			if (nodeCount == 0)
-			{
-				DevLog.Log($"StateMachineGraphView.LoadStateMachine AddEntryNode");
-				stateMachine.AddEntryNode();
-			}
-			
-			if (stateMachine == _stateMachine && nodeCount == nodes.Count()) return;
-			DevLog.Log($"StateMachineGraphView.LoadStateMachine({stateMachine})");
-			_stateMachine = stateMachine;
-			
-			_stateManager.LoadGraphViewState();
-			
-			_uiManager.UpdateToolbar();
-
-			_stateManager.ClearGraph();
-			
-			foreach (var node in _stateMachine.Nodes)
-			{
-				_stateManager.AddNode(node);
-			}
-			
-			foreach (var node in _stateMachine.Nodes)
-			{
-				StateMachineNodeFactory.ConnectStateNode(node, this);
-			}
-		}
-
-		public void SetStateMachine(StateMachine stateMachine)
-		{
-			_stateMachine = stateMachine;
-			_uiManager.UpdateToolbar();
 		}
 	}
 }

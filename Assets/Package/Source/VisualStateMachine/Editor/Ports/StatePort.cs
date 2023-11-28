@@ -13,7 +13,7 @@ namespace VisualStateMachine.Editor.Ports
 			
 		}
 		
-		public static StatePort Create<T>(Orientation orientation, Direction direction, Capacity capacity, Type type) where T : Edge
+		public new static StatePort Create<T>(Orientation orientation, Direction direction, Capacity capacity, Type type) where T : Edge
 		{
 			return new StatePort(orientation, direction, capacity, type);
 		}

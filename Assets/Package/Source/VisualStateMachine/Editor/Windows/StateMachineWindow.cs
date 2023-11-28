@@ -9,6 +9,9 @@ namespace VisualStateMachine.Editor.Windows
 	[InitializeOnLoad]
 	public class StateMachineWindow : GraphViewEditorWindow
 	{
+		public const int WindowWidth = 600;
+		public const int WindowHeight = 400;
+		
 		private StateMachine _stateMachine;
 		private StateMachineGraphView _graphView;
 		private StateMachineWindow _openWindow;
@@ -24,6 +27,7 @@ namespace VisualStateMachine.Editor.Windows
 			DevLog.Log("StateMachineWindow OpenWindow");
 			var window = GetWindow<StateMachineWindow>(false, Title, false);
 			window.rootVisualElement.styleSheets.Add(Resources.Load<StyleSheet>("StateMachineEditor"));
+			window.minSize = new Vector2(WindowWidth, WindowHeight);
 			window.Draw();
 			
 			return window;

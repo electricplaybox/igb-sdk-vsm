@@ -6,44 +6,46 @@ using VisualStateMachine.Attributes;
 using VisualStateMachine.Editor.Nodes;
 using VisualStateMachine.Editor.Utils;
 using VisualStateMachine.Editor.Windows;
-using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.Editor
 {
 	public class GraphStateManager
 	{
-		private StateMachineGraphView _graphView;
+		public  StateMachine StateMachine => _stateMachine;
 		
+		private StateMachineGraphView _graphView;
+		private StateMachine _stateMachine;
+
 		public GraphStateManager(StateMachineGraphView graphView) 
 		{
 			_graphView = graphView;
 		}
 
-		public void LoadStateMachine(StateMachine stateMachine)
+		public void LoadStateMachine(StateMachine newStateMachine)
 		{
-			if (stateMachine != _graphView.StateMachine)
+			if (newStateMachine != _stateMachine)
 			{
-				stateMachine.Save();
+				newStateMachine.Save();
 			}
 			
-			var nodeCount = stateMachine.Nodes.Count;
+			var nodeCount = newStateMachine.Nodes.Count;
 			if (nodeCount == 0)
 			{
-				stateMachine.AddEntryNode();
+				newStateMachine.AddEntryNode();
 			}
 			
-			if (stateMachine == _graphView.StateMachine && nodeCount == _graphView.nodes.Count()) return;
+			if (newStateMachine == _stateMachine && nodeCount == _graphView.nodes.Count()) return;
 			
-			_graphView.SetStateMachine(stateMachine);
+			SetStateMachine(newStateMachine);
 			LoadGraphViewState();
 			ClearGraph();
 
-			foreach (var node in stateMachine.Nodes)
+			foreach (var node in newStateMachine.Nodes)
 			{
 				AddNode(node);
 			}
 			
-			foreach (var node in stateMachine.Nodes)
+			foreach (var node in newStateMachine.Nodes)
 			{
 				StateMachineNodeFactory.ConnectStateNode(node, _graphView);
 			}
@@ -51,13 +53,13 @@ namespace VisualStateMachine.Editor
 
 		public void SaveGraphViewState()
 		{
-			if (_graphView.StateMachine == null) return;
+			if (_stateMachine == null) return;
 
 			var contentContainer = _graphView.contentViewContainer;
 			var position = contentContainer.transform.position;
 			if (float.IsNaN(position.x) || float.IsNaN(position.y) || float.IsNaN(position.z)) return;
 			
-			_graphView.StateMachine.UpdateGraphViewState(contentContainer.transform.position, _graphView.scale);
+			_stateMachine.UpdateGraphViewState(contentContainer.transform.position, _graphView.scale);
 		}
 
 		public void UpdateNodes() 
@@ -88,12 +90,11 @@ namespace VisualStateMachine.Editor
 		
 		public void LoadGraphViewState()
 		{
-			var statemachine = _graphView.StateMachine;
-			if (statemachine == null) return;
+			if (_stateMachine == null) return;
 			
 			var contentContainer = _graphView.contentViewContainer.transform;
 
-			if (statemachine.GraphViewState.Scale < 0.01f)
+			if (_stateMachine.GraphViewState.Scale < 0.01f)
 			{
 				var center = _graphView.GetGraphRect().center;
 				center.x -= 90;
@@ -104,17 +105,16 @@ namespace VisualStateMachine.Editor
 			}
 			else
 			{
-				contentContainer.position = statemachine.GraphViewState.Position;
-				contentContainer.scale = Vector3.one * statemachine.GraphViewState.Scale;
+				contentContainer.position = _stateMachine.GraphViewState.Position;
+				contentContainer.scale = Vector3.one * _stateMachine.GraphViewState.Scale;
 			}
 		}
 		
 		public void CreateNewStateNodeFromContextMenu(Vector2 position)
 		{
-			var statemachine = _graphView.StateMachine;
-			if (statemachine == null) return;
+			if (_stateMachine == null) return;
 			
-			StateSelectorWindow.Open(statemachine, position, stateType =>
+			StateSelectorWindow.Open(_stateMachine, position, stateType =>
 			{
 				if (stateType == null) return;
 				
@@ -124,10 +124,9 @@ namespace VisualStateMachine.Editor
 		
 		public void EnforceEntryNode()
 		{
-			var statemachine = _graphView.StateMachine;
-			if (statemachine.Nodes.Count > 0) return;
+			if (_stateMachine.Nodes.Count > 0) return;
 
-			statemachine.AddEntryNode();
+			_stateMachine.AddEntryNode();
 		}
 		
 		public void ClearGraph()
@@ -147,7 +146,7 @@ namespace VisualStateMachine.Editor
 				_graphView.AddConnectionToState(edge);
 			}
 				
-			_graphView.StateMachine.Save();
+			_stateMachine.Save();
 		}
 		
 		public void MoveNodes(List<GraphElement> nodesToMove)
@@ -159,18 +158,9 @@ namespace VisualStateMachine.Editor
 				MoveNode(node);
 			}
 				
-			_graphView.StateMachine.Save();
+			_stateMachine.Save();
 		}
 
-		public void MoveNode(GraphElement element)
-		{
-			if (element is not StateNodeView) return;
-			
-			var stateNodeView = element as StateNodeView;
-			var position = element.GetPosition().position;
-			stateNodeView.Data.SetPosition(position);
-		}
-		
 		public void RemoveEdges(List<GraphElement> edgesToRemove)
 		{
 			if (edgesToRemove == null) return;
@@ -180,15 +170,7 @@ namespace VisualStateMachine.Editor
 				RemoveEdge(edge);
 			}
 				
-			_graphView.StateMachine.Save();
-		}
-
-		public void RemoveEdge(GraphElement element)
-		{
-			if (element is not Edge && !element.GetType().IsSubclassOf(typeof(Edge))) return;
-			
-			var edge = element as Edge;
-			_graphView.StateMachine.RemoveConnection(edge.output.node.name, edge.input.node.name);
+			_stateMachine.Save();
 		}
 
 		public void RemoveNodes(List<GraphElement> nodesToRemove)
@@ -200,15 +182,38 @@ namespace VisualStateMachine.Editor
 				RemoveNode(node);
 			}
 				
-			_graphView.StateMachine.Save();
+			_stateMachine.Save();
 		}
-		
-		public void RemoveNode(GraphElement element)
+
+		public void SetStateMachine(StateMachine stateMachine)
+		{
+			_stateMachine = stateMachine;
+			_graphView.UIManager.UpdateToolbar();
+		}
+
+		private void MoveNode(GraphElement element)
 		{
 			if (element is not StateNodeView) return;
 			
 			var stateNodeView = element as StateNodeView;
-			_graphView.StateMachine.RemoveNode(stateNodeView.Data);
+			var position = element.GetPosition().position;
+			stateNodeView.Data.SetPosition(position);
+		}
+
+		private void RemoveNode(GraphElement element)
+		{
+			if (element is not StateNodeView) return;
+			
+			var stateNodeView = element as StateNodeView;
+			_stateMachine.RemoveNode(stateNodeView.Data);
+		}
+
+		private void RemoveEdge(GraphElement element)
+		{
+			if (element is not Edge && !element.GetType().IsSubclassOf(typeof(Edge))) return;
+			
+			var edge = element as Edge;
+			_stateMachine.RemoveConnection(edge.output.node.name, edge.input.node.name);
 		}
 	}
 }
