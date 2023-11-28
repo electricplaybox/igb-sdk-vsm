@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
 using VisualStateMachine.Editor.Nodes;
+using VisualStateMachine.Editor.Utils;
 using VisualStateMachine.Editor.Windows;
-using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.Editor
 {
@@ -14,11 +12,11 @@ namespace VisualStateMachine.Editor
 	{
 		public GraphStateManager StateManager => _stateManager;
 		public GraphUIManager UIManager => _uiManager;
-		private StateMachine _lastChangedStateMachine;
 		
 		private readonly GraphUIManager _uiManager;
 		private readonly GraphStateManager _stateManager;
-
+		private StateMachine _lastChangedStateMachine;
+		
 		public StateMachineGraphView(StateMachine stateMachine = null)
 		{
 			graphViewChanged -= OnGraphViewChanged;
@@ -34,8 +32,7 @@ namespace VisualStateMachine.Editor
 
 			graphViewChanged += OnGraphViewChanged;
 		}
-
-
+		
 		public void Update(StateMachine stateMachine)
 		{
 			graphViewChanged -= OnGraphViewChanged;
@@ -59,25 +56,16 @@ namespace VisualStateMachine.Editor
 			var compatiblePorts = new List<Port>();
 			foreach (var port in ports)
 			{
-				if (DoElementsBothContainClass(port, startPort, "output")) continue;
-				if (DoElementsBothContainClass(port, startPort, "input")) continue;
-				
-				if (startPort != port && startPort.node != port.node)
-				{
-					compatiblePorts.Add(port);
-				}
+				if (ElementUtils.BothContainClass(port, startPort, "output")) continue;
+				if (ElementUtils.BothContainClass(port, startPort, "input")) continue;
+
+				if (startPort == port || startPort.node == port.node) continue;
+				compatiblePorts.Add(port);
 			}
 			
 			return compatiblePorts;
 		}
 
-		private bool DoElementsBothContainClass(VisualElement elementA, VisualElement elementB, string className)
-		{
-			var elementAHasClass = elementA.GetClasses().Contains(className);
-			var elementBHasClass = elementB.GetClasses().Contains(className);
-			return elementAHasClass == elementBHasClass;
-		}
-	
 		private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
 		{
 			_stateManager.CreateEdges(graphViewChange.edgesToCreate);
@@ -88,8 +76,8 @@ namespace VisualStateMachine.Editor
 			
 			return graphViewChange;
 		}
-
-		public void AddConnectionToState(Edge edge)
+		
+		public static void AddConnectionToState(Edge edge)
 		{
 			var sourceNode = edge.output.node as StateNodeView;
 			var targetNode = edge.input.node as StateNodeView;
@@ -101,12 +89,6 @@ namespace VisualStateMachine.Editor
 			);
 					
 			sourceNode.Data.AddConnection(connection);
-			DevLog.Log("AddConnectionToState");
-		}
-
-		public Vector3 ScreenPointToGraphPoint(Vector2 screenPoint)
-		{
-			return (Vector3)screenPoint - contentViewContainer.transform.position;
 		}
 		
 		public void CreateNewStateNodeFromOutputPort(Port port, Vector2 position)
@@ -116,32 +98,15 @@ namespace VisualStateMachine.Editor
 			StateSelectorWindow.Open(_stateManager.StateMachine, position, stateType =>
 			{
 				if (stateType == null) return;
-				
-				var newNode = CreateStateNode(stateType, ScreenPointToGraphPoint(position));
+
+				var point = GraphUtils.ScreenPointToGraphPoint(position, this);
+				var newNode = StateMachineNodeFactory.CreateStateNode(stateType, point, this);
 				var edge = StateMachineNodeFactory.ConnectStateNode(port, newNode, this);
 
 				AddConnectionToState(edge);
 			});
 		}
-
-		public StateNodeView CreateStateNode(Type stateType, Vector2 position)
-		{
-			var stateNode = new StateNode(stateType);
-			stateNode.SetPosition(position);
-			
-			var isEntryNode = this.nodes.ToList().Count == 0;
-
-			var node = _stateManager.AddNode(stateNode);
-			_stateManager.StateMachine.AddNode(stateNode);
-			
-			if (isEntryNode)
-			{
-				_stateManager.StateMachine.SetEntryNode(stateNode);
-			}
-
-			return node;
-		}
-
+		
 		public void OnDestroy()
 		{
 			_stateManager.SaveGraphViewState();
@@ -150,15 +115,6 @@ namespace VisualStateMachine.Editor
 		public void HandleGraphDragged(Vector3 position)
 		{
 			_stateManager.SaveGraphViewState();
-		}
-
-		public Rect GetGraphRect()
-		{
-			var rect = new Rect();
-			rect.width = float.IsNaN(resolvedStyle.width) ? StateMachineWindow.WindowWidth : resolvedStyle.width;
-			rect.height = float.IsNaN(resolvedStyle.height) ? StateMachineWindow.WindowHeight : resolvedStyle.height;
-			
-			return rect;
 		}
 	}
 }

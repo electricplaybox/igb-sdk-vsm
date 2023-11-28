@@ -96,7 +96,7 @@ namespace VisualStateMachine.Editor
 
 			if (_stateMachine.GraphViewState.Scale < 0.01f)
 			{
-				var center = _graphView.GetGraphRect().center;
+				var center = GraphUtils.GraphRect(_graphView).center;
 				center.x -= 90;
 				center.y -= 43;
 
@@ -117,8 +117,9 @@ namespace VisualStateMachine.Editor
 			StateSelectorWindow.Open(_stateMachine, position, stateType =>
 			{
 				if (stateType == null) return;
-				
-				_graphView.CreateStateNode(stateType, _graphView.ScreenPointToGraphPoint(position));
+
+				var graphPoint = GraphUtils.ScreenPointToGraphPoint(position, _graphView);
+				StateMachineNodeFactory.CreateStateNode(stateType, graphPoint, _graphView);
 			});
 		}
 		
@@ -143,7 +144,7 @@ namespace VisualStateMachine.Editor
 			
 			foreach (var edge in edgesToCreate)
 			{
-				_graphView.AddConnectionToState(edge);
+				StateMachineGraphView.AddConnectionToState(edge);
 			}
 				
 			_stateMachine.Save();
