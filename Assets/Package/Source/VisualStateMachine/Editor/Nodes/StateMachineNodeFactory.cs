@@ -9,7 +9,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.Editor.Edges;
-using VisualStateMachine.Editor.Manipulators;
 using VisualStateMachine.Editor.Nodes;
 using VisualStateMachine.Editor.Utils;
 

@@ -16,17 +16,22 @@ namespace VisualStateMachine.Editor
 {
 	public class StateMachineGraphView : GraphView
 	{
+		public StateMachine StateMachine => _stateMachine;
+		
 		private StateMachine _stateMachine;
-		private StateMachineToolbar _toolbar;
-		private StateMachineContextMenu _contextMenu;
 		private StateMachine _lastChangedStateMachine;
+		
+		private readonly GraphUIManager _uiManager;
+		private readonly GraphStateManager _stateManager;
 
-		private const int WindowWidth = 600;
+		private const int WindowWidth = 600;t
 		private const int WindowHeight = 400;
 
 		public StateMachineGraphView(StateMachine stateMachine = null)
 		{
-			DevLog.Log($"StateMachineGraphView({stateMachine})");
+			_uiManager = new GraphUIManager(this);
+			_stateManager = new GraphStateManager(this);
+			
 			graphViewChanged -= OnGraphViewChanged;
 			
 			CreateEmptyGraphView();
@@ -34,7 +39,7 @@ namespace VisualStateMachine.Editor
 			if (stateMachine != null)
 			{
 				_stateMachine = stateMachine;
-				LoadStateMachine(stateMachine);
+				_stateManager.LoadStateMachine(stateMachine);
 			}
 			
 			graphViewChanged += OnGraphViewChanged;
@@ -48,14 +53,13 @@ namespace VisualStateMachine.Editor
 
 			if (stateMachine == null)
 			{
-				DevLog.Log($"StateMachineGraphView.Update 1b");
 				ClearGraph();
 			} 
 			else
 			{
-				// DevLog.Log($"StateMachineGraphView.Update 1c");
-				LoadStateMachine(stateMachine);
-				UpdateNodes();
+				_stateManager.LoadStateMachine(stateMachine);
+				_stateManager.UpdateNodes();
+				
 				EnforceEntryNode();
 			}
 			
@@ -112,18 +116,8 @@ namespace VisualStateMachine.Editor
 			var elementBHasClass = elementB.GetClasses().Contains(className);
 			return elementAHasClass == elementBHasClass;
 		}
-		
-		private void SaveGraphViewState()
-		{
-			if (_stateMachine == null) return;
-
-			var position = contentViewContainer.transform.position;
-			if (float.IsNaN(position.x) || float.IsNaN(position.y) || float.IsNaN(position.z)) return;
-			
-			_stateMachine.UpdateGraphViewState(contentViewContainer.transform.position, scale);
-		}
-		
-		private void LoadGraphViewState()
+	
+		public void LoadGraphViewState()
 		{
 			DevLog.Log($"StateMachineGraphView.LoadGraphViewState");
 			if (_stateMachine == null) return;
@@ -144,24 +138,6 @@ namespace VisualStateMachine.Editor
 			}
 		}
 
-		private void UpdateNodes()
-		{
-			if (_stateMachine == null) return;
-			
-			foreach (var node in nodes)
-			{
-				if (node is not StateNodeView stateNodeView) continue;
-
-				stateNodeView.Update();
-			}
-		}
-
-		private void CreateToolbar(StateMachine stateMachine)
-		{
-			_toolbar = new StateMachineToolbar(stateMachine);
-			Add(_toolbar);
-		}
-
 		private void CreateEmptyGraphView()
 		{
 			AddToClassList("stretch-to-parent-size");
@@ -170,8 +146,8 @@ namespace VisualStateMachine.Editor
 			CreateGrid();
 			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 			AddManipulators();
-			CreateToolbar(_stateMachine);
-			CreateContextMenu();
+			_uiManager.CreateToolbar();
+			_uiManager.CreateContextMenu();
 		}
 		
 		private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -221,7 +197,7 @@ namespace VisualStateMachine.Editor
 				}
 			}
 
-			SaveGraphViewState();
+			_stateManager.SaveGraphViewState();
 			
 			return graphViewChange;
 		}
@@ -241,13 +217,7 @@ namespace VisualStateMachine.Editor
 			DevLog.Log("AddConnectionToState");
 		}
 
-		private void CreateContextMenu()
-		{
-			_contextMenu = new StateMachineContextMenu(this);
-			_contextMenu.OnCreateNewStateNode += HandleCreateNewStateNode;
-		}
-
-		private void HandleCreateNewStateNode(Vector2 position)
+		public void CreateNewStateNodeFromContextMenu(Vector2 position)
 		{
 			if (_stateMachine == null) return;
 			
@@ -286,7 +256,7 @@ namespace VisualStateMachine.Editor
 			
 			var isEntryNode = this.nodes.ToList().Count == 0;
 
-			var node = CreateNode(stateNode);
+			var node = _stateManager.AddNode(stateNode);
 			_stateMachine.AddNode(stateNode);
 			
 			if (isEntryNode)
@@ -299,7 +269,7 @@ namespace VisualStateMachine.Editor
 
 		private void OnDestroy()
 		{
-			SaveGraphViewState();
+			_stateManager.SaveGraphViewState();
 		}
 
 		private void CreateGrid()
@@ -323,7 +293,7 @@ namespace VisualStateMachine.Editor
 
 		private void HandleGraphDragged(Vector3 position)
 		{
-			SaveGraphViewState();
+			_stateManager.SaveGraphViewState();
 		}
 
 		private Rect GetGraphRect()
@@ -355,13 +325,13 @@ namespace VisualStateMachine.Editor
 			
 			LoadGraphViewState();
 			
-			_toolbar?.Update(stateMachine);
+			_uiManager.UpdateToolbar();
 
 			ClearGraph();
 			
 			foreach (var node in _stateMachine.Nodes)
 			{
-				CreateNode(node);
+				_stateManager.AddNode(node);
 			}
 			
 			foreach (var node in _stateMachine.Nodes)
@@ -370,21 +340,10 @@ namespace VisualStateMachine.Editor
 			}
 		}
 
-		private StateNodeView CreateNode(StateNode stateNode)
+		public void SetStateMachine(StateMachine stateMachine)
 		{
-			DevLog.Log($"StateMachineGraphView.CreateNode({stateNode})");
-			var stateNodeType = stateNode.State.GetType();
-			var nodeType = AttributeUtils.GetInheritedCustomAttribute<NodeTypeAttribute>(stateNodeType);
-			var type = nodeType?.NodeType ?? NodeType.None;
-			
-			switch (type)
-			{
-				case NodeType.Relay:
-					return StateMachineNodeFactory.CreateStateNode<RelayNodeView>(stateNode, this);
-				case NodeType.None:
-				default:
-					return StateMachineNodeFactory.CreateStateNode<StateNodeView>(stateNode, this);
-			}
+			_stateMachine = stateMachine;
+			_uiManager.UpdateToolbar();
 		}
 	}
 }
