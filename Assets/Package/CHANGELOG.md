@@ -1,12 +1,15 @@
 ﻿# Change Log
 
-## [0.5.2-beta] - Nov 28, 2023
+## [0.5.3-beta] - Nov 27, 2023
+- Seperated the graph orientation from port orientation to better separate editor scripts from runtime.
+
+## [0.5.2-beta] - Nov 27, 2023
 - Fix for introduced build errors
 
-## [0.5.1-beta] - Nov 28, 2023
+## [0.5.1-beta] - Nov 27, 2023
 - Hid the samples directory (which still needs actual samples)
 - 
-## [0.5.0-beta] - Nov 27, 2023
+## [0.5.0-beta] - Nov 26, 2023
 - Support for vertical and flipped directional relay nodes
 - The state selection menu now appears where the mouse was when it was opened
 - Fix for input and output ports being able to connect to their own kind

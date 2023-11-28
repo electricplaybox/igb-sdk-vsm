@@ -230,7 +230,6 @@ namespace VisualStateMachine
 			{
 				EditorUtility.SetDirty(this);
 				AssetDatabase.SaveAssetIfDirty(this);
-				Debug.Log($"StateMachine.Save: {this.name}, {_nodes.Count}, {_nodes.Sum(node => node.Connections.Count)}");
 			}
 			#endif
 		}
