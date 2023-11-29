@@ -1,5 +1,9 @@
 ﻿# Change Log
 
+## [0.5.4-beta] - Nov 29, 2023
+- fix issue with progress bar not being displayed
+- refactored the StateMachineGraphView to better separate concerns
+
 ## [0.5.3-beta] - Nov 27, 2023
 - Seperated the graph orientation from port orientation to better separate editor scripts from runtime.
 
