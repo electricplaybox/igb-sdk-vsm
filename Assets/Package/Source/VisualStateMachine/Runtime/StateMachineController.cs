@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using VisualStateMachine.States;
 
 namespace VisualStateMachine
 {
@@ -54,6 +55,12 @@ namespace VisualStateMachine
 			{
 				return _stateMachine;
 			}
+		}
+
+		public State GetCurrentState()
+		{
+			var stateMachine = GetStateMachine();
+			return stateMachine.CurrentState;
 		}
 
 		public void Complete()

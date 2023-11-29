@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.5.5-beta] - Nov 29, 2023
+-Exposed the current state in the StateMachine and in the StateMachineController
+
 ## [0.5.4-beta] - Nov 29, 2023
 - fix issue with progress bar not being displayed
 - refactored the StateMachineGraphView to better separate concerns

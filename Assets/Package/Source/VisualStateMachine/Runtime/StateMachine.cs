@@ -19,6 +19,7 @@ namespace VisualStateMachine
 	public class StateMachine : ScriptableObject
 	{
 		public GraphViewState GraphViewState => _graphViewState ??= new GraphViewState();
+		public State CurrentState => _currentNode?.State ?? null;
 		
 		public StateMachine Base { get; set; }
 		public IReadOnlyCollection<StateNode> Nodes => _nodes;
