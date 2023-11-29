@@ -9,9 +9,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.Editor.Edges;
-using VisualStateMachine.Editor.Manipulators;
 using VisualStateMachine.Editor.Nodes;
 using VisualStateMachine.Editor.Utils;
+using VisualStateMachine.Editor.Windows;
 
 namespace VisualStateMachine.Editor
 {
@@ -27,6 +27,25 @@ namespace VisualStateMachine.Editor
 			var node = new StateNodeView(stateNode, stateTitle, stateNode.Id, graphView);
 			
 			graphView.AddElement(node);
+			return node;
+		}
+
+		public static StateNodeView CreateStateNode(Type stateType, Vector2 position, StateMachineGraphView graphView)
+		{
+			var stateManager = graphView.StateManager;
+			var stateNode = new StateNode(stateType);
+			stateNode.SetPosition(position);
+			
+			var isEntryNode = graphView.nodes.ToList().Count == 0;
+		
+			var node = stateManager.AddNode(stateNode);
+			stateManager.StateMachine.AddNode(stateNode);
+			
+			if (isEntryNode)
+			{
+				stateManager.StateMachine.SetEntryNode(stateNode);
+			}
+		
 			return node;
 		}
 		
@@ -92,7 +111,6 @@ namespace VisualStateMachine.Editor
 				var privateFields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
 				infoFields.AddRange(privateFields.Where(field => field.GetCustomAttribute<SerializeField>() != null));
 
-				// Move to the base type
 				type = type.BaseType;
 			}
 

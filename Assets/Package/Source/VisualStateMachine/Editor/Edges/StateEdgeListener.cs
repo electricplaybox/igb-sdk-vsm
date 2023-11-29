@@ -32,7 +32,7 @@ namespace VisualStateMachine.Editor.Edges
 			var inputNode = edge.input.node as StateNodeView;
 			
 			var connectedEdge = StateMachineNodeFactory.ConnectStateNode(port, inputNode, _graphView);
-			_graphView.AddConnectionToState(connectedEdge);
+			StateMachineGraphView.AddConnectionToState(connectedEdge);
 		}
 	}
 

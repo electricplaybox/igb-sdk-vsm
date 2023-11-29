@@ -9,6 +9,9 @@ namespace VisualStateMachine.Editor.Windows
 	[InitializeOnLoad]
 	public class StateMachineWindow : GraphViewEditorWindow
 	{
+		public const int WindowWidth = 600;
+		public const int WindowHeight = 400;
+		
 		private StateMachine _stateMachine;
 		private StateMachineGraphView _graphView;
 		private StateMachineWindow _openWindow;
@@ -21,9 +24,9 @@ namespace VisualStateMachine.Editor.Windows
 		[MenuItem("Tools/State Machine Editor")]
 		public static StateMachineWindow OpenWindow()
 		{
-			DevLog.Log("StateMachineWindow OpenWindow");
 			var window = GetWindow<StateMachineWindow>(false, Title, false);
 			window.rootVisualElement.styleSheets.Add(Resources.Load<StyleSheet>("StateMachineEditor"));
+			window.minSize = new Vector2(WindowWidth, WindowHeight);
 			window.Draw();
 			
 			return window;
@@ -31,7 +34,6 @@ namespace VisualStateMachine.Editor.Windows
 		
 		public static StateMachineWindow OpenWindow(StateMachine stateMachine)
 		{
-			DevLog.Log($"StateMachineWindow OpenWindow(stateMachine:{stateMachine})");
 			var window = OpenWindow();
 			window.Draw(stateMachine);
 
@@ -40,63 +42,17 @@ namespace VisualStateMachine.Editor.Windows
 
 		static StateMachineWindow()
 		{
-			EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
 			EditorApplication.projectWindowItemOnGUI += HandleProjectWindowItemGUI;
-		}
-
-		public override void DiscardChanges()
-		{
-			DevLog.Log("DISCARD CHANGES");
-			base.DiscardChanges();
-		}
-
-		public override void SaveChanges()
-		{
-			DevLog.Log("SAVE CHANGES");
-			base.SaveChanges();
-		}
-
-		public void OnBecameInvisible()
-		{
-			DevLog.Log("WINDOW BECAME INVISIBLE");
 		}
 
 		public void OnBecameVisible()
 		{
-			DevLog.Log("WINDOW BECAME VISIBLE");
 			OpenWindow();
 		}
 
 		private void OnSelectionChange()
 		{
-			DevLog.Log("ON SELECTION CHANGE");
 			OpenWindow();
-		}
-
-		private void OnTabDetached()
-		{
-			DevLog.Log("ON TAB DETACHED");
-		}
-
-		protected override void OnBackingScaleFactorChanged()
-		{
-			base.OnBackingScaleFactorChanged();
-			DevLog.Log("ON BACKING SCALE FACTOR CHANGED");
-		}
-
-		private void OnAddedAsTab()
-		{
-			DevLog.Log("ON ADDED AS A TAB");
-		}
-
-		private void OnDidOpenScene()
-		{
-			DevLog.Log("ON DID OPEN SCENE");
-		}
-
-		private void OnMainWindowMove()
-		{
-			DevLog.Log("ON MAIN WINDOW MOVE");
 		}
 
 		private static void HandleProjectWindowItemGUI(string guid, Rect selectionRect)
@@ -104,14 +60,8 @@ namespace VisualStateMachine.Editor.Windows
 			if (Event.current.type != EventType.MouseDown || Event.current.clickCount != 2) return;
 			if (!TryGetSelectedStateMachine(out StateMachine stateMachine)) return;
 			
-			DevLog.Log("HandleProjectWindowItemGUI");
 			OpenWindow(stateMachine);
 			Event.current.Use();
-		}
-
-		private static void HandlePlayModeStateChanged(PlayModeStateChange mode)
-		{
-			//Do something
 		}
 
 		private static bool TryGetSelectedStateMachine(out StateMachine stateMachine)
@@ -137,7 +87,6 @@ namespace VisualStateMachine.Editor.Windows
 			stateMachineController = selectedObject.GetComponent<StateMachineController>();
 			return stateMachineController != null;
 		}
-	
 
 		private static bool TryGetStateMachine(out StateMachine stateMachine)
 		{
@@ -161,26 +110,19 @@ namespace VisualStateMachine.Editor.Windows
 		
 		
 		
-		
-		
-		
 		/**
 		 * Instance
 		 */
 		private void Draw()
 		{
-			DevLog.Log("StateMachineWindow Draw .");
-			
 			if (_stateMachine != null)
 			{
-				DevLog.Log("StateMachineWindow Draw 1a");
 				Draw(_stateMachine);
 				return;
 			}
 
 			if (_graphView == null)
 			{
-				DevLog.Log("StateMachineWindow Draw 1b");
 				_graphView = new StateMachineGraphView();
 				rootVisualElement.Clear();
 				rootVisualElement.Add(_graphView);
@@ -189,19 +131,16 @@ namespace VisualStateMachine.Editor.Windows
 		
 		private void Draw(StateMachine stateMachine)
 		{
-			// DevLog.Log($"StateMachineWindow Draw(stateMachine) 1a - {stateMachine.Nodes.Sum(node => node.Connections.Count)}");
 			_stateMachine = stateMachine;
 			
 			if (_graphView == null)
 			{
-				DevLog.Log($"StateMachineWindow Draw(stateMachine) 1b");
 				_graphView = new StateMachineGraphView(_stateMachine);
 				rootVisualElement.Clear();
 				rootVisualElement.Add(_graphView);
 			}
 			else
 			{
-				// DevLog.Log($"StateMachineWindow Draw(stateMachine) 1c");
 				_graphView.Update(_stateMachine);
 			}
 		}
@@ -222,7 +161,7 @@ namespace VisualStateMachine.Editor.Windows
 			
 			if (_stateMachine == null && stateMachine == null)
 			{
-				_graphView?.ClearGraph();
+				_graphView?.StateManager.ClearGraph();
 			}
 				
 			Draw(stateMachine);
