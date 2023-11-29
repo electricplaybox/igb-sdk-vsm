@@ -1,0 +1,19 @@
+{
+    "name": "com.nonatomic.statemachine.tests.runtime.playmode",
+    "rootNamespace": "",
+    "references": [
+        "GUID:933b2205b9e1bf44c9cf43214981a083",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

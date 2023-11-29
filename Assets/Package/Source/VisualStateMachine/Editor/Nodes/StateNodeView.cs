@@ -152,7 +152,8 @@ namespace VisualStateMachine.Editor.Nodes
 			if (Data.IsActive)
 			{
 				AddToClassList("active-node");
-				this.Query<ProgressBar>("progress-bar").First().value = (Time.time % 1f) * 100f;
+				var progressBar = this.Query<ProgressBar>().First();
+				if(progressBar != null) progressBar.value = (Time.time % 1f) * 100f;
 			}
 			else
 			{
