@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6ef5062e9cd44f2b8ffeacac221fc9a, type: 3}
   m_Name: 82d90a5a-1159-4d03-9564-91911e36da8c
   m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
+  SubStateMachine: {fileID: 0}
 --- !u!114 &-5826920441125662248
 MonoBehaviour:
   m_ObjectHideFlags: 0
