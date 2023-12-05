@@ -6,6 +6,16 @@ namespace VisualStateMachine.Editor.Utils
 {
 	public class StringUtils
 	{
+		public static string RemoveStateSuffix(string title)
+		{
+			return !title.EndsWith("State") ? title : title[..^5];
+		}
+		
+		public static string ApplyEllipsis(string text, int maxLength)
+		{
+			return text.Length <= maxLength ? text : text[..(maxLength - 3)] + "...";
+		}
+		
 		public static string PascalCaseToTitleCase(string pascalCaseString)
 		{
 			var withSpaces = Regex.Replace(pascalCaseString, "(\\B[A-Z])", " $1");

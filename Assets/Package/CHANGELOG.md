@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.5.8-beta] - Dec 05, 2023
+- Set max node width to 300px
+
 ## [0.5.7-beta] - Dec 05, 2023
 - Abstracted a BaseSubStateMachine to better support custom sub state machine nodes that may want to customise their transitions
 - Fix for nodes with properties and long names not filling the property container

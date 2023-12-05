@@ -18,7 +18,7 @@ namespace VisualStateMachine.Editor.Nodes
 		public StateNodeView(StateNode stateNode, string stateTitle, string stateName, StateMachineGraphView graphView)
 		{
 			Data = stateNode;
-			this.title = stateTitle;
+			this.title = ProcessTitle(stateTitle);
 			this.name = stateNode.Id;
 			
 			if(stateNode.State is not EntryState) StateMachineNodeFactory.CreateInputPort(this, graphView);
@@ -78,6 +78,14 @@ namespace VisualStateMachine.Editor.Nodes
 			}
 		}
 
+		private string ProcessTitle(string title)
+		{
+			title = StringUtils.RemoveStateSuffix(title);
+			title = StringUtils.ApplyEllipsis(title, 32);
+
+			return title;
+		}
+		
 		public virtual void Update()
 		{
 			if (Data == null) return;
