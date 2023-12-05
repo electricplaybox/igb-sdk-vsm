@@ -2,6 +2,7 @@
 
 ## [0.5.8-beta] - Dec 05, 2023
 - Set max node width to 300px
+- Added title filtering to StateNodes
 
 ## [0.5.7-beta] - Dec 05, 2023
 - Abstracted a BaseSubStateMachine to better support custom sub state machine nodes that may want to customise their transitions
