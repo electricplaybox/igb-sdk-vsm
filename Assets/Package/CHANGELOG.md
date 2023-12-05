@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.5.9-beta] - Dec 05, 2023
+- Fix for relay node sizes
+
 ## [0.5.8-beta] - Dec 05, 2023
 - Set max node width to 300px
 - Added title filtering to StateNodes

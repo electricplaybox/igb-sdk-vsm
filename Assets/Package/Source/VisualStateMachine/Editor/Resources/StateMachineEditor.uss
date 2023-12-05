@@ -32,7 +32,19 @@
 
 .node {
     max-width: 300px;
-    min-width: 175px;
+    min-width: 200px;
+}
+
+.node.relay-node {
+    min-width: auto;
+    width:70px;
+    height:auto;
+}
+
+.node.relay-node.horizontal {
+    min-width: auto;
+    width:auto;
+    height:auto;
 }
 
 .node #title {
