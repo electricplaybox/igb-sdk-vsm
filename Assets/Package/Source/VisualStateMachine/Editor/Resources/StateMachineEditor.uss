@@ -30,6 +30,10 @@
 
 /* *********** State Node *********** */
 
+.node {
+    max-width: 300px;
+}
+
 .node #title {
     background-color: var(--node-title-color);
     color: var(--node-text-color);

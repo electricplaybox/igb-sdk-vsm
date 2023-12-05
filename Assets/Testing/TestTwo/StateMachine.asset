@@ -72,7 +72,7 @@ MonoBehaviour:
       _fromPortName: OnFoo
   - _state: {fileID: -7501869628561508882}
     _id: 82d90a5a-1159-4d03-9564-91911e36da8c
-    _position: {x: 383, y: -20}
+    _position: {x: 386, y: -37}
     _isEntryNode: 0
     _connections:
     - _toNodeId: 3bc52c2e-95af-417f-8a5e-1695b8088f45
