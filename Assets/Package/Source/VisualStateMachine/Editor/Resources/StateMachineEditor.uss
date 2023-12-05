@@ -104,7 +104,7 @@
 /* *********** Property Container *********** */
 #property-container {
     background-color: #2E2E2E;
-    width: 170px;
+    width: auto;
     padding-bottom: 5px;
     padding-top: 5px;
 }
