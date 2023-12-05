@@ -110,7 +110,7 @@
 }
 
 #property-container.has-properties {
-    width: 270px;
+    width: auto;
 }
 
 #property-container.relay {

@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7501869628561508882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ef5062e9cd44f2b8ffeacac221fc9a, type: 3}
+  m_Name: 82d90a5a-1159-4d03-9564-91911e36da8c
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 0}
 --- !u!114 &-5826920441125662248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,4 +66,33 @@ MonoBehaviour:
     _id: 02485302-c061-494f-a6d3-19476287a2d6
     _position: {x: 210, y: -57}
     _isEntryNode: 0
+    _connections:
+    - _toNodeId: 82d90a5a-1159-4d03-9564-91911e36da8c
+      _fromNodeId: 02485302-c061-494f-a6d3-19476287a2d6
+      _fromPortName: OnFoo
+  - _state: {fileID: -7501869628561508882}
+    _id: 82d90a5a-1159-4d03-9564-91911e36da8c
+    _position: {x: 383, y: -20}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: 3bc52c2e-95af-417f-8a5e-1695b8088f45
+      _fromNodeId: 82d90a5a-1159-4d03-9564-91911e36da8c
+      _fromPortName: OnComplete
+  - _state: {fileID: 3955171390427765526}
+    _id: 3bc52c2e-95af-417f-8a5e-1695b8088f45
+    _position: {x: 832, y: -186}
+    _isEntryNode: 0
     _connections: []
+--- !u!114 &3955171390427765526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c5b3d05ace4113a402502fea66a104, type: 3}
+  m_Name: 3bc52c2e-95af-417f-8a5e-1695b8088f45
+  m_EditorClassIdentifier: 
+  _foo: 0
