@@ -64,6 +64,8 @@ namespace VisualStateMachine.Editor.Windows
 		
 		private void SearchStates(StateMachine stateMachine, string searchQuery)
 		{
+			var emptySearchQuery = string.IsNullOrEmpty(searchQuery);
+			
 			_stateMachine = stateMachine;
 			var container = rootVisualElement.Q<ScrollView>();
 			container.Clear();
@@ -71,25 +73,30 @@ namespace VisualStateMachine.Editor.Windows
 			var groupedStates = GetGroupedStates();
 			var nearestGroupToStateMachine = FindNearestNamespaceToStateMachine(stateMachine, groupedStates);
 			
-			
 			for (var groupIndex = 0; groupIndex < groupedStates.Count; groupIndex++)
 			{
 				var group = groupedStates[groupIndex];
 
 				var firstGroup = groupIndex == 0;
-				var open = firstGroup || nearestGroupToStateMachine == groupIndex;
+				var open = firstGroup || nearestGroupToStateMachine == groupIndex || !emptySearchQuery;
+
 				var buttonIcon = firstGroup ? NodeIcon.VsmBlue : NodeIcon.VsmGreen;
 				var folderName = firstGroup ? "VSM States" : group[0].Namespace;
 				var folderIcon = firstGroup ? NodeIcon.FolderBlue : NodeIcon.FolderGreen;
 				
-				var groupBody = MakeGroupFoldout(groupIndex, folderName, folderIcon, open);
-				container.Add(groupBody);
-
+				Foldout groupBody = null;
 				for (var stateIndex = 0; stateIndex < group.Count; stateIndex++)
 				{
 					var stateType = group[stateIndex];
 					if (!stateType.Name.Contains(searchQuery)) continue;
-					
+
+					//Prevent empty groups from being created
+					if (groupBody == null)
+					{
+						groupBody = MakeGroupFoldout(groupIndex, folderName, folderIcon, open);
+						container.Add(groupBody);
+					}
+
 					var button = MakeStateButton(stateType, stateIndex, buttonIcon);
 					groupBody.Add(button);
 				}
