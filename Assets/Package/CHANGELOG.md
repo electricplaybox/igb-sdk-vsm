@@ -1,5 +1,10 @@
 ﻿# Change Log
 
+## [0.5.6-beta] - Dec 05, 2023
+- Fix for the state selector window displaying empty groups when searching. 
+- Fix for groups found in searches being folded.
+- Fix for property container width not spanning full node width when there are no properties
+
 ## [0.5.5-beta] - Nov 29, 2023
 -Exposed the current state in the StateMachine and in the StateMachineController
 
