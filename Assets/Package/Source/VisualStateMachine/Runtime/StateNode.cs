@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VisualStateMachine.States;
+using VisualStateMachine.Tools;
 
 namespace VisualStateMachine
 {
@@ -46,11 +47,6 @@ namespace VisualStateMachine
 			_position = position;
 		}
 		
-		public void Initialize(StateMachineController controller)
-		{
-			_state = _state.Clone(controller);
-		}
-		
 		public void AddConnection(StateConnection connection)
 		{
 			_connections.Add(connection);
@@ -79,6 +75,13 @@ namespace VisualStateMachine
 			_connections.RemoveAll(connection => connection.ToNodeId == nodeId);
 		}
 		
+		
+		public void Initialize(StateMachineCore stateMachineCore)
+		{
+			_state = _state.Clone(stateMachineCore);
+			_state.InitializeState();
+		}
+
 		public void Enter()
 		{
 			ToggleConnectionSubscription(subscribe: true);
@@ -112,7 +115,7 @@ namespace VisualStateMachine
 				ToggleEventSubscriptionByName(State, connection.FromPortName, connection, subscribe);
 			}
 		}
-		
+
 		private void ToggleEventSubscriptionByName(object targetObject, string eventName, StateConnection connection, bool subscribe)
 		{
 			var eventInfo = targetObject.GetType().GetEvent(eventName);

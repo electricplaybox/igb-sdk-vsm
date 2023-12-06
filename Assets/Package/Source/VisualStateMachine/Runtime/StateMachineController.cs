@@ -1,72 +1,43 @@
-﻿using System;
-using UnityEngine;
-using VisualStateMachine.States;
+﻿using UnityEngine;
 
 namespace VisualStateMachine
 {
 	public class StateMachineController : MonoBehaviour
 	{
-		public event Action OnComplete;
+		public StateMachine StateMachine => _stateMachineCore?.StateMachine;
 		
 		[SerializeField] private StateMachine _stateMachine;
 		
-		private StateMachine _stateMachineInstance;
-		private bool _isComplete;
+		private StateMachineCore _stateMachineCore;
+
+		public void Awake()
+		{
+			CreateCore();
+		}
 
 		public void OnValidate()
 		{
-			if (_stateMachine == null) return;
-			
-			_stateMachineInstance = StateMachine.CreateInstance(_stateMachine);
+			CreateCore();
 		}
-
-		public void SetStateMachine(StateMachine stateMachine)
-		{
-			_stateMachine = stateMachine;
-			if (_stateMachine == null) return;
-			
-			_isComplete = false;
-			OnValidate();
-		}
-	
+		
 		public void Start()
 		{
-			if (_stateMachine == null) throw new NullReferenceException("State machine is null");
-			
-			_stateMachineInstance = StateMachine.CreateInstance(_stateMachine);
-			_stateMachineInstance.Initialize(this);
+			_stateMachineCore.Start();
 		}
 
 		public void Update()
 		{
-			if (_isComplete) return;
-			if (_stateMachine == null) return;
+			if (StateMachine.IsComplete) return;
 			
-			_stateMachineInstance.Update();
+			_stateMachineCore.Update();
 		}
 
-		public StateMachine GetStateMachine()
+		private void CreateCore()
 		{
-			if (Application.isPlaying)
-			{
-				return _stateMachineInstance;
-			}
-			else
-			{
-				return _stateMachine;
-			}
-		}
-
-		public State GetCurrentState()
-		{
-			var stateMachine = GetStateMachine();
-			return stateMachine.CurrentState;
-		}
-
-		public void Complete()
-		{
-			_isComplete = true;
-			OnComplete?.Invoke();
+			if(_stateMachine == null) return;
+			if (_stateMachineCore != null) return;
+			
+			_stateMachineCore = new StateMachineCore(_stateMachine, gameObject);
 		}
 	}
 }

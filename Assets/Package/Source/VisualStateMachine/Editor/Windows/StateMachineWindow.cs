@@ -100,7 +100,7 @@ namespace VisualStateMachine.Editor.Windows
 
 			if (TryGetSelectedStateController(out var selectedStateController))
 			{
-				stateMachine = selectedStateController.GetStateMachine();
+				stateMachine = selectedStateController.StateMachine;
 				return stateMachine != null;
 			}
 

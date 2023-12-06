@@ -1,16 +1,21 @@
 ﻿using System;
+using UnityEngine;
 using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
-{ 
-	[HideNode, NodeColor(NodeColor.Green)]
-	public class EntryState : State
+{
+	[NodeColor(NodeColor.Blue)]
+	public class LogState : State
 	{
-		[Transition(">>")]
+		[Transition]
 		public event Action Exit;
-
+		
+		[SerializeField, Multiline(3)] 
+		private string _message = "Hello World";
+		
 		public override void EnterState()
 		{
+			Debug.Log(_message);
 			Exit?.Invoke();
 		}
 
