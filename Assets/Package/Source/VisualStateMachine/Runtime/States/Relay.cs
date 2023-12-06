@@ -24,15 +24,10 @@ namespace VisualStateMachine.States
 		{
 			Exit?.Invoke();
 		}
-
-		public override void UpdateState()
-		{
-			
-		}
-
+		
 		public override void ExitState()
 		{
-			
+			//Do nothing
 		}
 	}
 }

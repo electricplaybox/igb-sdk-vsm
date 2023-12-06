@@ -7,13 +7,27 @@ namespace VisualStateMachine.States
 	{
 		[NonSerialized] 
 		protected StateMachineCore StateMachineCore;
-		
-		public abstract void InitializeState();
+
+		public virtual void InitializeState()
+		{
+			//Any initialization code that makes sense to perform before the state is entered
+		}
+
+		//Any code that makes sense to perform when the state is entered
 		public abstract void EnterState();
-		public abstract void UpdateState();
+		
+		public virtual void UpdateState()
+		{
+			//Any code that makes sense to perform when the state is updated like state logic
+		}
+		
+		//Any code that makes sense to perform when the state is exited like state cleanup
 		public abstract void ExitState();
 
-		public virtual void FixedUpdateState() { }
+		public virtual void FixedUpdateState()
+		{
+			//Any code that requires a fixed update step like physics related code
+		}
 
 		public State Clone(StateMachineCore stateMachineCore)
 		{

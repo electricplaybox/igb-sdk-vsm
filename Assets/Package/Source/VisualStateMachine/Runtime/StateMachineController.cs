@@ -37,7 +37,7 @@ namespace VisualStateMachine
 			if(_stateMachine == null) return;
 			if (_stateMachineCore != null) return;
 			
-			_stateMachineCore = new StateMachineCore(_stateMachine, this);
+			_stateMachineCore = new StateMachineCore(_stateMachine, gameObject);
 		}
 	}
 }

@@ -14,6 +14,7 @@ namespace VisualStateMachine.States
 	public abstract class BaseSubStateMachine : State
 	{
 		[SerializeField] protected StateMachine SubStateMachine;
+		[SerializeField] protected bool ReinitializeOnExit = true;
 		
 		private StateMachineCore _stateMachineCore;
 
@@ -26,14 +27,18 @@ namespace VisualStateMachine.States
 		{
 			#if UNITY_EDITOR
 			{
-				if (Selection.activeObject == _stateMachineCore.Controller.gameObject)
+				var parentSelected = _stateMachineCore.Parent != null &&
+										_stateMachineCore.Parent.StateMachine == Selection.activeObject;
+				var rootSelected = _stateMachineCore.Root == Selection.activeObject;
+
+				if (parentSelected || rootSelected)
 				{
 					Selection.activeObject = _stateMachineCore.StateMachine;
 				}
 			}
 			#endif
 			
-			_stateMachineCore.OnComplete += HandleComplete;
+			_stateMachineCore.OnComplete += SubStateMachineComplete;
 			_stateMachineCore.Start();
 		}
 
@@ -44,28 +49,47 @@ namespace VisualStateMachine.States
 
 		public override void ExitState()
 		{
-			_stateMachineCore.OnComplete -= HandleComplete;
+			_stateMachineCore.OnComplete -= SubStateMachineComplete;
 			
 			#if UNITY_EDITOR
 			{
 				if (Selection.activeObject == _stateMachineCore.StateMachine)
 				{
-					Selection.activeObject = _stateMachineCore.Controller.gameObject;
+					Selection.activeObject = (Object)_stateMachineCore?.Parent.StateMachine ?? _stateMachineCore.Root;
 				}
 			}
 			#endif
 			
-			CreateCore();
+			//This enables the sub state machine to be reused
+			if(ReinitializeOnExit) CreateCore();
 		}
 
-		protected virtual void CreateCore()
+		private void CreateCore()
 		{
-			_stateMachineCore = new StateMachineCore(SubStateMachine, StateMachineCore.Controller);
+			if (GuardAgainstInfiniteLoopOfDoom()) return;
+			
+			_stateMachineCore = new StateMachineCore(SubStateMachine, StateMachineCore);
 		}
 
-		protected virtual void HandleComplete()
+		private bool GuardAgainstInfiniteLoopOfDoom()
 		{
-			DevLog.Log("BaseSubStateMachine.HandleComplete");
+			var parent = StateMachineCore.Parent;
+			while (parent != null)
+			{
+				if (parent.OriginalStateMachine == SubStateMachine)
+				{
+					var errorMsg = $"Infinite loop of doom detected. {this.GetType().Name} in " +
+					               $"{this.StateMachineCore.OriginalStateMachine.name} has a StateMachine used" +
+					               $" in parent {parent.OriginalStateMachine.name}";
+					throw new StateMachineException(errorMsg);
+				}
+
+				parent = parent.Parent;
+			}
+
+			return false;
 		}
+
+		protected abstract void SubStateMachineComplete(State finalState);
 	}
 }

@@ -17,11 +17,6 @@ namespace VisualStateMachine.States
 		[NonSerialized]
 		private float _time;
 
-		public override void InitializeState()
-		{
-			DevLog.Log("DelayState.InitializeState");
-		}
-
 		public override void EnterState()
 		{
 			_time = Time.time;
@@ -38,7 +33,7 @@ namespace VisualStateMachine.States
 
 		public override void ExitState()
 		{
-			
+			//Do nothing
 		}
 	}
 }

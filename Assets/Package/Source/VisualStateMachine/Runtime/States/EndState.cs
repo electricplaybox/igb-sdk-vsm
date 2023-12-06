@@ -6,19 +6,9 @@ namespace VisualStateMachine.States
 	[NodeColor(NodeColor.Red)]
 	public class EndState : State
 	{
-		public override void InitializeState()
-		{
-			
-		}
-
 		public override void EnterState()
 		{
-			StateMachineCore.Complete();
-		}
-
-		public override void UpdateState()
-		{
-			
+			StateMachineCore.Complete(this);
 		}
 
 		public override void ExitState()

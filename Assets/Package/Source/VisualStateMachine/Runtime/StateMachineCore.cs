@@ -7,39 +7,50 @@ namespace VisualStateMachine
 {
 	public class StateMachineCore
 	{
-		public event Action OnComplete;
+		public event Action<State> OnComplete;
 		
 		public StateMachine StateMachine => Application.isPlaying 
 			? _stateMachineInstance 
 			: _originalStateMachine;
 		
 		public State CurrentState => StateMachine.CurrentState;
-		public StateMachineController Controller => _controller;
-		
-		private readonly bool _stateMachineIsNull;
+		public GameObject Root => _root;
+		public StateMachineCore Parent => _parent;
+		public StateMachine OriginalStateMachine => _originalStateMachine;
+
 		private StateMachine _stateMachineInstance;
 		private StateMachine _originalStateMachine;
+		private StateMachineCore _parent;
+		private GameObject _root;
+		private bool _stateMachineIsNull;
 
-		private readonly StateMachineController _controller;
-
-		public StateMachineCore(StateMachine stateMachine, StateMachineController controller)
+		public StateMachineCore(StateMachine stateMachine, GameObject root)
 		{
-			DevLog.Log("StateMachineCore.Ctr");
-			
+			InitializeStateMachineCore(stateMachine, null, root);
+		}
+		
+		public StateMachineCore(StateMachine stateMachine, StateMachineCore parent)
+		{
+			InitializeStateMachineCore(stateMachine, parent, parent.Root);
+		}
+		
+		private void InitializeStateMachineCore(StateMachine stateMachine, StateMachineCore parent, GameObject root)
+		{
 			if (stateMachine == null)
 			{
 				_stateMachineIsNull = true;
 				throw new StateMachineException("StateMachine is null");
 			}
-			
-			_controller = controller;
+
+			_parent = parent;
+			_root = root;
+			_originalStateMachine = stateMachine;
 			_stateMachineInstance = StateMachine.CreateInstance(stateMachine);
 			_stateMachineInstance.Initialize(this);
 		}
 
 		public void Start()
 		{
-			DevLog.Log("StateMachineCore.Start");
 			if (_stateMachineIsNull) return;
 			
 			_stateMachineInstance.Start();
@@ -50,17 +61,15 @@ namespace VisualStateMachine
 			if (_stateMachineIsNull) return;
 			if (StateMachine.IsComplete) return;
 			
-			DevLog.Log($"StateMachineCore.Update: {StateMachine.IsComplete}");
 			_stateMachineInstance.Update();
 		}
 		
-		public void Complete()
+		public void Complete(State finalState)
 		{
 			if (StateMachine.IsComplete) return;
 			
-			DevLog.Log("StateMachineCore.Complete");
 			StateMachine.Complete();
-			OnComplete?.Invoke();
+			OnComplete?.Invoke(finalState);
 		}
 	}
 }
