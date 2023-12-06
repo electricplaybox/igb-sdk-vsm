@@ -23,7 +23,8 @@ namespace VisualStateMachine
 		
 		public StateMachine Base { get; set; }
 		public IReadOnlyCollection<StateNode> Nodes => _nodes;
-		
+		public bool IsComplete { get; private set; }
+
 		[SerializeField] 
 		private string _entryStateId;
 
@@ -56,10 +57,11 @@ namespace VisualStateMachine
 			_graphViewState.Scale = scale;
 		}
 		
-		public void Initialize(StateMachineController controller)
+		public void Initialize(StateMachineCore stateMachineCore)
 		{
 			DevLog.Log("StateMachine.Initialize");
-			InitalizeNodes(controller);
+			
+			InitalizeNodes(stateMachineCore);
 			CreateNodeLookupTable();
 			
 			if(_nodeLookup.Count == 0) throw new Exception($"StateMachine {this.name} has 0 nodes.");
@@ -81,7 +83,12 @@ namespace VisualStateMachine
 			DevLog.Log("StateMachine.Update");
 			_currentNode?.Update();
 		}
-		
+
+		public void Complete()
+		{
+			IsComplete = true;
+		}
+	
 		public void AddEntryNode()
 		{
 			DevLog.Log("StateMachine.AddEntryNode");
@@ -101,13 +108,13 @@ namespace VisualStateMachine
 			#endif
 		}
 
-		private void InitalizeNodes(StateMachineController controller)
+		private void InitalizeNodes(StateMachineCore stateMachineCore)
 		{
 			DevLog.Log("StateMachine.InitalizeNodes");
 			
 			foreach (var node in _nodes)
 			{
-				node.Initialize(controller);
+				node.Initialize(stateMachineCore);
 			}
 		}
 
@@ -292,6 +299,5 @@ namespace VisualStateMachine
 		}
 		
 		#endregion
-		
 	}
 }

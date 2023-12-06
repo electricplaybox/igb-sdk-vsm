@@ -14,12 +14,14 @@ namespace VisualStateMachine
 			: _originalStateMachine;
 		
 		public State CurrentState => StateMachine.CurrentState;
+		public StateMachineController Controller => _controller;
 		
 		private readonly bool _stateMachineIsNull;
 		private StateMachine _stateMachineInstance;
 		private StateMachine _originalStateMachine;
-		private bool _isComplete;
-		
+
+		private readonly StateMachineController _controller;
+
 		public StateMachineCore(StateMachine stateMachine, StateMachineController controller)
 		{
 			DevLog.Log("StateMachineCore.Ctr");
@@ -30,8 +32,9 @@ namespace VisualStateMachine
 				throw new StateMachineException("StateMachine is null");
 			}
 			
+			_controller = controller;
 			_stateMachineInstance = StateMachine.CreateInstance(stateMachine);
-			_stateMachineInstance.Initialize(controller);
+			_stateMachineInstance.Initialize(this);
 		}
 
 		public void Start()
@@ -44,17 +47,19 @@ namespace VisualStateMachine
 
 		public void Update()
 		{
-			DevLog.Log("StateMachineCore.Update");
 			if (_stateMachineIsNull) return;
-			if (_isComplete) return;
+			if (StateMachine.IsComplete) return;
 			
+			DevLog.Log($"StateMachineCore.Update: {StateMachine.IsComplete}");
 			_stateMachineInstance.Update();
 		}
 		
 		public void Complete()
 		{
+			if (StateMachine.IsComplete) return;
+			
 			DevLog.Log("StateMachineCore.Complete");
-			_isComplete = true;
+			StateMachine.Complete();
 			OnComplete?.Invoke();
 		}
 	}

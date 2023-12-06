@@ -19,14 +19,14 @@ namespace VisualStateMachine.States
 
 		public override void InitializeState()
 		{
-			_stateMachineCore = new StateMachineCore(SubStateMachine, Controller);
+			CreateCore();
 		}
-		
+
 		public override void EnterState()
 		{
 			#if UNITY_EDITOR
 			{
-				if (Selection.activeObject == Controller.gameObject)
+				if (Selection.activeObject == _stateMachineCore.Controller.gameObject)
 				{
 					Selection.activeObject = _stateMachineCore.StateMachine;
 				}
@@ -45,6 +45,22 @@ namespace VisualStateMachine.States
 		public override void ExitState()
 		{
 			_stateMachineCore.OnComplete -= HandleComplete;
+			
+			#if UNITY_EDITOR
+			{
+				if (Selection.activeObject == _stateMachineCore.StateMachine)
+				{
+					Selection.activeObject = _stateMachineCore.Controller.gameObject;
+				}
+			}
+			#endif
+			
+			CreateCore();
+		}
+
+		protected virtual void CreateCore()
+		{
+			_stateMachineCore = new StateMachineCore(SubStateMachine, StateMachineCore.Controller);
 		}
 
 		protected virtual void HandleComplete()

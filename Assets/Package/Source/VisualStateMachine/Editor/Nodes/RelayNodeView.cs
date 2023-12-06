@@ -11,9 +11,9 @@ namespace VisualStateMachine.Editor.Nodes
 			
 		}
 
-		public override void Update()
+		public override void Update(StateMachine stateMachine)
 		{
-			base.Update();
+			base.Update(stateMachine);
 			
 			if (Data == null) return;
 			if (Data.State is not Relay) return;

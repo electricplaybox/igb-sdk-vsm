@@ -5,8 +5,8 @@ namespace VisualStateMachine.States
 {
 	public abstract class State : ScriptableObject
 	{
-		[NonSerialized]
-		protected StateMachineController Controller;
+		[NonSerialized] 
+		protected StateMachineCore StateMachineCore;
 		
 		public abstract void InitializeState();
 		public abstract void EnterState();
@@ -15,10 +15,10 @@ namespace VisualStateMachine.States
 
 		public virtual void FixedUpdateState() { }
 
-		public State Clone(StateMachineController stateMachineController)
+		public State Clone(StateMachineCore stateMachineCore)
 		{
 			var state = Instantiate(this);
-			state.Controller = stateMachineController;
+			state.StateMachineCore = stateMachineCore;
 
 			return state;
 		}

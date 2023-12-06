@@ -44,7 +44,7 @@ namespace VisualStateMachine.Editor
 			else
 			{
 				_stateManager.LoadStateMachine(stateMachine);
-				_stateManager.UpdateNodes();
+				_stateManager.UpdateNodes(stateMachine);
 				_stateManager.EnforceEntryNode();
 			}
 			

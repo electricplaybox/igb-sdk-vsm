@@ -76,9 +76,9 @@ namespace VisualStateMachine
 		}
 		
 		
-		public void Initialize(StateMachineController controller)
+		public void Initialize(StateMachineCore stateMachineCore)
 		{
-			_state = _state.Clone(controller);
+			_state = _state.Clone(stateMachineCore);
 			_state.InitializeState();
 		}
 

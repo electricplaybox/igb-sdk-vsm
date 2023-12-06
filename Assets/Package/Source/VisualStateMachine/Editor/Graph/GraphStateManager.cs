@@ -62,13 +62,13 @@ namespace VisualStateMachine.Editor
 			_stateMachine.UpdateGraphViewState(contentContainer.transform.position, _graphView.scale);
 		}
 
-		public void UpdateNodes() 
+		public void UpdateNodes(StateMachine stateMachine) 
 		{
 			foreach (var node in _graphView.nodes)
 			{
 				if (node is not StateNodeView stateNodeView) continue;
 
-				stateNodeView.Update();
+				stateNodeView.Update(stateMachine);
 			}
 		}
 		

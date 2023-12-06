@@ -1,4 +1,5 @@
-﻿using VisualStateMachine.Attributes;
+﻿using UnityEngine;
+using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 {
@@ -12,7 +13,7 @@ namespace VisualStateMachine.States
 
 		public override void EnterState()
 		{
-			Controller.Complete();
+			StateMachineCore.Complete();
 		}
 
 		public override void UpdateState()
