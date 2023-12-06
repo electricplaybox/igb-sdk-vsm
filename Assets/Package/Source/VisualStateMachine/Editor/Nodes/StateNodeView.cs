@@ -13,7 +13,6 @@ namespace VisualStateMachine.Editor.Nodes
 	public class StateNodeView : Node
 	{
 		public StateNode Data;
-		public StateMachine StateMachine;
 
 		public StateNodeView(StateNode stateNode, string stateTitle, string stateName, StateMachineGraphView graphView)
 		{
@@ -86,15 +85,25 @@ namespace VisualStateMachine.Editor.Nodes
 			return title;
 		}
 		
-		public virtual void Update()
+		public virtual void Update(StateMachine stateMachine)
 		{
 			if (Data == null) return;
 			
 			DrawEntryPoint();
 			DrawCustomNodeColor();
-			DrawActiveNode();
 			SetCustomLabelText();
 			CreateCustomIcon();
+
+			if (stateMachine == null) return;
+			
+			if (stateMachine.IsComplete)
+			{
+				DrawCompleteNode();
+			}
+			else
+			{
+				DrawActiveNode();
+			}
 		}
 		
 		private void CreateCustomIcon()
@@ -162,6 +171,22 @@ namespace VisualStateMachine.Editor.Nodes
 				AddToClassList("active-node");
 				var progressBar = this.Query<ProgressBar>().First();
 				if(progressBar != null) progressBar.value = (Time.time % 1f) * 100f;
+			}
+			else
+			{
+				RemoveFromClassList("active-node");
+			}
+		}
+
+		private void DrawCompleteNode()
+		{
+			if (!Application.isPlaying) return;
+			
+			if (Data.IsActive)
+			{
+				AddToClassList("active-node");
+				var progressBar = this.Query<ProgressBar>().First();
+				if(progressBar != null) progressBar.value = 100f;
 			}
 			else
 			{

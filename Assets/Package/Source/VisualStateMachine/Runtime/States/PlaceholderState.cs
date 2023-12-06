@@ -7,15 +7,10 @@ namespace VisualStateMachine.States
 	{
 		[Transition] 
 		public event Action Exit;
-		
+
 		public override void EnterState()
 		{
 			Exit?.Invoke();
-		}
-
-		public override void UpdateState()
-		{
-			
 		}
 
 		public override void ExitState()

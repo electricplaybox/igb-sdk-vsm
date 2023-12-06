@@ -5,15 +5,10 @@ namespace VisualStateMachine.States
 {
 	public class SubStateMachine : BaseSubStateMachine
 	{
-		[Transition]
+		[Transition("Complete")]
 		public event Action OnComplete;
-		
-		public override void UpdateState()
-		{
-			//Do nothing
-		}
 
-		protected override void HandleComplete()
+		protected override void SubStateMachineComplete(State finalState)
 		{
 			OnComplete?.Invoke();
 		}

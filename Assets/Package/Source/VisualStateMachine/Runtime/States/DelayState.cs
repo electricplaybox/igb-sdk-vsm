@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using VisualStateMachine.Attributes;
+using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.States
 {
@@ -23,12 +24,16 @@ namespace VisualStateMachine.States
 
 		public override void UpdateState()
 		{
-			if(Time.time - _time > _duration) Exit?.Invoke();
+			if (Time.time - _time > _duration)
+			{
+				DevLog.Log($"{Time.time} - {_time} > {_duration}");
+				Exit?.Invoke();
+			}
 		}
 
 		public override void ExitState()
 		{
-			
+			//Do nothing
 		}
 	}
 }
