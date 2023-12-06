@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using VisualStateMachine.States;
+using VisualStateMachine.Tools;
 
 namespace VisualStateMachine
 {
@@ -8,64 +8,61 @@ namespace VisualStateMachine
 	{
 		public event Action OnComplete;
 		
+		public StateMachine StateMachine => _stateMachineCore?.StateMachine;
+		
 		[SerializeField] private StateMachine _stateMachine;
 		
-		private StateMachine _stateMachineInstance;
-		private bool _isComplete;
+		private StateMachineCore _stateMachineCore;
+
+		public void Awake()
+		{
+			DevLog.Log("StateMachineController.Awake", this);
+			CreateCore();
+		}
 
 		public void OnValidate()
 		{
-			if (_stateMachine == null) return;
-			
-			_stateMachineInstance = StateMachine.CreateInstance(_stateMachine);
+			DevLog.Log("StateMachineController.OnValidate", this);
+			CreateCore();
 		}
 
-		public void SetStateMachine(StateMachine stateMachine)
+		private void CreateCore()
 		{
-			_stateMachine = stateMachine;
-			if (_stateMachine == null) return;
+			DevLog.Log("StateMachineController.CreateCore", this);
+			if(_stateMachine == null) return;
+			if (_stateMachineCore != null) return;
 			
-			_isComplete = false;
-			OnValidate();
+			_stateMachineCore = new StateMachineCore(_stateMachine, this);
 		}
-	
+
 		public void Start()
 		{
-			if (_stateMachine == null) throw new NullReferenceException("State machine is null");
-			
-			_stateMachineInstance = StateMachine.CreateInstance(_stateMachine);
-			_stateMachineInstance.Initialize(this);
+			DevLog.Log("StateMachineController.Start", this);
+			_stateMachineCore.OnComplete += HandleComplete;
+			_stateMachineCore.Start();
 		}
 
 		public void Update()
 		{
-			if (_isComplete) return;
-			if (_stateMachine == null) return;
-			
-			_stateMachineInstance.Update();
-		}
-
-		public StateMachine GetStateMachine()
-		{
-			if (Application.isPlaying)
-			{
-				return _stateMachineInstance;
-			}
-			else
-			{
-				return _stateMachine;
-			}
-		}
-
-		public State GetCurrentState()
-		{
-			var stateMachine = GetStateMachine();
-			return stateMachine.CurrentState;
+			DevLog.Log("StateMachineController.Update", this);
+			_stateMachineCore.Update();
 		}
 
 		public void Complete()
 		{
-			_isComplete = true;
+			DevLog.Log("StateMachineController.Complete", this);
+			_stateMachineCore.Complete();
+		}
+
+		public void OnDestroy()
+		{
+			DevLog.Log("StateMachineController.OnDestroy", this);
+			_stateMachineCore.OnComplete -= HandleComplete;
+		}
+
+		private void HandleComplete()
+		{
+			DevLog.Log("StateMachineController.HandleComplete", this);
 			OnComplete?.Invoke();
 		}
 	}

@@ -8,6 +8,7 @@ namespace VisualStateMachine.States
 		[NonSerialized]
 		protected StateMachineController Controller;
 		
+		public abstract void InitializeState();
 		public abstract void EnterState();
 		public abstract void UpdateState();
 		public abstract void ExitState();

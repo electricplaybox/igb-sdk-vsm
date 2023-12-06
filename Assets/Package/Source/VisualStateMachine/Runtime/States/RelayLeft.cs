@@ -9,5 +9,10 @@ namespace VisualStateMachine.States
 		{
 			Direction = RelayDirection.Left;
 		}
+
+		public override void InitializeState()
+		{
+			
+		}
 	}
 }

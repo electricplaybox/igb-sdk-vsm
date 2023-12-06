@@ -11,10 +11,15 @@ namespace Testing
 		public event Action MyTransition;
 
 		[SerializeField] private float _foo;
-		
-		public override void EnterState()
+
+		public override void InitializeState()
 		{
 			
+		}
+
+		public override void EnterState()
+		{
+			MyTransition?.Invoke();
 		}
 
 		public override void UpdateState()

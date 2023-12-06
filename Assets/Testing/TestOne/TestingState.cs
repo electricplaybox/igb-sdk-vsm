@@ -8,7 +8,12 @@ namespace Testing
 	{
 		[Transition] 
 		public event Action MyTransition;
-		
+
+		public override void InitializeState()
+		{
+			
+		}
+
 		public override void EnterState()
 		{
 			

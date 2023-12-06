@@ -9,7 +9,12 @@ namespace Testing.TestTwo
 	{
 		[Transition("Foo")]
 		public event Action OnFoo;
-		
+
+		public override void InitializeState()
+		{
+			
+		}
+
 		public override void EnterState()
 		{
 			

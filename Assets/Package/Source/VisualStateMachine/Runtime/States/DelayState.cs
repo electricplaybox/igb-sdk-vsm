@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using VisualStateMachine.Attributes;
+using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.States
 {
@@ -16,6 +17,11 @@ namespace VisualStateMachine.States
 		[NonSerialized]
 		private float _time;
 
+		public override void InitializeState()
+		{
+			DevLog.Log("DelayState.InitializeState");
+		}
+
 		public override void EnterState()
 		{
 			_time = Time.time;
@@ -23,7 +29,11 @@ namespace VisualStateMachine.States
 
 		public override void UpdateState()
 		{
-			if(Time.time - _time > _duration) Exit?.Invoke();
+			if (Time.time - _time > _duration)
+			{
+				DevLog.Log($"{Time.time} - {_time} > {_duration}");
+				Exit?.Invoke();
+			}
 		}
 
 		public override void ExitState()

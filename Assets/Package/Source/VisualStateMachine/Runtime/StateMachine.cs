@@ -41,6 +41,7 @@ namespace VisualStateMachine
 
 		public static StateMachine CreateInstance(StateMachine stateMachine)
 		{
+			DevLog.Log("StateMachine.CreateInstance");
 			var instance = Instantiate(stateMachine);
 			instance.name = instance.name + instance.GetInstanceID();
 			instance.Base = stateMachine;
@@ -57,6 +58,7 @@ namespace VisualStateMachine
 		
 		public void Initialize(StateMachineController controller)
 		{
+			DevLog.Log("StateMachine.Initialize");
 			InitalizeNodes(controller);
 			CreateNodeLookupTable();
 			
@@ -66,16 +68,24 @@ namespace VisualStateMachine
 			if (_currentNode == null) return;
 			
 			SubscribeToNode(_currentNode);
+		}
+
+		public void Start()
+		{
+			DevLog.Log("StateMachine.Start");
 			_currentNode.Enter();
 		}
 		
 		public void Update()
 		{
+			DevLog.Log("StateMachine.Update");
 			_currentNode?.Update();
 		}
 		
 		public void AddEntryNode()
 		{
+			DevLog.Log("StateMachine.AddEntryNode");
+			
 			#if UNITY_EDITOR
 			{
 				if (!AssetDatabase.Contains(this)) return;
@@ -93,6 +103,8 @@ namespace VisualStateMachine
 
 		private void InitalizeNodes(StateMachineController controller)
 		{
+			DevLog.Log("StateMachine.InitalizeNodes");
+			
 			foreach (var node in _nodes)
 			{
 				node.Initialize(controller);
@@ -101,6 +113,8 @@ namespace VisualStateMachine
 
 		private void CreateNodeLookupTable()
 		{
+			DevLog.Log("StateMachine.CreateNodeLookupTable");
+			
 			_nodeLookup.Clear();
 
 			foreach (var node in _nodes)
@@ -113,6 +127,8 @@ namespace VisualStateMachine
 		
 		private void SubscribeToNode(StateNode node)
 		{
+			DevLog.Log("StateMachine.SubscribeToNode");
+			
 			var connections = node.Connections;
 
 			foreach (var connection in node.Connections)
@@ -123,6 +139,8 @@ namespace VisualStateMachine
 		
 		private void Unsubscribe(StateNode node)
 		{
+			DevLog.Log("StateMachine.Unsubscribe");
+			
 			var connections = node.Connections;
 
 			foreach (var connection in node.Connections)
@@ -133,6 +151,7 @@ namespace VisualStateMachine
 
 		private void OnDestroy()
 		{
+			DevLog.Log("StateMachine.OnDestroy");
 			if (_currentNode == null) return;
 			
 			Unsubscribe(_currentNode);
@@ -140,6 +159,7 @@ namespace VisualStateMachine
 
 		private void OnTransition(StateConnection connection)
 		{
+			DevLog.Log("StateMachine.OnTransition");
 			var nextNode = _nodeLookup[connection.ToNodeId];
 			
 			Unsubscribe(_currentNode);
@@ -158,6 +178,7 @@ namespace VisualStateMachine
 		
 		public void AddNode(StateNode node)
 		{
+			DevLog.Log("StateMachine.AddNode");
 			_nodes.Add(node);
 			
 			#if UNITY_EDITOR
@@ -170,6 +191,7 @@ namespace VisualStateMachine
 		
 		public void RemoveNode(StateNode node)
 		{
+			DevLog.Log("StateMachine.RemoveNode");
 			if (!_nodes.Contains(node)) return;
 
 			#if UNITY_EDITOR
@@ -189,6 +211,7 @@ namespace VisualStateMachine
 
 		public void RemoveConnectionsToNode(string nodeId)
 		{
+			DevLog.Log("StateMachine.RemoveConnectionsToNode");
 			foreach (var node in _nodes)
 			{
 				node.RemoveAll(connection => connection.ToNodeId == nodeId);
@@ -197,6 +220,8 @@ namespace VisualStateMachine
 
 		public void RemoveConnection(string fromNodeId, string toNodeId)
 		{
+			DevLog.Log("StateMachine.RemoveConnection");
+			
 			var fromNode = _nodes.FirstOrDefault(node => node.Id == fromNodeId);
 			if (fromNode == null)
 			{
@@ -209,6 +234,8 @@ namespace VisualStateMachine
 
 		public void SetEntryNode(StateNode node)
 		{
+			DevLog.Log("StateMachine.SetEntryNode");
+			
 			if (!_nodes.Contains(node)) throw new Exception("Node is not part of this state machine");
 			
 			SetEntryNodeId(node.Id);
@@ -216,6 +243,7 @@ namespace VisualStateMachine
 
 		private void SetEntryNodeId(string entryNodeId)
 		{
+			DevLog.Log("StateMachine.SetEntryNodeId");
 			_entryStateId = entryNodeId;
 
 			foreach (var node in _nodes)
@@ -228,6 +256,8 @@ namespace VisualStateMachine
 
 		public void Save()
 		{
+			DevLog.Log("StateMachine.Save");
+			
 			#if UNITY_EDITOR
 			{
 				EditorUtility.SetDirty(this);
@@ -238,12 +268,16 @@ namespace VisualStateMachine
 		
 		private void SelectNextEntryNode()
 		{
+			DevLog.Log("StateMachine.SelectNextEntryNode");
+			
 			_entryStateId = _nodes.Count > 0 ? _nodes[0].Id : null;
 			Save();
 		}
 
 		public void RemoveAllNodes()
 		{
+			DevLog.Log("StateMachine.RemoveAllNodes");
+			
 			#if UNITY_EDITOR
 			{
 				foreach (var node in _nodes)

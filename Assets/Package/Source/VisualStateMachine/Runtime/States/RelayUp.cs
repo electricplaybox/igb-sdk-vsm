@@ -6,5 +6,10 @@
 		{
 			Direction = RelayDirection.Up;
 		}
+
+		public override void InitializeState()
+		{
+			
+		}
 	}
 }

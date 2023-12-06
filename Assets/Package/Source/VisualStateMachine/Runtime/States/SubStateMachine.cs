@@ -7,11 +7,6 @@ namespace VisualStateMachine.States
 	{
 		[Transition]
 		public event Action OnComplete;
-		
-		public override void UpdateState()
-		{
-			//Do nothing
-		}
 
 		protected override void HandleComplete()
 		{
