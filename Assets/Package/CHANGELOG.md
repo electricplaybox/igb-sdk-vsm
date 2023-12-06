@@ -1,5 +1,15 @@
 ﻿# Change Log
 
+## [0.6.0-beta] - Dec 06, 2023
+- Refactor of SubStateMachine with new base class BaseSubStateMachine
+  - Allows custom transition ports to be added to derived versions of BaeSubStateMachine
+- Refactor of StateMachineController to abstract StateMachineCore
+  - Removes dependency upon MonoBehaviour and empowers BaseSubStateMachine to be used in non MonoBehaviour contexts
+- Added an InitializeState method to States to allow for setup ahead of the call to EnterState
+- Converted the Update method of States to virtual removing it's requirement
+- Fix for deep nested sub state machines allowing the StateMachineEditor to be opened automatically 
+- Added support for the EndState of a StateMachine to be passed to it's parent BaseSubStateMachine
+
 ## [0.5.9-beta] - Dec 05, 2023
 - Fix for relay node sizes
 
