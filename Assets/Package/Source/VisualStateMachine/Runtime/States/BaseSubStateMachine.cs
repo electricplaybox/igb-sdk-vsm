@@ -25,25 +25,16 @@ namespace VisualStateMachine.States
 
 		public override void EnterState()
 		{
-			#if UNITY_EDITOR
-			{
-				var parentSelected = _stateMachineCore.Parent != null &&
-										_stateMachineCore.Parent.StateMachine == Selection.activeObject;
-				var rootSelected = _stateMachineCore.Root == Selection.activeObject;
-
-				if (parentSelected || rootSelected)
-				{
-					Selection.activeObject = _stateMachineCore.StateMachine;
-				}
-			}
-			#endif
+			SelectStateMachine();
 			
 			_stateMachineCore.OnComplete += SubStateMachineComplete;
 			_stateMachineCore.Start();
 		}
-
+		
 		public override void UpdateState()
 		{
+			SelectStateMachine();
+			
 			_stateMachineCore.Update();
 		}
 
@@ -88,6 +79,22 @@ namespace VisualStateMachine.States
 			}
 
 			return false;
+		}
+
+		private void SelectStateMachine()
+		{
+			#if UNITY_EDITOR
+			{
+				var parentSelected = _stateMachineCore.Parent != null &&
+				                     _stateMachineCore.Parent.StateMachine == Selection.activeObject;
+				var rootSelected = _stateMachineCore.Root == Selection.activeObject;
+
+				if (parentSelected || rootSelected)
+				{
+					Selection.activeObject = _stateMachineCore.StateMachine;
+				}
+			}
+			#endif
 		}
 
 		protected abstract void SubStateMachineComplete(State finalState);

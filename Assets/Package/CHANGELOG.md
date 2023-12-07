@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.6.1-beta] - Dec 07, 2023
+- BaseSubStateMachine now selects the sub state machine on update if it is not already selected
+
 ## [0.6.0-beta] - Dec 06, 2023
 - Refactor of SubStateMachine with new base class BaseSubStateMachine
   - Allows custom transition ports to be added to derived versions of BaeSubStateMachine
