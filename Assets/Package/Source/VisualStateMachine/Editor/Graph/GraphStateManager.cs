@@ -40,12 +40,20 @@ namespace VisualStateMachine.Editor
 			LoadGraphViewState();
 			ClearGraph();
 
-			foreach (var node in newStateMachine.Nodes)
+			var nodes = newStateMachine.Nodes.ToArray();
+			foreach (var node in nodes)
 			{
+				if (node == null || node.State == null)
+				{
+					Debug.LogError($"LoadStateMachine.LoadStateMachine received stateNode with missing State");
+					RemoveNode(node);
+					continue;
+				}
+				
 				AddNode(node);
 			}
 			
-			foreach (var node in newStateMachine.Nodes)
+			foreach (var node in nodes)
 			{
 				StateMachineNodeFactory.ConnectStateNode(node, _graphView);
 			}
@@ -74,7 +82,13 @@ namespace VisualStateMachine.Editor
 		
 		public StateNodeView AddNode(StateNode stateNode)
 		{
-			var stateNodeType = stateNode.State.GetType();
+			if (stateNode == null || stateNode.State == null)
+			{
+				Debug.LogError($"GraphStateManager.AddNode recieved stateNode with missing State");
+				return null;
+			}
+			
+			var stateNodeType = stateNode.State.GetType() ?? null;
 			var nodeType = AttributeUtils.GetInheritedCustomAttribute<NodeTypeAttribute>(stateNodeType);
 			var type = nodeType?.NodeType ?? NodeType.None;
 			
@@ -173,7 +187,7 @@ namespace VisualStateMachine.Editor
 				
 			_stateMachine.Save();
 		}
-
+		
 		public void RemoveNodes(List<GraphElement> nodesToRemove)
 		{
 			if (nodesToRemove == null) return;
@@ -207,6 +221,15 @@ namespace VisualStateMachine.Editor
 			
 			var stateNodeView = element as StateNodeView;
 			_stateMachine.RemoveNode(stateNodeView.Data);
+		}
+		
+		
+		public void RemoveNode(StateNode node)
+		{
+			if (node == null) return;
+			
+			Debug.LogError($"GraphStateManager.RemoveNode {node.Id}");
+			_stateMachine.RemoveNode(node);
 		}
 
 		private void RemoveEdge(GraphElement element)

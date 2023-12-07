@@ -51,6 +51,12 @@ namespace VisualStateMachine.Editor
 		
 		public static T CreateStateNode<T>(StateNode stateNode, StateMachineGraphView graphView) where T : StateNodeView
 		{
+			if (stateNode == null || stateNode.State == null)
+			{
+				Debug.LogError($"StateMachineNodeFactory.CreateStateNode recieved stateNode with missing State");
+				return null;
+			}
+			
 			var stateType = stateNode.State.GetType();
 			var stateName = stateType.Name;
 			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
@@ -188,16 +194,17 @@ namespace VisualStateMachine.Editor
 			return edge;
 		}
 		
-		public static void ConnectStateNode(StateNode stateNode, GraphView graphView)
+		public static void ConnectStateNode(StateNode stateNode, StateMachineGraphView graphView)
 		{
 			var nodeView = graphView.Q<StateNodeView>(stateNode.Id);
-			
-			foreach (var connection in stateNode.Connections)
+
+			var connections = stateNode.Connections.ToArray();
+			foreach (var connection in connections)
 			{
-				var connectedNodeView = graphView.Q<StateNodeView>(connection.ToNodeId);
-				var outputPort = nodeView.Q<Port>(connection.FromPortName);
-				var inputPort = connectedNodeView.Q<Port>(null, "port", "input");
+				if (!TryGetConnectedNodeView(connection, graphView, out var connectedNodeView)) continue;
+				if (!TryGetOutputPortFromConnection(connection, graphView, out var outputPort)) continue;
 				
+				var inputPort = connectedNodeView.Q<Port>(null, "port", "input");
 				var edge = new StateNodeEdge
 				{
 					input = inputPort,
@@ -209,6 +216,29 @@ namespace VisualStateMachine.Editor
 				
 				graphView.Add(edge);
 			}
+		}
+
+		private static bool TryGetConnectedNodeView(StateConnection connection, StateMachineGraphView graphView, out StateNodeView connectedNodeView)
+		{
+			connectedNodeView = graphView.Q<StateNodeView>(connection.ToNodeId);
+			if (connectedNodeView != null) return true;
+
+			var stateMachine = graphView.StateManager.StateMachine;
+			stateMachine.RemoveNodeById(connection.ToNodeId);
+			
+			return false;
+		}
+
+		private static bool TryGetOutputPortFromConnection(StateConnection connection, StateMachineGraphView graphView, out Port outputPort)
+		{
+			var nodeView = graphView.Q<StateNodeView>(connection.FromNodeId);
+			outputPort = nodeView.Q<Port>(connection.FromPortName);
+			if (outputPort != null) return true;
+			
+			var stateMachine = graphView.StateManager.StateMachine;
+			stateMachine.RemoveConnection(connection.FromNodeId, connection.ToNodeId);
+
+			return false;
 		}
 	}
 }

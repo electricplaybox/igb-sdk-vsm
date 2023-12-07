@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using VisualStateMachine.Editor.Utils;
 using VisualStateMachine.States;
 using VisualStateMachine.Tools;
+using Object = System.Object;
 
 namespace VisualStateMachine
 {
@@ -39,6 +41,9 @@ namespace VisualStateMachine
 
 		[NonSerialized]
 		private StateNode _currentNode;
+		
+		[SerializeField, HideInInspector]
+		private List<UnityEngine.Object> _subAssets = new();
 
 		public static StateMachine CreateInstance(StateMachine stateMachine)
 		{
@@ -190,22 +195,34 @@ namespace VisualStateMachine
 			
 			#if UNITY_EDITOR
 			{
+				_subAssets.Add(node.State);
 				AssetDatabase.AddObjectToAsset(node.State, this);
 				AssetDatabase.SaveAssets();
 			}
 			#endif
 		}
 		
+		public void RemoveNodeById(string nodeId)
+		{
+			var node = _nodes.FirstOrDefault(node => node.Id == nodeId);
+			if (node == null) return;
+
+			RemoveNode(node);
+		}
+		
 		public void RemoveNode(StateNode node)
 		{
-			DevLog.Log("StateMachine.RemoveNode");
-			if (!_nodes.Contains(node)) return;
-
+			Debug.Log($"StateMachine.RemoveNode {node.Id}");
+			var subAsset = _subAssets.FirstOrDefault(subAsset => subAsset.name == node.Id);
+			if (subAsset == null) return;
+			
 			#if UNITY_EDITOR
 			{
 				var isEntryNode = _entryStateId == node.Id;
-
-				AssetDatabase.RemoveObjectFromAsset(node.State);
+				
+				_subAssets.Remove(subAsset);
+				AssetDatabase.RemoveObjectFromAsset(subAsset);
+				
 				RemoveConnectionsToNode(node.Id);
 				
 				_nodes.Remove(node);
@@ -264,6 +281,7 @@ namespace VisualStateMachine
 		public void Save()
 		{
 			DevLog.Log("StateMachine.Save");
+			ValidateSubAssets();
 			
 			#if UNITY_EDITOR
 			{
@@ -280,6 +298,22 @@ namespace VisualStateMachine
 			_entryStateId = _nodes.Count > 0 ? _nodes[0].Id : null;
 			Save();
 		}
+		
+		public void ValidateSubAssets() 
+		{
+			var thisPath = AssetDatabase.GetAssetPath(this);
+			var subAssets = AssetDatabase.LoadAllAssetsAtPath(thisPath);
+ 
+			for (var i = subAssets.Length - 1; i >= 0; i--) 
+			{
+				if(subAssets[i] != null) continue;
+             
+				AssetDatabase.RemoveObjectFromAsset(_subAssets[i]);
+				_subAssets.RemoveAt(i);
+			}
+         
+			AssetDatabase.SaveAssets();
+		}
 
 		public void RemoveAllNodes()
 		{
@@ -287,12 +321,14 @@ namespace VisualStateMachine
 			
 			#if UNITY_EDITOR
 			{
-				foreach (var node in _nodes)
+				foreach (var subAsset in _subAssets)
 				{
-					AssetDatabase.RemoveObjectFromAsset(node.State);
+					AssetDatabase.RemoveObjectFromAsset(subAsset);
 				}
 				
 				_nodes.Clear();
+				_subAssets.Clear();
+				
 				Save();
 			}
 			#endif

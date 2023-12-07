@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3632218930845712906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15634ad3c81c42de8fe7f9cf610117b6, type: 3}
+  m_Name: 917b76ab-b857-4dff-96b9-78018bd3462e
+  m_EditorClassIdentifier: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
+  m_Name: StateMachine 1
+  m_EditorClassIdentifier: 
+  _entryStateId: 917b76ab-b857-4dff-96b9-78018bd3462e
+  _graphViewState:
+    Position: {x: 854.5, y: 370, z: 0}
+    Scale: 1
+  _nodes:
+  - _state: {fileID: -3632218930845712906}
+    _id: 917b76ab-b857-4dff-96b9-78018bd3462e
+    _position: {x: 0, y: 0}
+    _isEntryNode: 1
+    _connections: []
+  _subAssets: []
