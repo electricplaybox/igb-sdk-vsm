@@ -34,22 +34,14 @@ namespace VisualStateMachine.States
 		public override void UpdateState()
 		{
 			SelectStateMachine();
-			
 			_stateMachineCore.Update();
 		}
 
 		public override void ExitState()
 		{
-			_stateMachineCore.OnComplete -= SubStateMachineComplete;
+			SelectParentStateMachine();
 			
-			#if UNITY_EDITOR
-			{
-				if (Selection.activeObject == _stateMachineCore.StateMachine)
-				{
-					Selection.activeObject = (Object)_stateMachineCore?.Parent.StateMachine ?? _stateMachineCore.Root;
-				}
-			}
-			#endif
+			_stateMachineCore.OnComplete -= SubStateMachineComplete;
 			
 			//This enables the sub state machine to be reused
 			if(ReinitializeOnExit) CreateCore();
@@ -81,12 +73,27 @@ namespace VisualStateMachine.States
 			return false;
 		}
 
+		private void SelectParentStateMachine()
+		{
+			#if UNITY_EDITOR
+			{
+				if (Selection.activeObject == _stateMachineCore.StateMachine)
+				{
+					Selection.activeObject = (Object)_stateMachineCore?.Parent.StateMachine ?? _stateMachineCore.Root;
+				}
+			}
+			#endif
+		}
+
 		private void SelectStateMachine()
 		{
 			#if UNITY_EDITOR
 			{
+				var stateMachineSelected = _stateMachineCore.StateMachine == Selection.activeObject;
+				if (stateMachineSelected) return;
+				
 				var parentSelected = _stateMachineCore.Parent != null &&
-				                     _stateMachineCore.Parent.StateMachine == Selection.activeObject;
+										 _stateMachineCore.Parent.StateMachine == Selection.activeObject;
 				var rootSelected = _stateMachineCore.Root == Selection.activeObject;
 
 				if (parentSelected || rootSelected)

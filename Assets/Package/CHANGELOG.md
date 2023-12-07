@@ -1,4 +1,6 @@
 ﻿# Change Log
+## [0.6.2-beta] - Dec 07, 2023
+- Prevented BaseSubStateMachine selecting the StateMachine if already selected
 
 ## [0.6.1-beta] - Dec 07, 2023
 - BaseSubStateMachine now selects the sub state machine on update if it is not already selected
