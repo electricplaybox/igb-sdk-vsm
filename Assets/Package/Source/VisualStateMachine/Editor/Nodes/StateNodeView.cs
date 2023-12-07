@@ -72,7 +72,7 @@ namespace VisualStateMachine.Editor.Nodes
 				var nodeWidth = stateType.GetCustomAttribute<NodeWidthAttribute>();
 				if (nodeWidth != null)
 				{
-					propertyContainer.style.width = nodeWidth.Width;
+					this.style.maxWidth = nodeWidth.Width;
 				}
 			}
 		}

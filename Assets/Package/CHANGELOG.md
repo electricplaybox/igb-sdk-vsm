@@ -1,4 +1,8 @@
 ﻿# Change Log
+
+## [0.6.3-beta] - Dec 07, 2023
+- Fix for the NodeWidth attribute being applied to the property container and not the node as a whole
+
 ## [0.6.2-beta] - Dec 07, 2023
 - Prevented BaseSubStateMachine selecting the StateMachine if already selected
 

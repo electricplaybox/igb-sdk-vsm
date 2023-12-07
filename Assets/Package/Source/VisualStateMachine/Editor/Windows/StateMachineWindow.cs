@@ -2,7 +2,6 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.Editor.Windows
 {
@@ -76,6 +75,20 @@ namespace VisualStateMachine.Editor.Windows
 			
 			return true;
 		}
+		
+		//@Todo: 
+		private static bool TryGetOriginalStateMachine(out StateMachine stateMachine)
+		{
+			stateMachine = null;
+
+			var selected = Selection.activeObject;
+			if (selected == null) return false;
+			if (selected is not StateMachineController stateMachineController) return false;
+
+			stateMachine = stateMachineController.StateMachine;
+			
+			return true;
+		}
 
 		private static bool TryGetSelectedStateController(out StateMachineController stateMachineController)
 		{
@@ -101,6 +114,12 @@ namespace VisualStateMachine.Editor.Windows
 			if (TryGetSelectedStateController(out var selectedStateController))
 			{
 				stateMachine = selectedStateController.StateMachine;
+				return stateMachine != null;
+			}
+			
+			if(TryGetOriginalStateMachine(out var originalStateMachine))
+			{
+				stateMachine = originalStateMachine;
 				return stateMachine != null;
 			}
 
