@@ -26,7 +26,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 8be5d20e-787b-4bb2-a0b2-d484a3d5c411
   _graphViewState:
-    Position: {x: 539.5, y: 370, z: 0}
+    Position: {x: 404, y: 378, z: 0}
     Scale: 1
   _nodes:
   - _state: {fileID: -4833983329420598258}
@@ -40,6 +40,14 @@ MonoBehaviour:
   - _state: {fileID: 2493413918447024633}
     _id: dd5ed49e-2734-4b11-a40e-c79e58958ad4
     _position: {x: -139, y: -12}
+    _isEntryNode: 0
+    _connections:
+    - _toNodeId: 3e7b489c-8fee-41a4-923f-29b06a2254a2
+      _fromNodeId: dd5ed49e-2734-4b11-a40e-c79e58958ad4
+      _fromPortName: OnComplete
+  - _state: {fileID: 5826939712589724975}
+    _id: 3e7b489c-8fee-41a4-923f-29b06a2254a2
+    _position: {x: 230, y: -1}
     _isEntryNode: 0
     _connections: []
 --- !u!114 &2493413918447024633
@@ -55,3 +63,16 @@ MonoBehaviour:
   m_Name: dd5ed49e-2734-4b11-a40e-c79e58958ad4
   m_EditorClassIdentifier: 
   _myReallyLongSerializedFieldLabel: {fileID: 11400000, guid: f952c082cb03451daed3ee968ac6c63e, type: 2}
+--- !u!114 &5826939712589724975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4732fdabeaae4b0896f51422f4eed836, type: 3}
+  m_Name: 3e7b489c-8fee-41a4-923f-29b06a2254a2
+  m_EditorClassIdentifier: 
+  Foo: 0

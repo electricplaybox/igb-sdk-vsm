@@ -73,6 +73,7 @@ namespace VisualStateMachine.Editor.Nodes
 				if (nodeWidth != null)
 				{
 					this.style.maxWidth = nodeWidth.Width;
+					this.style.width = nodeWidth.Width;
 				}
 			}
 		}

@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.6.4-beta] - Dec 07, 2023
+- Applied max node width to width as well
+- 
 ## [0.6.3-beta] - Dec 07, 2023
 - Fix for the NodeWidth attribute being applied to the property container and not the node as a whole
 

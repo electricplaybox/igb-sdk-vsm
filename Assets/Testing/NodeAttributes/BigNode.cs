@@ -1,15 +1,13 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.States;
 
 namespace Testing.NodeAttributes
 {
-	public class SmallNode : State
+	[NodeWidth(500)]
+	public class BigNode : State
 	{
-		[Transition] public event Action OnComplete;
-		
-		[SerializeField] private ScriptableObject _myReallyLongSerializedFieldLabel;
+		public int Foo;
 		
 		public override void EnterState()
 		{
