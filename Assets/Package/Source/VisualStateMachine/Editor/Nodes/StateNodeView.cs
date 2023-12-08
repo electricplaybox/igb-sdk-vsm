@@ -81,7 +81,7 @@ namespace VisualStateMachine.Editor.Nodes
 		private string ProcessTitle(string title)
 		{
 			title = StringUtils.RemoveStateSuffix(title);
-			title = StringUtils.ApplyEllipsis(title, 32);
+			title = StringUtils.ApplyEllipsis(title, 30);
 
 			return title;
 		}
