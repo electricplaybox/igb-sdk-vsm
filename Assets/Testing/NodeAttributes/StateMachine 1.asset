@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0fb46608c3f4a22bd5ed641f9a6d638, type: 3}
-  m_Name: StateMachine
+  m_Name: StateMachine 1
   m_EditorClassIdentifier: 
-  _entryStateId: aa29d1b5-de9c-4d3d-a809-7ff80ac4f8a0
+  _entryStateId: ec618e42-9d54-4584-9448-28ce52953434
   _graphViewState:
-    Position: {x: 539.5, y: 370, z: 0}
-    Scale: 1
+    Position: {x: 0, y: 0, z: 0}
+    Scale: 0
   _nodes:
-  - _state: {fileID: 4587208901864259367}
-    _id: aa29d1b5-de9c-4d3d-a809-7ff80ac4f8a0
-    _position: {x: -307, y: -9}
+  - _state: {fileID: 5691380104523947607}
+    _id: ec618e42-9d54-4584-9448-28ce52953434
+    _position: {x: 0, y: 0}
     _isEntryNode: 1
     _connections: []
---- !u!114 &4587208901864259367
+--- !u!114 &5691380104523947607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32,5 +32,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15634ad3c81c42de8fe7f9cf610117b6, type: 3}
-  m_Name: aa29d1b5-de9c-4d3d-a809-7ff80ac4f8a0
+  m_Name: ec618e42-9d54-4584-9448-28ce52953434
   m_EditorClassIdentifier: 

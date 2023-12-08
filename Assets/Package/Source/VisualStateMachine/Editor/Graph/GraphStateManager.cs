@@ -216,5 +216,10 @@ namespace VisualStateMachine.Editor
 			var edge = element as Edge;
 			_stateMachine.RemoveConnection(edge.output.node.name, edge.input.node.name);
 		}
+
+		public void Save()
+		{
+			_stateMachine?.Save();
+		}
 	}
 }

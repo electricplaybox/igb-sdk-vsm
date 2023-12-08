@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.6.5-beta] - Dec 08, 2023
+- Added additional save points when connections are created
+
 ## [0.6.4-beta] - Dec 07, 2023
 - Applied max node width to width as well
 - 

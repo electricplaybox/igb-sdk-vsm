@@ -104,6 +104,8 @@ namespace VisualStateMachine.Editor
 				var edge = StateMachineNodeFactory.ConnectStateNode(port, newNode, this);
 
 				AddConnectionToState(edge);
+				
+				_stateManager.Save();
 			});
 		}
 		
@@ -115,6 +117,11 @@ namespace VisualStateMachine.Editor
 		public void HandleGraphDragged(Vector3 position)
 		{
 			_stateManager.SaveGraphViewState();
+		}
+
+		public void Save()
+		{
+			
 		}
 	}
 }
