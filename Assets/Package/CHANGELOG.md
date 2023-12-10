@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.4-beta] - Dec 10, 2023
+- Added a fix for handling transition name changes
+
 ## [0.7.3-beta] - Dec 10, 2023
 - Improved StateSelectWindow search by comparing lower case search query again lowercase state names
 - State names are now processed to be more readable in the StateSelectorWindow
