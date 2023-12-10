@@ -67,6 +67,12 @@ public class DelayState : State
 5. Create a game object with a StateMachineController component upon it and assign it your new state machine asset.
 6. Run the application with the StateMachineController selected to see the state of your state machine within the State Machine Editor window.
 
+## Jump Nodes
+
+Add JumpOutState state and set it's Id. Then create a JumpInState with the corresponding Id to jump from one node to another.
+![Unity_aEXhADhxUy](https://github.com/PaulNonatomic/VisualStateMachine/assets/4581647/8df2873c-070d-4ae9-a3a1-1abed9013c70)
+
+
 
 
 # Known Issues
