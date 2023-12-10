@@ -189,6 +189,8 @@ namespace VisualStateMachine.Editor
 			foreach (var connection in stateNode.Connections)
 			{
 				var connectedNodeView = graphView.Q<NodeView>(connection.ToNodeId);
+				if (connectedNodeView == null) continue;
+				
 				var outputPort = nodeView.Q<Port>(connection.FromPortName);
 				var inputPort = connectedNodeView.Q<Port>(null, "port", "input");
 				

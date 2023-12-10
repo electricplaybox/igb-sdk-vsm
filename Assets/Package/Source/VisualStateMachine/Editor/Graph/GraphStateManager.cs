@@ -40,8 +40,15 @@ namespace VisualStateMachine.Editor
 			LoadGraphViewState();
 			ClearGraph();
 
-			foreach (var node in newStateMachine.Nodes)
+			var nodes = newStateMachine.Nodes.ToList();
+			foreach (var node in nodes)
 			{
+				if (node.State == null)
+				{
+					newStateMachine.RemoveNode(node);
+					return;
+				}
+				
 				AddNode(node);
 			}
 			

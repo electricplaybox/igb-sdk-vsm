@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using VisualStateMachine.States;
 using VisualStateMachine.Tools;
+using Object = UnityEngine.Object;
 
 namespace VisualStateMachine
 {
@@ -42,6 +43,9 @@ namespace VisualStateMachine
 
 		[NonSerialized]
 		private StateNode _currentNode;
+		
+		//used to keep a reference to the child states
+		private List<Object> _references = new();
 
 		public static StateMachine CreateInstance(StateMachine stateMachine)
 		{
@@ -218,11 +222,16 @@ namespace VisualStateMachine
 		
 		public void AddNode(StateNode node)
 		{
+			ValidateSubAssets();
+			
+			if (node.State == null) return;
+			
 			DevLog.Log("StateMachine.AddNode");
 			_nodes.Add(node);
 			
 			#if UNITY_EDITOR
 			{
+				_references.Add(node.State);
 				AssetDatabase.AddObjectToAsset(node.State, this);
 				AssetDatabase.SaveAssets();
 			}
@@ -232,6 +241,11 @@ namespace VisualStateMachine
 		public void RemoveNode(StateNode node)
 		{
 			DevLog.Log("StateMachine.RemoveNode");
+			
+			ValidateSubAssets();
+
+			if (node == null) return;
+			if (node.State == null) return;
 			if (!_nodes.Contains(node)) return;
 
 			#if UNITY_EDITOR
@@ -239,6 +253,7 @@ namespace VisualStateMachine
 				var isEntryNode = _entryStateId == node.Id;
 
 				AssetDatabase.RemoveObjectFromAsset(node.State);
+				_references.Remove(node.State);
 				RemoveConnectionsToNode(node.Id);
 				
 				_nodes.Remove(node);
@@ -263,11 +278,7 @@ namespace VisualStateMachine
 			DevLog.Log("StateMachine.RemoveConnection");
 			
 			var fromNode = _nodes.FirstOrDefault(node => node.Id == fromNodeId);
-			if (fromNode == null)
-			{
-				Debug.LogError($"Attempting to remove connection between node {fromNodeId} to {toNodeId} failed as the fromNode is not present");
-				return;
-			}
+			if (fromNode == null) return;
 			
 			fromNode.RemoveAll(connection => connection.ToNodeId == toNodeId);
 		}
@@ -297,6 +308,7 @@ namespace VisualStateMachine
 		public void Save()
 		{
 			DevLog.Log("StateMachine.Save");
+			ValidateSubAssets();
 			
 			#if UNITY_EDITOR
 			{
@@ -320,11 +332,12 @@ namespace VisualStateMachine
 			
 			#if UNITY_EDITOR
 			{
-				foreach (var node in _nodes)
+				foreach(var state in _references)
 				{
-					AssetDatabase.RemoveObjectFromAsset(node.State);
+					AssetDatabase.RemoveObjectFromAsset(state);
 				}
-				
+
+				_references.Clear();
 				_nodes.Clear();
 				Save();
 			}
@@ -332,5 +345,34 @@ namespace VisualStateMachine
 		}
 		
 		#endregion
+		
+		private void ValidateSubAssets ()
+		{
+			var thisPath = AssetDatabase.GetAssetPath(this);
+			var subAssets = AssetDatabase.LoadAllAssetsAtPath(thisPath);
+ 
+			for (var i = subAssets.Length - 1; i >= 0; i--) 
+			{
+				if(subAssets[i] != null) continue;
+             
+				AssetDatabase.RemoveObjectFromAsset(_references[i]);
+				_references.RemoveAt(i);
+				_nodes.RemoveAt(i);
+			}
+
+			foreach (var node in _nodes)
+			{
+				if (node == null) continue;
+				
+				var connections = node.Connections.ToList();
+				foreach (var connection in connections)
+				{
+					var count = _nodes.Count(node => node.Id == connection.ToNodeId);
+					if (count == 0) node.RemoveConnection(connection);
+				}
+			}
+
+			AssetDatabase.SaveAssets();
+		}
 	}
 }
