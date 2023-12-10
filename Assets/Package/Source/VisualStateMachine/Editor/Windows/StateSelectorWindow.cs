@@ -88,7 +88,7 @@ namespace VisualStateMachine.Editor.Windows
 				for (var stateIndex = 0; stateIndex < group.Count; stateIndex++)
 				{
 					var stateType = group[stateIndex];
-					if (!stateType.Name.Contains(searchQuery)) continue;
+					if (!stateType.Name.ToLower().Contains(searchQuery.ToLower())) continue;
 
 					//Prevent empty groups from being created
 					if (groupBody == null)
