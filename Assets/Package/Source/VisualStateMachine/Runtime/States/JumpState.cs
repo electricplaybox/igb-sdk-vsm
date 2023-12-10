@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using VisualStateMachine.Attributes;
+﻿using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 {
@@ -10,6 +8,5 @@ namespace VisualStateMachine.States
 	public abstract class JumpState : State
 	{
 		public JumpId JumpId;
-		
 	}
 }

@@ -5,7 +5,7 @@ using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.States
 {
-	[NodeColor(NodeColor.Pink)]
+	[NodeColor(NodeColor.Pink), NodeIcon(NodeIcon.VsmFlatTimeWhite, opacity:0.3f)]
 	public class DelayState : State
 	{
 		[Transition]

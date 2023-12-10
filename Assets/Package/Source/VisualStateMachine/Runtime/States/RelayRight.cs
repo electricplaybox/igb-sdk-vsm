@@ -2,6 +2,7 @@
 
 namespace VisualStateMachine.States
 {
+	[HideNode]
 	[PortOrientation(PortOrientation.Horizontal)]
 	public class RelayRight : Relay
 	{

@@ -39,7 +39,7 @@ namespace VisualStateMachine
 			if (stateMachine == null)
 			{
 				_stateMachineIsNull = true;
-				throw new StateMachineException("StateMachine is null");
+				return;
 			}
 
 			_parent = parent;

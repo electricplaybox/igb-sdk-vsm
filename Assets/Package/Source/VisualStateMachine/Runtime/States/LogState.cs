@@ -4,7 +4,7 @@ using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 {
-	[NodeColor(NodeColor.Blue)]
+	[NodeColor(NodeColor.Blue), NodeIcon(NodeIcon.VsmFlatDocWhite, opacity:0.3f)]
 	public class LogState : State
 	{
 		[Transition]

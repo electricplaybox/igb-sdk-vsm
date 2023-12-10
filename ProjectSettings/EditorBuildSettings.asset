@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Package/Samples/ExampleOne/Content/Scenes/Example.unity
     guid: d32a203f0ea38744b9832b14eca6b93b
+  - enabled: 1
+    path: Assets/Testing/CustomSubStateMachines/CustomSubStateMachines.unity
+    guid: a3b5a752438daa9488badee649760c68
   m_configObjects: {}

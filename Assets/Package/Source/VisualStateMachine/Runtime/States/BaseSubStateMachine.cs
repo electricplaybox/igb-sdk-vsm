@@ -10,11 +10,10 @@ using UnityEditor;
 
 namespace VisualStateMachine.States
 {
-	[NodeColor(NodeColor.Purple), NodeLabel("Sub State Machine"), NodeIcon(NodeIcon.VsmFlatWhite)]
+	[NodeColor(NodeColor.Purple), NodeLabel("Sub State Machine"), NodeIcon(NodeIcon.VsmFlatWhite, opacity:0.3f)]
 	public abstract class BaseSubStateMachine : State
 	{
 		[SerializeField] protected StateMachine SubStateMachine;
-		[SerializeField] protected bool ReinitializeOnExit = true;
 		
 		private StateMachineCore _stateMachineCore;
 
@@ -39,12 +38,8 @@ namespace VisualStateMachine.States
 
 		public override void ExitState()
 		{
-			SelectParentStateMachine();
-			
 			_stateMachineCore.OnComplete -= SubStateMachineComplete;
-			
-			//This enables the sub state machine to be reused
-			if(ReinitializeOnExit) CreateCore();
+			SelectParentStateMachine();
 		}
 
 		private void CreateCore()

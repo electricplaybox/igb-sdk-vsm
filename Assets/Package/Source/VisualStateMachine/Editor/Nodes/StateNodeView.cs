@@ -118,6 +118,7 @@ namespace VisualStateMachine.Editor.Nodes
 			
 			if (image == null) return;
 			image.image = icon;
+			image.style.opacity = nodeIcon.Opacity;
 		}
 
 		private void SetCustomLabelText()

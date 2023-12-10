@@ -70,20 +70,29 @@ namespace VisualStateMachine
 			if(_nodeLookup.Count == 0) throw new Exception($"StateMachine {this.name} has 0 nodes.");
 			
 			_currentNode = _nodeLookup[_entryStateId];
-			if (_currentNode == null) return;
-			
-			SubscribeToNode(_currentNode);
 		}
 
 		public void Start()
 		{
-			DevLog.Log("StateMachine.Start");
-			_currentNode.Enter();
+			DevLog.Log($"StateMachine.Start: {name}");
+			ResetNodes();
+			IsComplete = false;
+			_currentNode = _nodeLookup[_entryStateId];
+			SubscribeToNode(_currentNode);
+			
+			_currentNode?.Enter();
 		}
-		
+
+		private void ResetNodes()
+		{
+			foreach(var node in _nodes)
+			{
+				node.Reset();
+			}
+		}
+
 		public void Update()
 		{
-			DevLog.Log("StateMachine.Update");
 			_currentNode?.Update();
 		}
 

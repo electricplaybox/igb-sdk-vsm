@@ -137,5 +137,10 @@ namespace VisualStateMachine
 		{
 			_connections.RemoveAll(match);
 		}
+
+		public void Reset()
+		{
+			_isActive = false;
+		}
 	}
 }
