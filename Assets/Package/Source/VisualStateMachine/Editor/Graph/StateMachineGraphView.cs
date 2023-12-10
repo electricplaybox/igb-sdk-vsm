@@ -79,8 +79,8 @@ namespace VisualStateMachine.Editor
 		
 		public static void AddConnectionToState(Edge edge)
 		{
-			var sourceNode = edge.output.node as StateNodeView;
-			var targetNode = edge.input.node as StateNodeView;
+			var sourceNode = edge.output.node as NodeView;
+			var targetNode = edge.input.node as NodeView;
 
 			var connection = new StateConnection(
 				fromNodeId: sourceNode.Data.Id,
@@ -102,7 +102,8 @@ namespace VisualStateMachine.Editor
 				var point = GraphUtils.ScreenPointToGraphPoint(position, this);
 				var newNode = StateMachineNodeFactory.CreateStateNode(stateType, point, this);
 				var edge = StateMachineNodeFactory.ConnectStateNode(port, newNode, this);
-
+				if (edge == null) return;
+				
 				AddConnectionToState(edge);
 				
 				_stateManager.Save();

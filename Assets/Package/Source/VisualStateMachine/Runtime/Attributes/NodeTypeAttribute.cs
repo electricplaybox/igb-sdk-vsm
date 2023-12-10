@@ -5,7 +5,8 @@ namespace VisualStateMachine.Attributes
 	public enum NodeType
 	{
 		None,
-		Relay
+		Relay,
+		Jump
 	}
 	
 	[AttributeUsage(AttributeTargets.Class, Inherited = false)]

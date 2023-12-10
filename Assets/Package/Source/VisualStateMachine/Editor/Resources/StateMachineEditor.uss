@@ -191,3 +191,11 @@
     margin: 3px;
 }
 
+/* *********** JumpIn Node *********** */
+.jump-node {
+    max-width: 130px;
+    min-width: 130px;
+}
+.jump-node .unity-text-element {
+    -unity-text-align: middle-center;
+}

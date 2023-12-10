@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 569012416}
   - component: {fileID: 569012415}
   m_Layer: 0
-  m_Name: StateMachienController
+  m_Name: StateMachineController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df320fa969e4776b8555911db71f3b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 11400000, guid: ce635718838d2a74a99343c57b3ff2a4, type: 2}
+  _stateMachine: {fileID: 11400000, guid: 894b538adad4889428de1454a9c1ed4b, type: 2}
 --- !u!4 &569012416
 Transform:
   m_ObjectHideFlags: 0

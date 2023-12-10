@@ -21,7 +21,7 @@ namespace VisualStateMachine.Editor.ContextMenu
 					case "StateMachineGraphView":
 						BuildGraphViewContext(evt);
 						break;
-					case "StateNodeView":
+					case "NodeView":
 						BuildNodeContext(evt);
 						break;
 				}
@@ -30,7 +30,7 @@ namespace VisualStateMachine.Editor.ContextMenu
 
 		private void BuildNodeContext(ContextualMenuPopulateEvent evt)
 		{
-			var node = evt.target as StateNodeView;
+			var node = evt.target as NodeView;
 		}
 
 		private void BuildGraphViewContext(ContextualMenuPopulateEvent evt)

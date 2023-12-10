@@ -4,9 +4,9 @@ using VisualStateMachine.States;
 
 namespace VisualStateMachine.Editor.Nodes
 {
-	public class RelayNodeView : StateNodeView
+	public class RelayNodeView : NodeView
 	{
-		public RelayNodeView(StateNode stateNode, string stateTitle, string stateName, StateMachineGraphView graphView) : base(stateNode, stateTitle, stateName, graphView)
+		public RelayNodeView(StateNode stateNode, StateMachineGraphView graphView) : base(stateNode, graphView)
 		{
 			
 		}

@@ -29,9 +29,11 @@ namespace VisualStateMachine.Editor.Edges
 			if(edge.output.connections.ToList().Count > 0) return;
 			
 			var port = edge.output;
-			var inputNode = edge.input.node as StateNodeView;
+			var inputNode = edge.input.node as NodeView;
 			
 			var connectedEdge = StateMachineNodeFactory.ConnectStateNode(port, inputNode, _graphView);
+			if (connectedEdge == null) return;
+			
 			StateMachineGraphView.AddConnectionToState(connectedEdge);
 
 			_graphView.StateManager.Save();

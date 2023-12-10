@@ -19,18 +19,15 @@ namespace VisualStateMachine.Editor
 	{
 		public const string DefaultInputNodeName = "Enter";
 		
-		public static StateNodeView CreateStateNode(StateNode stateNode, StateMachineGraphView graphView)
+		public static NodeView CreateStateNode(StateNode stateNode, StateMachineGraphView graphView)
 		{
-			var stateType = stateNode.State.GetType();
-			var stateName = stateType.Name;
-			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
-			var node = new StateNodeView(stateNode, stateTitle, stateNode.Id, graphView);
+			var node = new StateNodeView(stateNode, graphView);
 			
 			graphView.AddElement(node);
 			return node;
 		}
 
-		public static StateNodeView CreateStateNode(Type stateType, Vector2 position, StateMachineGraphView graphView)
+		public static NodeView CreateStateNode(Type stateType, Vector2 position, StateMachineGraphView graphView)
 		{
 			var stateManager = graphView.StateManager;
 			var stateNode = new StateNode(stateType);
@@ -49,12 +46,9 @@ namespace VisualStateMachine.Editor
 			return node;
 		}
 		
-		public static T CreateStateNode<T>(StateNode stateNode, StateMachineGraphView graphView) where T : StateNodeView
+		public static T CreateNode<T>(StateNode stateNode, StateMachineGraphView graphView) where T : NodeView
 		{
-			var stateType = stateNode.State.GetType();
-			var stateName = stateType.Name;
-			var stateTitle = StringUtils.PascalCaseToTitleCase(stateName);
-			var node = Activator.CreateInstance(typeof(T), new object[] {stateNode, stateTitle, stateName, graphView}) as T;
+			var node = Activator.CreateInstance(typeof(T), new object[] {stateNode, graphView}) as T;
 			
 			graphView.AddElement(node);
 			return node;
@@ -117,11 +111,11 @@ namespace VisualStateMachine.Editor
 			return infoFields.ToArray();
 		}
 
-		public static void CreateInputPort(StateNodeView node, StateMachineGraphView graphView)
+		public static void CreateInputPort(NodeView node, StateMachineGraphView graphView)
 		{
 			var nodeType = node.Data.State.GetType();
 			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(nodeType);
-			var orientation = orientationAtt != null ? (Orientation)orientationAtt.PortOrientation : Orientation.Horizontal;
+			var orientation = orientationAtt != null ? (Orientation) orientationAtt.PortOrientation : Orientation.Horizontal;
 			var inputPort = node.InstantiatePort(orientation, Direction.Input, Port.Capacity.Multi, typeof(Node));
 
 			inputPort.name = inputPort.portName = DefaultInputNodeName;
@@ -129,7 +123,7 @@ namespace VisualStateMachine.Editor
 			node.inputContainer.Add(inputPort);
 		}
 
-		public static void CreateOutputPorts(StateNodeView node, StateMachineGraphView graphView)
+		public static void CreateOutputPorts(NodeView node, StateMachineGraphView graphView)
 		{
 			var type = node.Data.State.GetType();
 			var events = type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
@@ -143,7 +137,7 @@ namespace VisualStateMachine.Editor
 			}
 		}
 		
-		public static void CreateOutputPort(StateNodeView node, string portName, StateMachineGraphView graphView, 
+		public static void CreateOutputPort(NodeView node, string portName, StateMachineGraphView graphView, 
 			TransitionAttribute transitionAttribute)
 		{
 			var nodeType = node.Data.State.GetType();
@@ -166,9 +160,10 @@ namespace VisualStateMachine.Editor
 			node.outputContainer.Add(outputPort);
 		}
 
-		public static Edge ConnectStateNode(Port outputPort, StateNodeView destinationNode, GraphView graphView)
+		public static Edge ConnectStateNode(Port outputPort, NodeView destinationNode, GraphView graphView)
 		{
 			var inputPort = destinationNode.Q<Port>(null, "port", "input");
+			if (inputPort == null) return null;
 			
 			var edge = new StateNodeEdge()
 			{
@@ -178,8 +173,7 @@ namespace VisualStateMachine.Editor
 
 			var position = edge.GetPosition();
 			position.position -= (Vector2)graphView.contentViewContainer.transform.position;
-			edge.SetPosition(position); 
-			
+			edge.SetPosition(position);
 			
 			inputPort.Connect(edge);
 			outputPort.Connect(edge); 
@@ -190,11 +184,11 @@ namespace VisualStateMachine.Editor
 		
 		public static void ConnectStateNode(StateNode stateNode, GraphView graphView)
 		{
-			var nodeView = graphView.Q<StateNodeView>(stateNode.Id);
+			var nodeView = graphView.Q<NodeView>(stateNode.Id);
 			
 			foreach (var connection in stateNode.Connections)
 			{
-				var connectedNodeView = graphView.Q<StateNodeView>(connection.ToNodeId);
+				var connectedNodeView = graphView.Q<NodeView>(connection.ToNodeId);
 				var outputPort = nodeView.Q<Port>(connection.FromPortName);
 				var inputPort = connectedNodeView.Q<Port>(null, "port", "input");
 				

@@ -36,6 +36,9 @@ namespace VisualStateMachine
 		
 		[NonSerialized]
 		private Dictionary<string, StateNode> _nodeLookup = new();
+		
+		[NonSerialized]
+		private Dictionary<JumpId, StateNode> _jumpNodeLookup = new();
 
 		[NonSerialized]
 		private StateNode _currentNode;
@@ -126,7 +129,15 @@ namespace VisualStateMachine
 
 			foreach (var node in _nodes)
 			{
+				if (node.State == null) continue;
+				
 				_nodeLookup.Add(node.Id, node);
+				
+				if (node.State is JumpInState)
+				{
+					var jumpIn = node.State as JumpInState;
+					_jumpNodeLookup.Add(jumpIn.JumpId, node);
+				}
 			}
 		}
 
@@ -168,7 +179,11 @@ namespace VisualStateMachine
 		{
 			DevLog.Log("StateMachine.OnTransition");
 			var nextNode = _nodeLookup[connection.ToNodeId];
-			
+			Transition(nextNode);
+		}
+
+		private void Transition(StateNode nextNode)
+		{
 			Unsubscribe(_currentNode);
 			_currentNode.Exit();
 			
@@ -177,6 +192,15 @@ namespace VisualStateMachine
 			
 			SubscribeToNode(_currentNode);
 			_currentNode.Enter();
+		}
+		
+		public void JumpTo(JumpId jumpId)
+		{
+			DevLog.Log("StateMachine.JumpTo");
+			var nextNode = _jumpNodeLookup[jumpId];
+			if (nextNode == null) return;
+
+			Transition(nextNode);
 		}
 		
 		#endregion

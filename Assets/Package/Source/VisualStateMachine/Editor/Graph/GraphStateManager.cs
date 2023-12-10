@@ -66,13 +66,13 @@ namespace VisualStateMachine.Editor
 		{
 			foreach (var node in _graphView.nodes)
 			{
-				if (node is not StateNodeView stateNodeView) continue;
+				if (node is not NodeView nodeView) continue;
 
-				stateNodeView.Update(stateMachine);
+				nodeView.Update(stateMachine);
 			}
 		}
 		
-		public StateNodeView AddNode(StateNode stateNode)
+		public NodeView AddNode(StateNode stateNode)
 		{
 			var stateNodeType = stateNode.State.GetType();
 			var nodeType = AttributeUtils.GetInheritedCustomAttribute<NodeTypeAttribute>(stateNodeType);
@@ -81,10 +81,12 @@ namespace VisualStateMachine.Editor
 			switch (type)
 			{
 				case NodeType.Relay:
-					return StateMachineNodeFactory.CreateStateNode<RelayNodeView>(stateNode, _graphView);
+					return StateMachineNodeFactory.CreateNode<RelayNodeView>(stateNode, _graphView);
+				case NodeType.Jump:
+					return StateMachineNodeFactory.CreateNode<JumpNodeView>(stateNode, _graphView);
 				case NodeType.None:
 				default:
-					return StateMachineNodeFactory.CreateStateNode<StateNodeView>(stateNode, _graphView);
+					return StateMachineNodeFactory.CreateNode<StateNodeView>(stateNode, _graphView);
 			}
 		}
 		
@@ -194,19 +196,19 @@ namespace VisualStateMachine.Editor
 
 		private void MoveNode(GraphElement element)
 		{
-			if (element is not StateNodeView) return;
+			if (element is not NodeView) return;
 			
-			var stateNodeView = element as StateNodeView;
+			var nodeView = element as NodeView;
 			var position = element.GetPosition().position;
-			stateNodeView.Data.SetPosition(position);
+			nodeView.Data.SetPosition(position);
 		}
 
 		private void RemoveNode(GraphElement element)
 		{
-			if (element is not StateNodeView) return;
+			if (element is not NodeView) return;
 			
-			var stateNodeView = element as StateNodeView;
-			_stateMachine.RemoveNode(stateNodeView.Data);
+			var nodeView = element as NodeView;
+			_stateMachine.RemoveNode(nodeView.Data);
 		}
 
 		private void RemoveEdge(GraphElement element)

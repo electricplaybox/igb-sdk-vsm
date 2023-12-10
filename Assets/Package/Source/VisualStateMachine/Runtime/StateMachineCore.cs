@@ -71,5 +71,10 @@ namespace VisualStateMachine
 			StateMachine.Complete();
 			OnComplete?.Invoke(finalState);
 		}
+
+		public void JumpTo(JumpId jumpId)
+		{
+			_stateMachineInstance.JumpTo(jumpId);
+		}
 	}
 }

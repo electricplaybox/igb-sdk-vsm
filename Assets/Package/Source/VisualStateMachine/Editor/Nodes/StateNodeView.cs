@@ -1,31 +1,18 @@
 ﻿using System.Reflection;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VisualStateMachine.Attributes;
-using VisualStateMachine.Editor.Ports;
 using VisualStateMachine.Editor.Services;
 using VisualStateMachine.Editor.Utils;
-using VisualStateMachine.States;
 
 namespace VisualStateMachine.Editor.Nodes
 {
-	public class StateNodeView : Node
+	public class StateNodeView : NodeView
 	{
-		public StateNode Data;
-
-		public StateNodeView(StateNode stateNode, string stateTitle, string stateName, StateMachineGraphView graphView)
+		public StateNodeView(StateNode stateNode, StateMachineGraphView graphView) : base(stateNode, graphView)
 		{
-			Data = stateNode;
-			this.title = ProcessTitle(stateTitle);
-			this.name = stateNode.Id;
-			
-			if(stateNode.State is not EntryState) StateMachineNodeFactory.CreateInputPort(this, graphView);
-			StateMachineNodeFactory.CreateOutputPorts(this, graphView);
-			
-			this.RefreshPorts();
-			this.RefreshExpandedState();
-			this.SetPosition(new Rect(stateNode.Position, Vector2.one));
+			var titleString = stateNode.State.GetType().Name;
+			this.title = ProcessTitle(titleString);
 			
 			var container = new VisualElement();
 			container.name = "title-container";
@@ -80,14 +67,17 @@ namespace VisualStateMachine.Editor.Nodes
 
 		private string ProcessTitle(string title)
 		{
+			title = StringUtils.PascalCaseToTitleCase(title);
 			title = StringUtils.RemoveStateSuffix(title);
 			title = StringUtils.ApplyEllipsis(title, 30);
 
 			return title;
 		}
 		
-		public virtual void Update(StateMachine stateMachine)
+		public override void Update(StateMachine stateMachine)
 		{
+			base.Update(stateMachine);
+			
 			if (Data == null) return;
 			
 			DrawEntryPoint();
@@ -205,15 +195,6 @@ namespace VisualStateMachine.Editor.Nodes
 			{
 				RemoveFromClassList("entry-node");
 			}
-		}
-		
-		public override Port InstantiatePort(
-			Orientation orientation,
-			Direction direction,
-			Port.Capacity capacity,
-			System.Type type)
-		{
-			return StatePort.Create<Edge>(orientation, direction, capacity, type);
 		}
 	}
 }

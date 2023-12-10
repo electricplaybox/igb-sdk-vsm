@@ -2,13 +2,12 @@
 using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
-{ 
-	[HideNode, NodeColor(NodeColor.Green), NoInputPort()]
-	public class EntryState : State
+{
+	[NoInputPort()]
+	public class JumpInState : JumpState
 	{
-		[Transition(">>")]
-		public event Action Exit;
-
+		[Transition] public event Action Exit;
+		
 		public override void EnterState()
 		{
 			Exit?.Invoke();
@@ -16,7 +15,7 @@ namespace VisualStateMachine.States
 
 		public override void ExitState()
 		{
-			//Do nothing
+			
 		}
 	}
 }

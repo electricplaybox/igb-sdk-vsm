@@ -1,22 +1,24 @@
 ﻿using System;
+using UnityEngine;
 using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
-{ 
-	[HideNode, NodeColor(NodeColor.Green), NoInputPort()]
-	public class EntryState : State
+{
+	
+	[NodeType(NodeType.Jump)]
+	[NodeWidth(100)]
+	public class JumpFromState : State
 	{
-		[Transition(">>")]
-		public event Action Exit;
-
+		public JumpId JumpId;
+		
 		public override void EnterState()
 		{
-			Exit?.Invoke();
+			
 		}
 
 		public override void ExitState()
 		{
-			//Do nothing
+			
 		}
 	}
 }
