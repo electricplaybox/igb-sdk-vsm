@@ -3,6 +3,7 @@
 ## [0.7.3-beta] - Dec 10, 2023
 - Improved StateSelectWindow search by comparing lower case search query again lowercase state names
 - State names are now processed to be more readable in the StateSelectorWindow
+- Added support for keyboard controls in the StateSelectorWindow
 
 ## [0.7.2-beta] - Dec 10, 2023
 - Added better support for removal of nodes and connections when states are missing/deleted
