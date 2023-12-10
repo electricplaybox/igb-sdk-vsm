@@ -1,5 +1,11 @@
 ﻿# Change Log
 
+## [0.7.1-beta] - Dec 10, 2023
+- Remove the need for SubStateMachines to flag reinitialization
+  - All nodes are only initialized once
+- Added new node icons
+- Hidden relay nodes from the selection menu. Will eventually deprecate them.
+
 ## [0.7.0-beta] - Dec 10, 2023
 - Reduced the state node max character limit to 30
 - Introduced jump nodes to simplify loops and other complex transitions
