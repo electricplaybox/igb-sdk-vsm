@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.2-beta] - Dec 10, 2023
+- Added better support for removal of nodes and connections when states are missing/deleted
+
 ## [0.7.1-beta] - Dec 10, 2023
 - Remove the need for SubStateMachines to flag reinitialization
   - All nodes are only initialized once
