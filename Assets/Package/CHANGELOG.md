@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.6.6-beta] - Dec 10, 2023
+- Reduced the state node max character limit to 30
+
 ## [0.6.5-beta] - Dec 08, 2023
 - Added additional save points when connections are created
 
