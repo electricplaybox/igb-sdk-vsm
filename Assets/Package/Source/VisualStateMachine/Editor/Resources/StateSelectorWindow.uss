@@ -9,6 +9,13 @@
     -unity-text-align: middle-left;
 }
 
+.unity-button.even.highlighted-button-style {
+    background-color: #595959;
+}
+.unity-button.highlighted-button-style {
+    background-color: #595959;
+}
+
 .unity-button.even {
     background-color: var(--unity-colors-alternated_rows-background);
 }

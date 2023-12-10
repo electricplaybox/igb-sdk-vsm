@@ -1,16 +1,20 @@
 ﻿# Change Log
 
+## [0.7.3-beta] - Dec 10, 2023
+- Improved StateSelectWindow search by comparing lower case search query again lowercase state names
+- State names are now processed to be more readable in the StateSelectorWindow
+
 ## [0.7.2-beta] - Dec 10, 2023
 - Added better support for removal of nodes and connections when states are missing/deleted
 
 ## [0.7.1-beta] - Dec 10, 2023
 - Remove the need for SubStateMachines to flag reinitialization
   - All nodes are only initialized once
-- Added new node icons
+- Added new node icons[StateSelectorWindow.uss](Source%2FVisualStateMachine%2FEditor%2FResources%2FStateSelectorWindow.uss)
 - Hidden relay nodes from the selection menu. Will eventually deprecate them.
 
 ## [0.7.0-beta] - Dec 10, 2023
-- Reduced the state node max character limit to 30
+- Reduced the state node max character li[StateSelectorWindow.uss](Source%2FVisualStateMachine%2FEditor%2FResources%2FStateSelectorWindow.uss)mit to 30
 - Introduced jump nodes to simplify loops and other complex transitions
 
 ## [0.6.5-beta] - Dec 08, 2023
