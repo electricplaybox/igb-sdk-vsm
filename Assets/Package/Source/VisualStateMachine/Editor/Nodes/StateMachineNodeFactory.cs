@@ -185,14 +185,26 @@ namespace VisualStateMachine.Editor
 		public static void ConnectStateNode(StateNode stateNode, GraphView graphView)
 		{
 			var nodeView = graphView.Q<NodeView>(stateNode.Id);
-			
-			foreach (var connection in stateNode.Connections)
+
+			var connections = stateNode.Connections.ToList();
+			foreach (var connection in connections)
 			{
 				var connectedNodeView = graphView.Q<NodeView>(connection.ToNodeId);
 				if (connectedNodeView == null) continue;
 				
 				var outputPort = nodeView.Q<Port>(connection.FromPortName);
+				if (outputPort == null)
+				{
+					stateNode.RemoveConnection(connection);
+					continue;
+				}
+				
 				var inputPort = connectedNodeView.Q<Port>(null, "port", "input");
+				if (inputPort == null)
+				{
+					stateNode.RemoveConnection(connection);
+					continue;
+				}
 				
 				var edge = new StateNodeEdge
 				{
