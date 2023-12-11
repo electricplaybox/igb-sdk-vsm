@@ -7,7 +7,7 @@ namespace VisualStateMachine
 {
 	public class StateMachineCore
 	{
-		public event Action<State> OnComplete;
+		public event Action<StateMachineCore, State> OnComplete;
 		
 		public StateMachine StateMachine => Application.isPlaying 
 			? _stateMachineInstance 
@@ -51,6 +51,7 @@ namespace VisualStateMachine
 
 		public void Start()
 		{
+			DevLog.Log($"StateMachineCore.Start: {this.StateMachine.name}");
 			if (_stateMachineIsNull) return;
 			
 			_stateMachineInstance.Start();
@@ -66,10 +67,11 @@ namespace VisualStateMachine
 		
 		public void Complete(State finalState)
 		{
+			Debug.Log($"Complete: {StateMachine.name}, {StateMachine.IsComplete}");
 			if (StateMachine.IsComplete) return;
 			
 			StateMachine.Complete();
-			OnComplete?.Invoke(finalState);
+			OnComplete?.Invoke(this, finalState);
 		}
 
 		public void JumpTo(JumpId jumpId)

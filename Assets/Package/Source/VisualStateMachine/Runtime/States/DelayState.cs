@@ -26,7 +26,6 @@ namespace VisualStateMachine.States
 		{
 			if (Time.time - _time > _duration)
 			{
-				DevLog.Log($"{Time.time} - {_time} > {_duration}");
 				Exit?.Invoke();
 			}
 		}

@@ -8,7 +8,7 @@ namespace VisualStateMachine.States
 		[Transition("Complete")]
 		public event Action OnComplete;
 
-		protected override void SubStateMachineComplete(State finalState)
+		protected override void SubStateMachineComplete(StateMachineCore core, State finalState)
 		{
 			OnComplete?.Invoke();
 		}

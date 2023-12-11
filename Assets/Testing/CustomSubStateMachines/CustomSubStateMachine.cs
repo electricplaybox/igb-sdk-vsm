@@ -1,4 +1,5 @@
 ﻿using System;
+using VisualStateMachine;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.States;
 
@@ -15,7 +16,7 @@ namespace Testing
 		[Transition] 
 		public event Action OutcomeThree;
 		
-		protected override void SubStateMachineComplete(State finalState)
+		protected override void SubStateMachineComplete(StateMachineCore core, State finalState)
 		{
 			switch (finalState)
 			{

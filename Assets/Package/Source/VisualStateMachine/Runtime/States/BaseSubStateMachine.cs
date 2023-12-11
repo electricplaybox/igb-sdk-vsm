@@ -1,8 +1,6 @@
 ﻿
 using UnityEngine;
-using UnityEngine.Serialization;
 using VisualStateMachine.Attributes;
-using VisualStateMachine.Tools;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -99,6 +97,6 @@ namespace VisualStateMachine.States
 			#endif
 		}
 
-		protected abstract void SubStateMachineComplete(State finalState);
+		protected abstract void SubStateMachineComplete(StateMachineCore core, State finalState);
 	}
 }
