@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.7-beta] - Dec 11, 2023
+- Updated the JumpNode to update the valid JumpId's on mouse over and mouse down
+ 
 ## [0.7.6-beta] - Dec 11, 2023
 - Added NodeWidth nodes to the sub state machine states
 
