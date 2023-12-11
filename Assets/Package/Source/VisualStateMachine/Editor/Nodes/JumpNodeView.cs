@@ -23,7 +23,19 @@ namespace VisualStateMachine.Editor.Nodes
 			RemoveTitle();
 			AddProperties();
 			
-			this.AddToClassList("jump-node");
+			AddToClassList("jump-node");
+			RegisterCallback<FocusEvent>(e => OnFocus());
+			RegisterCallback<BlurEvent>(e => OnBlur());
+		}
+		
+		private void OnFocus()
+		{
+			RepopulateDropdown();
+		}
+
+		private void OnBlur()
+		{
+			
 		}
 		
 		private void AddProperties()
@@ -44,16 +56,42 @@ namespace VisualStateMachine.Editor.Nodes
 				}
 			}
 			
-			_idDropdown = new PopupField<string>("", ids, currentId);
-			_idDropdown.AddToClassList("center-aligned-text");
-			_idDropdown.RegisterValueChangedCallback(evt =>
+			if (_idDropdown == null)
 			{
-				HandleIdValueChanged(evt.newValue);
-			});
+				_idDropdown = new PopupField<string>("", ids, currentId);
+				_idDropdown.AddToClassList("center-aligned-text");
+				_idDropdown.RegisterValueChangedCallback(evt =>
+				{
+					HandleIdValueChanged(evt.newValue);
+				});
+				_idDropdown.RegisterCallback<PointerDownEvent>(evt => RepopulateDropdown());
+				_idDropdown.RegisterCallback<PointerOverEvent>(evt => RepopulateDropdown());
+				
+				top.Add(_idDropdown);
+			}
+			else
+			{
+				_idDropdown.choices = ids; // Update the choices
+				_idDropdown.value = currentId; // Update the selected value
+			}
 
 			HandleIdValueChanged(_idDropdown.value);
-			
-			top.Add(_idDropdown);
+		}
+		
+		private void RepopulateDropdown()
+		{
+			var ids = GetIds();
+			var currentId = _jumpState.JumpId.ToString();
+			if (!ids.Contains(currentId) && ids.Count > 0)
+			{
+				_jumpState.JumpId = (JumpId)Enum.Parse(typeof(JumpId), ids[0]);
+				currentId = ids[0];
+			}
+
+			_idDropdown.choices = ids; // Update the choices
+			_idDropdown.value = currentId; // Ensure the selected value is valid
+
+			HandleIdValueChanged(_idDropdown.value);
 		}
 
 		private JumpId GetIdAtIndex(int index)
@@ -79,7 +117,9 @@ namespace VisualStateMachine.Editor.Nodes
 			var jumpNodes = GraphView.Query<JumpNodeView>().ToList();
 			foreach(var node in jumpNodes)
 			{
+				if (node == this) continue;
 				if (node.Data == null) continue;
+				
 				if (node.Data.State is JumpInState)
 				{
 					var jumpIn = node.Data.State as JumpInState;
