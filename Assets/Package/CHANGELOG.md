@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.6-beta] - Dec 11, 2023
+- Added NodeWidth nodes to the sub state machine states
+
 ## [0.7.5-beta] - Dec 11, 2023
 - Added support for parallel sub state machines
 

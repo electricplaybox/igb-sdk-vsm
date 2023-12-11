@@ -3,6 +3,7 @@ using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 {
+	[NodeWidth(350)]
 	public class SubStateMachine : BaseSubStateMachine
 	{
 		[Transition("Complete")]

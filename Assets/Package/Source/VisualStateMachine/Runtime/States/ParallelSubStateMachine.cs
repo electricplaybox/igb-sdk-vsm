@@ -4,6 +4,7 @@ using VisualStateMachine.Attributes;
 
 namespace VisualStateMachine.States
 {
+	[NodeWidth(350)]
 	public class ParallelSubStateMachine : BaseParallelSubStateMachine
 	{
 		[Transition("All Complete")]

@@ -26,7 +26,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 492d8233-f6ba-4d6f-93a8-6d334c610c1f
   _graphViewState:
-    Position: {x: 101, y: 301, z: 0}
+    Position: {x: 9, y: 297, z: 0}
     Scale: 1
   _nodes:
   - _state: {fileID: -9027793594358728270}
@@ -82,7 +82,6 @@ MonoBehaviour:
   m_Name: 1ece8071-06a8-4f04-9a28-f5aa2c6aa101
   m_EditorClassIdentifier: 
   SubStateMachine: {fileID: 11400000, guid: ced0d82b153d3744781b97cdb796d6be, type: 2}
-  ReinitializeOnExit: 1
 --- !u!114 &3996724948608281108
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ using UnityEditor;
 
 namespace VisualStateMachine.States
 {
+	[NodeWidth(350)]
 	[NodeColor(NodeColor.Purple), NodeLabel("Sub State Machine"), NodeIcon(NodeIcon.VsmFlatWhite, opacity:0.3f)]
 	public abstract class BaseSubStateMachine : State
 	{
