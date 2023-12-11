@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.5-beta] - Dec 11, 2023
+- Added support for parallel sub state machines
+
 ## [0.7.4-beta] - Dec 10, 2023
 - Added a fix for handling transition name changes
 
