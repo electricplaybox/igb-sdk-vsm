@@ -1,5 +1,9 @@
 ﻿# Change Log
 
+## [0.7.8-beta] - Dec 12, 2023
+- Forked from PaulNonatomic/VisualStateMachine
+- Changed paths to IGB
+
 ## [0.7.7-beta] - Dec 11, 2023
 - Updated the JumpNode to update the valid JumpId's on mouse over and mouse down
  
