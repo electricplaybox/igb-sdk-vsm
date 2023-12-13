@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using VisualStateMachine.States;
@@ -194,9 +195,16 @@ namespace VisualStateMachine
 			var nextNode = _nodeLookup[connection.ToNodeId];
 			Transition(nextNode);
 		}
-
+		
 		private void Transition(StateNode nextNode)
 		{
+			TransitionAsync(nextNode).ConfigureAwait(false);
+		}
+
+		private async Task TransitionAsync(StateNode nextNode)
+		{
+			await Task.Delay(TimeSpan.FromSeconds(Time.deltaTime));
+			
 			Unsubscribe(_currentNode);
 			_currentNode.Exit();
 			
@@ -209,7 +217,11 @@ namespace VisualStateMachine
 		
 		public void JumpTo(JumpId jumpId)
 		{
-			DevLog.Log("StateMachine.JumpTo");
+			if (!_jumpNodeLookup.ContainsKey(jumpId))
+			{
+				throw new StateMachineException($"There is no JumpIn state with the id:{jumpId} in {this.name}");
+			}
+			
 			var nextNode = _jumpNodeLookup[jumpId];
 			if (nextNode == null) return;
 

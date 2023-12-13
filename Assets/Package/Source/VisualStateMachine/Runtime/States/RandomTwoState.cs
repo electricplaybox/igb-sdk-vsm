@@ -5,8 +5,8 @@ namespace VisualStateMachine.States
 {
 	public class RandomTwoState : RandomState
 	{
-		[Transition("1")] public event Action OptionOne;
-		[Transition("2")] public event Action OptionTwo;
+		[Transition("1", NodeColor.Red)] public event Action OptionOne;
+		[Transition("2", NodeColor.Green)] public event Action OptionTwo;
 		
 		public RandomTwoState()
 		{
