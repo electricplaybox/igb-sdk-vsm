@@ -203,10 +203,10 @@ namespace VisualStateMachine
 
 		private async Task TransitionAsync(StateNode nextNode)
 		{
-			await Task.Delay(TimeSpan.FromSeconds(Time.deltaTime));
-			
 			Unsubscribe(_currentNode);
 			_currentNode.Exit();
+			
+			await Task.Delay(TimeSpan.FromSeconds(Time.deltaTime));
 			
 			_currentNode = nextNode;
 			if (_currentNode == null) return;

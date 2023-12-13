@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.9-beta] - Dec 13, 2023
+- hot fix to ensure nodes exit before the frame delay is applied
+
 ## [0.7.8-beta] - Dec 13, 2023
 - added a glow to nodes that fades out as they exit
 - introduced port colours which influence edge colours
