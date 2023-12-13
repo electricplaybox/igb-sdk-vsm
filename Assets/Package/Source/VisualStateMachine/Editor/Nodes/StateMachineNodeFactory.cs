@@ -117,10 +117,12 @@ namespace VisualStateMachine.Editor
 			var orientationAtt = AttributeUtils.GetInheritedCustomAttribute<PortOrientationAttribute>(nodeType);
 			var orientation = orientationAtt != null ? (Orientation) orientationAtt.PortOrientation : Orientation.Horizontal;
 			var inputPort = node.InstantiatePort(orientation, Direction.Input, Port.Capacity.Multi, typeof(Node));
-
+			
 			inputPort.name = inputPort.portName = DefaultInputNodeName;
 			inputPort.AddManipulator(new EdgeConnector<StateNodeEdge>(new StateEdgeListener(graphView)));
 			node.inputContainer.Add(inputPort);
+			
+			ColorizePort(node.Data, inputPort);
 		}
 
 		public static void CreateOutputPorts(NodeView node, StateMachineGraphView graphView)
@@ -149,6 +151,8 @@ namespace VisualStateMachine.Editor
 				Port.Capacity.Single,
 				typeof(Node));
 			
+			ColorizePort(node.Data, outputPort);
+			
 			var portText = string.IsNullOrEmpty(transitionAttribute.PortLabel) 
 				? portName 
 				: transitionAttribute.PortLabel;
@@ -158,6 +162,20 @@ namespace VisualStateMachine.Editor
 			outputPort.AddManipulator(new EdgeConnector<StateNodeEdge>(new StateEdgeListener(graphView)));
 			
 			node.outputContainer.Add(outputPort);
+		}
+
+		public static void ColorizePort(StateNode stateNode, Port port)
+		{
+			var stateType = stateNode.State.GetType();
+			var nodeColor = AttributeUtils.GetInheritedCustomAttribute<NodeColorAttribute>(stateType);
+			var color = Color.gray;
+			
+			if (nodeColor != null)
+			{
+				color = ColorUtils.HexToColor(nodeColor.HexColor);
+			}
+
+			port.portColor = color;
 		}
 
 		public static Edge ConnectStateNode(Port outputPort, NodeView destinationNode, GraphView graphView)

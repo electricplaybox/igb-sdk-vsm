@@ -38,6 +38,19 @@ MonoBehaviour:
   m_Name: 27e14fe7-bbd4-4c3e-b6b6-32c56bdeaff7
   m_EditorClassIdentifier: 
   JumpId: 0
+--- !u!114 &-3672048079636782934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30de04f8f9e14c20b5670fe8e107402a, type: 3}
+  m_Name: 26c9a842-454f-449b-80ec-6b3f8c8285cf
+  m_EditorClassIdentifier: 
+  JumpId: 0
 --- !u!114 &-664120063137473715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,8 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 6f3e64ee-0b1d-431c-8957-be54f523b868
   _graphViewState:
-    Position: {x: 221, y: 282, z: 0}
-    Scale: 0.8695652
+    Position: {x: -284, y: 352, z: 0}
+    Scale: 1
   _nodes:
   - _state: {fileID: -664120063137473715}
     _id: 6f3e64ee-0b1d-431c-8957-be54f523b868
@@ -94,7 +107,7 @@ MonoBehaviour:
     - _toNodeId: 27e14fe7-bbd4-4c3e-b6b6-32c56bdeaff7
       _fromNodeId: 38ce7db4-50ce-474f-a70c-dcf284606d95
       _fromPortName: OptionOne
-    - _toNodeId: d4de754f-41bd-4df2-9e80-dddea8a7c2ad
+    - _toNodeId: 26c9a842-454f-449b-80ec-6b3f8c8285cf
       _fromNodeId: 38ce7db4-50ce-474f-a70c-dcf284606d95
       _fromPortName: OptionTwo
   - _state: {fileID: -5086747358724424649}
@@ -115,11 +128,6 @@ MonoBehaviour:
     - _toNodeId: 38ce7db4-50ce-474f-a70c-dcf284606d95
       _fromNodeId: bc52e39f-c8cc-4be4-bd41-d567e0154e88
       _fromPortName: Exit
-  - _state: {fileID: 270486046661193612}
-    _id: d4de754f-41bd-4df2-9e80-dddea8a7c2ad
-    _position: {x: 853, y: 14}
-    _isEntryNode: 0
-    _connections: []
   - _state: {fileID: 4454171463741343880}
     _id: 241d99f4-0b56-4f6e-9ffd-a7dc64a8d62b
     _position: {x: -111, y: 161}
@@ -136,19 +144,11 @@ MonoBehaviour:
     - _toNodeId: db19be63-77da-4d60-9062-2ee7b3218c4c
       _fromNodeId: 0a8645de-d2e0-4275-b4e6-e9c17272a9e9
       _fromPortName: Exit
---- !u!114 &270486046661193612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30de04f8f9e14c20b5670fe8e107402a, type: 3}
-  m_Name: d4de754f-41bd-4df2-9e80-dddea8a7c2ad
-  m_EditorClassIdentifier: 
-  JumpId: 0
+  - _state: {fileID: -3672048079636782934}
+    _id: 26c9a842-454f-449b-80ec-6b3f8c8285cf
+    _position: {x: 853, y: 14}
+    _isEntryNode: 0
+    _connections: []
 --- !u!114 &1246941967668602560
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.8-beta] - Dec 13, 2023
+- added a glow to nodes that fades out as they exit
+
 ## [0.7.7-beta] - Dec 11, 2023
 - Updated the JumpNode to update the valid JumpId's on mouse over and mouse down
  
