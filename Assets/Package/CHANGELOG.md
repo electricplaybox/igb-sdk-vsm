@@ -2,6 +2,11 @@
 
 ## [0.7.8-beta] - Dec 13, 2023
 - added a glow to nodes that fades out as they exit
+- introduced port colours which influence edge colours
+  - By default ports are coloured to match their nodes 
+    unless a colour is passed to the transition attribute
+- Discovered that Jumps can cause stack over flow exceptions so introduced a
+    frame delay between transitions to allow the stack to clear
 
 ## [0.7.7-beta] - Dec 11, 2023
 - Updated the JumpNode to update the valid JumpId's on mouse over and mouse down

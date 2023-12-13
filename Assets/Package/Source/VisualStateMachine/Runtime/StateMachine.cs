@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using VisualStateMachine.States;
@@ -194,9 +195,16 @@ namespace VisualStateMachine
 			var nextNode = _nodeLookup[connection.ToNodeId];
 			Transition(nextNode);
 		}
-
+		
 		private void Transition(StateNode nextNode)
 		{
+			TransitionAsync(nextNode).ConfigureAwait(false);
+		}
+
+		private async Task TransitionAsync(StateNode nextNode)
+		{
+			await Task.Delay(TimeSpan.FromSeconds(Time.deltaTime));
+			
 			Unsubscribe(_currentNode);
 			_currentNode.Exit();
 			

@@ -151,7 +151,7 @@ namespace VisualStateMachine.Editor
 				Port.Capacity.Single,
 				typeof(Node));
 			
-			ColorizePort(node.Data, outputPort);
+			ColorizePort(node.Data, outputPort, transitionAttribute);
 			
 			var portText = string.IsNullOrEmpty(transitionAttribute.PortLabel) 
 				? portName 
@@ -164,7 +164,7 @@ namespace VisualStateMachine.Editor
 			node.outputContainer.Add(outputPort);
 		}
 
-		public static void ColorizePort(StateNode stateNode, Port port)
+		public static void ColorizePort(StateNode stateNode, Port port, TransitionAttribute transition = null)
 		{
 			var stateType = stateNode.State.GetType();
 			var nodeColor = AttributeUtils.GetInheritedCustomAttribute<NodeColorAttribute>(stateType);
@@ -173,6 +173,11 @@ namespace VisualStateMachine.Editor
 			if (nodeColor != null)
 			{
 				color = ColorUtils.HexToColor(nodeColor.HexColor);
+			}
+
+			if (transition != null && transition.PortColor != default)
+			{
+				color = ColorUtils.HexToColor(transition.PortColor);
 			}
 
 			port.portColor = color;
