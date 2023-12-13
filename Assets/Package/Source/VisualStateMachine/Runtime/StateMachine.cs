@@ -209,7 +209,11 @@ namespace VisualStateMachine
 		
 		public void JumpTo(JumpId jumpId)
 		{
-			DevLog.Log("StateMachine.JumpTo");
+			if (!_jumpNodeLookup.ContainsKey(jumpId))
+			{
+				throw new StateMachineException($"There is no JumpIn state with the id:{jumpId} in {this.name}");
+			}
+			
 			var nextNode = _jumpNodeLookup[jumpId];
 			if (nextNode == null) return;
 

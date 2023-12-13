@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using VisualStateMachine.Attributes;
-using VisualStateMachine.Tools;
 
 namespace VisualStateMachine.States
 {

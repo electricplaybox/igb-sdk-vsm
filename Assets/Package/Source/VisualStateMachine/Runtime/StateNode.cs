@@ -16,6 +16,7 @@ namespace VisualStateMachine
 		public State State => _state;
 		public string Id => _id;
 		public IReadOnlyList<StateConnection> Connections => _connections;
+		public float LastActive => _lastActive;
 
 		[SerializeField] private State _state;
 		[SerializeField] private string _id = Guid.NewGuid().ToString();
@@ -25,6 +26,9 @@ namespace VisualStateMachine
 
 		[NonSerialized]
 		private bool _isActive;
+
+		[NonSerialized] 
+		private float _lastActive = -1;
 		
 		public StateNode(Type stateType)
 		{
@@ -86,6 +90,7 @@ namespace VisualStateMachine
 		{
 			ToggleConnectionSubscription(subscribe: true);
 			_isActive = true;
+			_lastActive = Time.time;
 			State.EnterState();
 		}
 
@@ -93,11 +98,14 @@ namespace VisualStateMachine
 		{
 			if (!_isActive) return;
 			
+			_lastActive = Time.time;
 			State.UpdateState();
 		}
 
 		public void FixedUpdate()
 		{
+			if (!_isActive) return;
+			
 			State.FixedUpdateState();
 		}
 

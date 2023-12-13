@@ -7,7 +7,7 @@ namespace VisualStateMachine.States
 	{
 		[NonSerialized] 
 		protected StateMachineCore StateMachineCore;
-
+		
 		public virtual void InitializeState()
 		{
 			//Any initialization code that makes sense to perform before the state is entered

@@ -4,7 +4,6 @@ using UnityEngine.UIElements;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.Editor.Ports;
 using VisualStateMachine.Editor.Utils;
-using VisualStateMachine.States;
 
 namespace VisualStateMachine.Editor.Nodes
 {
@@ -12,6 +11,7 @@ namespace VisualStateMachine.Editor.Nodes
 	{
 		public StateNode Data;
 		public StateMachineGraphView GraphView;
+		private readonly VisualElement _stateBorder;
 
 		public NodeView(StateNode stateNode, StateMachineGraphView graphView)
 		{
@@ -26,6 +26,11 @@ namespace VisualStateMachine.Editor.Nodes
 			var noInputPort = AttributeUtils.GetInheritedCustomAttribute<NoInputPortAttribute>(stateType);
 			if(noInputPort == null) StateMachineNodeFactory.CreateInputPort(this, graphView);
 			StateMachineNodeFactory.CreateOutputPorts(this, graphView);
+
+			_stateBorder = new VisualElement();
+			_stateBorder.name = "state-border";
+			_stateBorder.pickingMode = PickingMode.Ignore;
+			this.Add(_stateBorder);
 			
 			this.RefreshPorts();
 			this.RefreshExpandedState();
@@ -34,7 +39,13 @@ namespace VisualStateMachine.Editor.Nodes
 
 		public virtual void Update(StateMachine stateMachine)
 		{
-			
+			if (!Application.isPlaying) return;
+			if (Data == null) return;
+			if (Data.LastActive == -1) return;
+
+			var timeElapsed = Time.time - Data.LastActive;
+			var opacity = 1.0f - Mathf.Clamp01(timeElapsed / 1f);
+			_stateBorder.style.opacity = opacity;
 		}
 		
 		public override Port InstantiatePort(
