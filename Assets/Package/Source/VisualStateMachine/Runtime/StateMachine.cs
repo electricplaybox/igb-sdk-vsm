@@ -108,6 +108,8 @@ namespace VisualStateMachine
 	
 		public void AddEntryNode()
 		{
+			if (Application.isPlaying) return;
+			
 			DevLog.Log("StateMachine.AddEntryNode");
 			
 			#if UNITY_EDITOR
@@ -186,7 +188,14 @@ namespace VisualStateMachine
 			DevLog.Log("StateMachine.OnDestroy");
 			if (_currentNode == null) return;
 			
-			Unsubscribe(_currentNode);
+			try
+			{
+				Unsubscribe(_currentNode);
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError("Error while unsubscribing: " + ex.Message);
+			}
 		}
 
 		private void OnTransition(StateConnection connection)
@@ -207,6 +216,8 @@ namespace VisualStateMachine
 			_currentNode.Exit();
 			
 			await Task.Delay(TimeSpan.FromSeconds(Time.deltaTime));
+
+			if (!Application.isPlaying) return;
 			
 			_currentNode = nextNode;
 			if (_currentNode == null) return;
@@ -234,6 +245,8 @@ namespace VisualStateMachine
 		
 		public void AddNode(StateNode node)
 		{
+			if (Application.isPlaying) return;
+			
 			ValidateSubAssets();
 			
 			if (node.State == null) return;
@@ -252,6 +265,8 @@ namespace VisualStateMachine
 		
 		public void RemoveNode(StateNode node)
 		{
+			if (Application.isPlaying) return;
+			
 			DevLog.Log("StateMachine.RemoveNode");
 			
 			ValidateSubAssets();
@@ -319,6 +334,8 @@ namespace VisualStateMachine
 
 		public void Save()
 		{
+			if (Application.isPlaying) return;
+			
 			DevLog.Log("StateMachine.Save");
 			ValidateSubAssets();
 			
@@ -340,6 +357,8 @@ namespace VisualStateMachine
 
 		public void RemoveAllNodes()
 		{
+			if (Application.isPlaying) return;
+			
 			DevLog.Log("StateMachine.RemoveAllNodes");
 			
 			#if UNITY_EDITOR
@@ -360,6 +379,8 @@ namespace VisualStateMachine
 		
 		private void ValidateSubAssets ()
 		{
+			if (Application.isPlaying) return;
+			
 			var thisPath = AssetDatabase.GetAssetPath(this);
 			var subAssets = AssetDatabase.LoadAllAssetsAtPath(thisPath);
  
