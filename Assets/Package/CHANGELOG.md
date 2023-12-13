@@ -1,7 +1,11 @@
 ﻿# Change Log
 
+## [0.7.11-beta] - Dec 13, 2023
+- merged in upstream fix for runtime checks in the statemachine
+
 ## [0.7.10-beta] - Dec 13, 2023
 - merged in upstream hotfix
+- Added additional checks for running in playmode in the statemachine
 
 ## [0.7.9-beta] - Dec 13, 2023
 - hot fix to ensure nodes exit before the frame delay is applied
