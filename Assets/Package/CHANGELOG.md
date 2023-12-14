@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.13-beta] - Dec 13, 2023
+- Added PortData clone method
+
 ## [0.7.12-beta] - Dec 13, 2023
 - merged upstream
 
