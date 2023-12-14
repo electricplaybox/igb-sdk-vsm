@@ -425,6 +425,14 @@ namespace VisualStateMachine
 					Debug.LogError("Error while unsubscribing: " + ex.Message);
 				}
 			}
+			
+			foreach(var node in _nodes)
+			{
+				if (node == null) continue;
+				if (node.State == null) continue;
+				
+				node.State.DestroyState();
+			}
 		}
 	}
 }

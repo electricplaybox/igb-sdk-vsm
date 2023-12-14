@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using VisualStateMachine.Attributes;
 using VisualStateMachine.States;
 
@@ -17,6 +18,11 @@ namespace Testing.Test
 		public override void ExitState()
 		{
 			
+		}
+
+		public override void DestroyState()
+		{
+			Debug.Log($"This {this.GetType().Name} Destroyed");
 		}
 	}
 }
