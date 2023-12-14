@@ -1,8 +1,12 @@
 ﻿# Change Log
 
+## [0.7.13-beta] - Dec 14, 2023
+- merged upstream
+- Added a DestroyState method to States to allow for cleanup when the StateMachine is destroyed
+
 ## [0.7.13-beta] - Dec 13, 2023
 - Added PortData clone method
-
+- 
 ## [0.7.12-beta] - Dec 13, 2023
 - merged upstream
 
