@@ -1,6 +1,6 @@
 ﻿{
   "name": "com.nonatomic.visualstatemachine",
-  "version": "0.7.13-beta",
+  "version": "0.7.14-beta",
   "displayName": "Nonatomic Visual StateMachine",
   "description": "Visual StateMachine",
   "unity": "2022.3",
