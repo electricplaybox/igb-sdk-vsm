@@ -159,7 +159,7 @@ namespace VisualStateMachine.Editor
 			
 			outputPort.name = portName;
 			outputPort.portName = portText;
-			outputPort.userData = transitionAttribute.PortData;
+			outputPort.userData = transitionAttribute.PortData.Clone();
 			outputPort.AddManipulator(new EdgeConnector<StateNodeEdge>(new StateEdgeListener(graphView)));
 			
 			node.outputContainer.Add(outputPort);
