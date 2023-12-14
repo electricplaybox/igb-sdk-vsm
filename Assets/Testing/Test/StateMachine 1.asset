@@ -27,7 +27,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 10cf85a3-ee86-4b3d-8b2e-72dd01789c4a
   _graphViewState:
-    Position: {x: 575.5, y: 350.5, z: 0}
+    Position: {x: 476, y: 348, z: 0}
     Scale: 1
   _nodes:
   - _state: {fileID: 8324212491583674846}

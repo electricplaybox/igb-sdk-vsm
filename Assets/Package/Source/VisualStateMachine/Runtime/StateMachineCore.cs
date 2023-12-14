@@ -46,6 +46,9 @@ namespace VisualStateMachine
 			_root = root;
 			_originalStateMachine = stateMachine;
 			_stateMachineInstance = StateMachine.CreateInstance(stateMachine);
+
+			if (!Application.isPlaying) return;
+			
 			_stateMachineInstance.Initialize(this);
 		}
 

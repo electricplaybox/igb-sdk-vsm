@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.15-beta] - Dec 14, 2023
+- Prevented state initialization from being called if application not running
+
 ## [0.7.14-beta] - Dec 14, 2023
 - merged upstream
 - Added a DestroyState method to States to allow for cleanup when the StateMachine is destroyed
