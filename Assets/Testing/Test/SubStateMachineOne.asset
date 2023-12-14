@@ -50,6 +50,10 @@ MonoBehaviour:
     - _toNodeId: 3ecce6bc-c1b9-41d3-86ec-ef6475961234
       _fromNodeId: 227a7214-cf2a-4bb9-9ebe-d49a712492a6
       _fromPortName: Exit
+      _portData:
+        FrameDelay: 0
+        PortLabel: 
+        PortColor: 
   - _state: {fileID: 647443351953421220}
     _id: 3ecce6bc-c1b9-41d3-86ec-ef6475961234
     _position: {x: 296, y: 62.5}
@@ -58,6 +62,10 @@ MonoBehaviour:
     - _toNodeId: c0f01983-c896-44e4-85e5-b7c06ab286e6
       _fromNodeId: 3ecce6bc-c1b9-41d3-86ec-ef6475961234
       _fromPortName: Exit
+      _portData:
+        FrameDelay: 0
+        PortLabel: 
+        PortColor: 
   - _state: {fileID: 3695174407748013040}
     _id: c0f01983-c896-44e4-85e5-b7c06ab286e6
     _position: {x: 567, y: 0}
@@ -66,6 +74,10 @@ MonoBehaviour:
     - _toNodeId: 55733fcc-869e-46d6-a0d8-1b11fa33b519
       _fromNodeId: c0f01983-c896-44e4-85e5-b7c06ab286e6
       _fromPortName: Exit
+      _portData:
+        FrameDelay: 0
+        PortLabel: 
+        PortColor: 
   - _state: {fileID: -7324612726515753691}
     _id: 55733fcc-869e-46d6-a0d8-1b11fa33b519
     _position: {x: 921, y: 124}
@@ -74,11 +86,16 @@ MonoBehaviour:
     - _toNodeId: 33874fa0-4b57-4187-8a52-52b2e7367222
       _fromNodeId: 55733fcc-869e-46d6-a0d8-1b11fa33b519
       _fromPortName: Exit
+      _portData:
+        FrameDelay: 0
+        PortLabel: 
+        PortColor: 
   - _state: {fileID: 7298197357175694856}
     _id: 33874fa0-4b57-4187-8a52-52b2e7367222
     _position: {x: 1161, y: 18}
     _isEntryNode: 0
     _connections: []
+  _references: []
 --- !u!114 &647443351953421220
 MonoBehaviour:
   m_ObjectHideFlags: 0

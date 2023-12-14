@@ -6,7 +6,6 @@ namespace VisualStateMachine.Editor.Utils
 	{
 		public static Color HexToColor(string hex)
 		{
-			
 			if (hex.StartsWith("#")) hex = hex.Substring(1);
 			if (hex.Length == 6) hex += "FF";
 			

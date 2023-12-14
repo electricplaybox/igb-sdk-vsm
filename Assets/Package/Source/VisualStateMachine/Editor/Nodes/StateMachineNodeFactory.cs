@@ -153,12 +153,13 @@ namespace VisualStateMachine.Editor
 			
 			ColorizePort(node.Data, outputPort, transitionAttribute);
 			
-			var portText = string.IsNullOrEmpty(transitionAttribute.PortLabel) 
+			var portText = string.IsNullOrEmpty(transitionAttribute.PortData.PortLabel) 
 				? portName 
-				: transitionAttribute.PortLabel;
+				: transitionAttribute.PortData.PortLabel;
 			
 			outputPort.name = portName;
 			outputPort.portName = portText;
+			outputPort.userData = transitionAttribute.PortData;
 			outputPort.AddManipulator(new EdgeConnector<StateNodeEdge>(new StateEdgeListener(graphView)));
 			
 			node.outputContainer.Add(outputPort);
@@ -175,9 +176,9 @@ namespace VisualStateMachine.Editor
 				color = ColorUtils.HexToColor(nodeColor.HexColor);
 			}
 
-			if (transition != null && transition.PortColor != default)
+			if (transition != null && transition.PortData != null && transition.PortData.PortColor != default)
 			{
-				color = ColorUtils.HexToColor(transition.PortColor);
+				color = ColorUtils.HexToColor(transition.PortData.PortColor);
 			}
 
 			port.portColor = color;

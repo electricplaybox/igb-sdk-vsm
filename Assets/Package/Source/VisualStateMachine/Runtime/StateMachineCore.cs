@@ -78,5 +78,10 @@ namespace VisualStateMachine
 		{
 			_stateMachineInstance.JumpTo(jumpId);
 		}
+
+		public void Dispose()
+		{
+			_stateMachineInstance.Dispose();
+		}
 	}
 }
