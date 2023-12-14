@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -35,7 +36,10 @@ namespace VisualStateMachine
 		
 		[SerializeField]
 		private List<StateNode> _nodes = new();
-		
+
+		[SerializeField]
+		private List<Object> _references = new();
+
 		[NonSerialized]
 		private Dictionary<string, StateNode> _nodeLookup = new();
 		
@@ -44,9 +48,10 @@ namespace VisualStateMachine
 
 		[NonSerialized]
 		private StateNode _currentNode;
-		
-		//used to keep a reference to the child states
-		private List<Object> _references = new();
+
+		[NonSerialized]
+		private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+
 
 		public static StateMachine CreateInstance(StateMachine stateMachine)
 		{
@@ -175,26 +180,13 @@ namespace VisualStateMachine
 		{
 			DevLog.Log("StateMachine.Unsubscribe");
 			
-			var connections = node.Connections;
-
+			var connections = node?.Connections;
+			if (connections == null) return;
+			
 			foreach (var connection in node.Connections)
 			{
+				if (connection == null) continue;
 				connection.OnTransition -= OnTransition;
-			}
-		}
-
-		private void OnDestroy()
-		{
-			DevLog.Log("StateMachine.OnDestroy");
-			if (_currentNode == null) return;
-			
-			try
-			{
-				Unsubscribe(_currentNode);
-			}
-			catch (Exception ex)
-			{
-				Debug.LogError("Error while unsubscribing: " + ex.Message);
 			}
 		}
 
@@ -202,28 +194,38 @@ namespace VisualStateMachine
 		{
 			DevLog.Log("StateMachine.OnTransition");
 			var nextNode = _nodeLookup[connection.ToNodeId];
-			Transition(nextNode);
-		}
-		
-		private void Transition(StateNode nextNode)
-		{
-			TransitionAsync(nextNode).ConfigureAwait(false);
+			Transition(nextNode, connection.PortData.FrameDelay);
 		}
 
-		private async Task TransitionAsync(StateNode nextNode)
+		private void Transition(StateNode nextNode, int frameDelay = 0)
 		{
-			Unsubscribe(_currentNode);
-			_currentNode.Exit();
-			
-			await Task.Delay(TimeSpan.FromSeconds(Time.deltaTime));
+			TransitionAsync(nextNode, frameDelay).ConfigureAwait(false);
+		}
 
-			if (!Application.isPlaying) return;
-			
-			_currentNode = nextNode;
-			if (_currentNode == null) return;
-			
-			SubscribeToNode(_currentNode);
-			_currentNode.Enter();
+		private async Task TransitionAsync(StateNode nextNode, int frameDelay = 0)
+		{
+			try
+			{
+				Unsubscribe(_currentNode);
+				_currentNode.Exit();
+				
+				if (!Application.isPlaying) return;
+				
+				if(frameDelay > 0)
+				{
+					await Task.Delay(TimeSpan.FromSeconds(Time.deltaTime), _cancellationTokenSource.Token);
+				}
+				
+				_currentNode = nextNode;
+				if (_currentNode == null) return;
+				
+				SubscribeToNode(_currentNode);
+				_currentNode.Enter();
+			}
+			catch (OperationCanceledException canceledException)
+			{
+				Debug.Log("StateMachine.TransitionAsync cancelled: " + canceledException.Message);
+			}
 		}
 		
 		public void JumpTo(JumpId jumpId)
@@ -387,7 +389,7 @@ namespace VisualStateMachine
 			for (var i = subAssets.Length - 1; i >= 0; i--) 
 			{
 				if(subAssets[i] != null) continue;
-             
+			 
 				AssetDatabase.RemoveObjectFromAsset(_references[i]);
 				_references.RemoveAt(i);
 				_nodes.RemoveAt(i);
@@ -406,6 +408,23 @@ namespace VisualStateMachine
 			}
 
 			AssetDatabase.SaveAssets();
+		}
+
+		public void Dispose()
+		{
+			_cancellationTokenSource.Cancel();
+
+			if (_currentNode != null)
+			{
+				try
+				{
+					Unsubscribe(_currentNode);
+				}
+				catch (Exception ex)
+				{
+					Debug.LogError("Error while unsubscribing: " + ex.Message);
+				}
+			}
 		}
 	}
 }

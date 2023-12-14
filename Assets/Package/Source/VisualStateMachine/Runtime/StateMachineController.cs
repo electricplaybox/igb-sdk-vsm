@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace VisualStateMachine
 {
@@ -38,6 +39,11 @@ namespace VisualStateMachine
 			if (_stateMachineCore != null) return;
 			
 			_stateMachineCore = new StateMachineCore(_stateMachine, gameObject);
+		}
+
+		private void OnDestroy()
+		{
+			_stateMachineCore.Dispose();
 		}
 	}
 }

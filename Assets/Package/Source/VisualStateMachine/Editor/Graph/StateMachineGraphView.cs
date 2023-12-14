@@ -5,6 +5,7 @@ using UnityEngine;
 using VisualStateMachine.Editor.Nodes;
 using VisualStateMachine.Editor.Utils;
 using VisualStateMachine.Editor.Windows;
+using VisualStateMachine.States;
 
 namespace VisualStateMachine.Editor
 {
@@ -81,11 +82,13 @@ namespace VisualStateMachine.Editor
 		{
 			var sourceNode = edge.output.node as NodeView;
 			var targetNode = edge.input.node as NodeView;
+			var portData = edge.output.userData as PortData;
 
 			var connection = new StateConnection(
 				fromNodeId: sourceNode.Data.Id,
 				fromPortName: edge.output.name,
-				toNodeId: targetNode.Data.Id
+				toNodeId: targetNode.Data.Id,
+				portData: portData
 			);
 					
 			sourceNode.Data.AddConnection(connection);

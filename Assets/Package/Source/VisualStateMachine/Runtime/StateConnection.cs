@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using VisualStateMachine.States;
 
 namespace VisualStateMachine
 {
@@ -11,6 +12,7 @@ namespace VisualStateMachine
 		public string ToNodeId => _toNodeId;
 		public string FromNodeId => _fromNodeId;
 		public string FromPortName => _fromPortName;
+		public PortData PortData => _portData;
 		
 		[SerializeField]
 		private string _toNodeId;
@@ -20,12 +22,16 @@ namespace VisualStateMachine
 		
 		[SerializeField]
 		private string _fromPortName;
+		
+		[SerializeField]
+		private PortData _portData;
 
-		public StateConnection(string fromNodeId, string fromPortName, string toNodeId)
+		public StateConnection(string fromNodeId, string fromPortName, string toNodeId, PortData portData)
 		{
 			_fromNodeId = fromNodeId;
 			_fromPortName = fromPortName;
 			_toNodeId = toNodeId;
+			_portData = portData;
 		}
 		
 		public void Transition()

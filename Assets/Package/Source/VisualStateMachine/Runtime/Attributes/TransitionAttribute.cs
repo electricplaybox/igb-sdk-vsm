@@ -1,22 +1,23 @@
 ﻿using System;
+using VisualStateMachine.States;
 
 namespace VisualStateMachine.Attributes
 {
 	[AttributeUsage(AttributeTargets.Event)]
 	public class TransitionAttribute : Attribute
 	{
-		public string PortLabel { get; private set; } = string.Empty;
-		public string PortColor { get; private set; } = default;
+		public PortData PortData { get; private set; } = new ();
 		
 		public TransitionAttribute()
 		{
 			
 		}
 		
-		public TransitionAttribute(string portLabel, string portColor = default)
+		public TransitionAttribute(string portLabel, string portColor = default, int frameDelay = 1)
 		{
-			PortLabel = portLabel;
-			PortColor = portColor;
+			PortData.PortLabel = portLabel;
+			PortData.PortColor = portColor;
+			PortData.FrameDelay = frameDelay;
 		}
 	}
 }
