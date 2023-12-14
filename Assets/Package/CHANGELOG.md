@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.7.11-beta] - Dec 13, 2023
+- Made frame delay on transition optional and configurable via the Transition attribute
+
 ## [0.7.10-beta] - Dec 13, 2023
 - Added additional checks for running in playmode in the statemachine
 
