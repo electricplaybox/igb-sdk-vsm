@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.8.1-beta] - Dec 14, 2023
+- Merged in upstream
+
 ## [0.8.0-beta] - Dec 14, 2023
 - Breaking change renamed InitializeState to AwakeState and added StartState
 
