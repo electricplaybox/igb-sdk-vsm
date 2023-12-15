@@ -27,7 +27,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entryStateId: 10cf85a3-ee86-4b3d-8b2e-72dd01789c4a
   _graphViewState:
-    Position: {x: 476, y: 348, z: 0}
+    Position: {x: 608, y: 365, z: 0}
     Scale: 1
   _nodes:
   - _state: {fileID: 8324212491583674846}
@@ -47,7 +47,7 @@ MonoBehaviour:
     _position: {x: -56, y: -76}
     _isEntryNode: 0
     _connections:
-    - _toNodeId: 4e1ca839-517f-49d3-9463-916e1e3b62e7
+    - _toNodeId: 867357f7-d78d-4540-8e48-ad6863671dc7
       _fromNodeId: 8fa77468-9921-472f-be34-787cb82669a2
       _fromPortName: Exit
       _portData:
@@ -66,28 +66,15 @@ MonoBehaviour:
         FrameDelay: 0
         PortLabel: 
         PortColor: 
-  - _state: {fileID: 6728813813735316563}
-    _id: 4e1ca839-517f-49d3-9463-916e1e3b62e7
-    _position: {x: 318.5, y: 54.5}
-    _isEntryNode: 0
-    _connections:
-    - _toNodeId: 867357f7-d78d-4540-8e48-ad6863671dc7
-      _fromNodeId: 4e1ca839-517f-49d3-9463-916e1e3b62e7
-      _fromPortName: OnNewThings
-      _portData:
-        FrameDelay: 1
-        PortLabel: 
-        PortColor: 
   - _state: {fileID: 7139414795221120728}
     _id: 867357f7-d78d-4540-8e48-ad6863671dc7
-    _position: {x: 587.5, y: 93.5}
+    _position: {x: 289, y: 20}
     _isEntryNode: 0
     _connections: []
   _references:
   - {fileID: 8324212491583674846}
   - {fileID: -1396349673879676390}
   - {fileID: 70890962973991686}
-  - {fileID: 6728813813735316563}
   - {fileID: 7139414795221120728}
 --- !u!114 &70890962973991686
 MonoBehaviour:
@@ -102,18 +89,6 @@ MonoBehaviour:
   m_Name: 90a9a405-7b3f-442d-963d-7c098beee812
   m_EditorClassIdentifier: 
   JumpId: 0
---- !u!114 &6728813813735316563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08b9930741534ca1a8e243942e4ec149, type: 3}
-  m_Name: 4e1ca839-517f-49d3-9463-916e1e3b62e7
-  m_EditorClassIdentifier: 
 --- !u!114 &7139414795221120728
 MonoBehaviour:
   m_ObjectHideFlags: 0
