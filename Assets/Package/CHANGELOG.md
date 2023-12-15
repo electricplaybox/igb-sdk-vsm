@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.8.0-beta] - Dec 14, 2023
+- Breaking change renamed InitializeState to AwakeState and added StartState
+
 ## [0.7.14-beta] - Dec 14, 2023
 - Prevented state initialization from being called if application not running
 

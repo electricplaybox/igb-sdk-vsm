@@ -9,10 +9,21 @@ namespace Testing.Test
 	{
 		[Transition] 
 		public event Action OnNewThings;
+
+		public override void AwakeState()
+		{
+			Debug.Log("AWAKE");
+		}
+
+		public override void StartState()
+		{
+			Debug.Log("START");
+		}
 		
 		public override void EnterState()
 		{
-			
+			Debug.Log("ENTER");
+			OnNewThings?.Invoke();
 		}
 
 		public override void ExitState()

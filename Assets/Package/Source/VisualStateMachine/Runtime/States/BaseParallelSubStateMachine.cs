@@ -16,7 +16,7 @@ namespace VisualStateMachine.States
 
 		private List<StateMachineCore> _stateMachineCores = new();
 		
-		public override void InitializeState()
+		public override void AwakeState()
 		{
 			CreateCores();
 		}

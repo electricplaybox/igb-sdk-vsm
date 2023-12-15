@@ -80,10 +80,15 @@ namespace VisualStateMachine
 		}
 		
 		
-		public void Initialize(StateMachineCore stateMachineCore)
+		public void Awake(StateMachineCore stateMachineCore)
 		{
 			_state = _state.Clone(stateMachineCore);
-			_state.InitializeState();
+			_state.AwakeState();
+		}
+
+		public void Start(StateMachineCore stateMachineCore)
+		{
+			_state.StartState();
 		}
 
 		public void Enter()
