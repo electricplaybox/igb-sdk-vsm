@@ -5,7 +5,7 @@ Currently still a work in progress and subject to breaking changes.
 VisualStateMachine is a Unity package designed to simplify the creation and management of state machines in Unity projects. It provides a visual editor for designing state machines, making it easier to create complex behaviors without writing extensive code.
 
 ![Unity_p60bnCUncK](https://github.com/PaulNonatomic/VisualStateMachine/assets/4581647/ebb5e1c4-2e98-490c-be78-9350c6d96703)
-[README.md](Assets%2FPackage%2FREADME.md)
+
 ## Features
 - **Visual Editor**: Design state machines using a user-friendly graphical interface.
 - **Unity Integration**: Seamlessly integrates with Unity, allowing for easy implementation in your game projects.
@@ -72,16 +72,22 @@ public class DelayState : State
 Add JumpOutState state and set it's Id. Then create a JumpInState with the corresponding Id to jump from one node to another.
 ![Unity_aEXhADhxUy](https://github.com/electricplaybox/igb-sdk-vsm/assets/4581647/8df2873c-070d-4ae9-a3a1-1abed9013c70)
 
+## Transition Delay
 
+The process of transitioning between nodes originally incurred no delay at all but when wiring up a looping state machine
+it could cause a stack overflow. To prevent this a delay of 1 frame has been added to all transitions by default, but this
+can be configured on a per transition bases by passing a frameDelay value through the Transition attribute, but please use
+with caution as a frameDelay of 0 can cause a stack overflow.
 
-
-# Known Issues
-- Renaming transition events will break state machine at present.
+## Known Issues
+- Renaming transition events will lead to the transition being removed.
     - I'm working on a fix for this were a combination of event name and order will be used to identify events.
-- There are residual issues with selecting edge connections between certain nodes. This can be overcome by area selecting the edge.
-- On occasions the nodes will loose there code driven styling.
+- On occasions the nodes will loose there style.
+- No way to follow the progress of parallel sub state machines at run time.
+- The state selector window attempts to unfold the states in the namespace nearest to the stataemachine asset, but doesn't always get this right.
 
-# Roadmap
+## Roadmap]()
+
 - Support for sticky notes
 - Grouping of nodes
 - Visual cooldown feedback of state execution (a dissipating glow perhaps)

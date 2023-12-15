@@ -26,15 +26,15 @@ namespace VisualStateMachine
 
 		public StateMachineCore(StateMachine stateMachine, GameObject root)
 		{
-			InitializeStateMachineCore(stateMachine, null, root);
+			AwakeStateMachineCore(stateMachine, null, root);
 		}
 		
 		public StateMachineCore(StateMachine stateMachine, StateMachineCore parent)
 		{
-			InitializeStateMachineCore(stateMachine, parent, parent.Root);
+			AwakeStateMachineCore(stateMachine, parent, parent.Root);
 		}
 		
-		private void InitializeStateMachineCore(StateMachine stateMachine, StateMachineCore parent, GameObject root)
+		private void AwakeStateMachineCore(StateMachine stateMachine, StateMachineCore parent, GameObject root)
 		{
 			if (stateMachine == null)
 			{
@@ -49,15 +49,17 @@ namespace VisualStateMachine
 
 			if (!Application.isPlaying) return;
 			
-			_stateMachineInstance.Initialize(this);
+			_stateMachineInstance.AwakeStateMachine(this);
 		}
 
 		public void Start()
 		{
+			if (!Application.isPlaying) return;
+			
 			DevLog.Log($"StateMachineCore.Start: {this.StateMachine.name}");
 			if (_stateMachineIsNull) return;
 			
-			_stateMachineInstance.Start();
+			_stateMachineInstance.StartStateMachine(this);
 		}
 
 		public void Update()

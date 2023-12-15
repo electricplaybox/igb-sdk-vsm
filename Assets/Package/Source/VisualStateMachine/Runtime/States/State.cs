@@ -14,10 +14,14 @@ namespace VisualStateMachine.States
 		//Any code that makes sense to perform when the state is exited like state cleanup
 		public abstract void ExitState();
 		
-		//Any initialization code that makes sense to perform before the state is entered
-		public virtual void InitializeState()
+		public virtual void AwakeState()
 		{
-			
+			//Any Awake phase code that makes sense to perform before the state is entered
+		}
+
+		public virtual void StartState()
+		{
+			//Any Start code that makes sense to perform before the state is entered
 		}
 		
 		public virtual void UpdateState()

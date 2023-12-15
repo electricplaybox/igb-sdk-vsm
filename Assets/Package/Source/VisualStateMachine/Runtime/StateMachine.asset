@@ -22,6 +22,7 @@ MonoBehaviour:
     _position: {x: 0, y: 0}
     _isEntryNode: 1
     _connections: []
+  _references: []
 --- !u!114 &5318820369373469973
 MonoBehaviour:
   m_ObjectHideFlags: 0

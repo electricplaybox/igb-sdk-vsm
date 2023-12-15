@@ -70,11 +70,11 @@ namespace VisualStateMachine
 			_graphViewState.Scale = scale;
 		}
 		
-		public void Initialize(StateMachineCore stateMachineCore)
+		public void AwakeStateMachine(StateMachineCore stateMachineCore)
 		{
-			DevLog.Log("StateMachine.Initialize");
+			DevLog.Log("StateMachine.Awake");
 			
-			InitalizeNodes(stateMachineCore);
+			AwakeNodes(stateMachineCore);
 			CreateNodeLookupTable();
 			
 			if(_nodeLookup.Count == 0) throw new Exception($"StateMachine {this.name} has 0 nodes.");
@@ -82,11 +82,13 @@ namespace VisualStateMachine
 			_currentNode = _nodeLookup[_entryStateId];
 		}
 
-		public void Start()
+		public void StartStateMachine(StateMachineCore stateMachineCore)
 		{
 			DevLog.Log($"StateMachine.Start: {name}");
 			ResetNodes();
 			IsComplete = false;
+			
+			StartNodes(stateMachineCore);
 			_currentNode = _nodeLookup[_entryStateId];
 			SubscribeToNode(_currentNode);
 			
@@ -132,13 +134,23 @@ namespace VisualStateMachine
 			#endif
 		}
 
-		private void InitalizeNodes(StateMachineCore stateMachineCore)
+		private void AwakeNodes(StateMachineCore stateMachineCore)
 		{
-			DevLog.Log("StateMachine.InitalizeNodes");
+			DevLog.Log("StateMachine.AwakeNodes");
 			
 			foreach (var node in _nodes)
 			{
-				node.Initialize(stateMachineCore);
+				node.Awake(stateMachineCore);
+			}
+		}
+
+		private void StartNodes(StateMachineCore stateMachineCore)
+		{
+			DevLog.Log("StateMachine.StartNodes");
+			
+			foreach (var node in _nodes)
+			{
+				node.Start(stateMachineCore);
 			}
 		}
 
