@@ -167,13 +167,25 @@ namespace VisualStateMachine.Editor.Windows
 		private void OnEnable()
 		{
 			EditorApplication.update += HandleEditorUpdate;
+			EditorApplication.playModeStateChanged += HandlePlayModeStateChanged;
 		}
 
 		private void OnDisable()
 		{
 			EditorApplication.update -= HandleEditorUpdate;
+			EditorApplication.playModeStateChanged -= HandlePlayModeStateChanged;
 		}
-		
+
+		private void HandlePlayModeStateChanged(PlayModeStateChange playMode)
+		{
+			if (playMode == PlayModeStateChange.ExitingPlayMode)
+			{
+				_stateMachine = _stateMachine.Base;
+				Draw(_stateMachine);
+				Selection.activeObject = _stateMachine;
+			}
+		}
+
 		private void HandleEditorUpdate()
 		{
 			if (!TryGetStateMachine(out var stateMachine)) return;
