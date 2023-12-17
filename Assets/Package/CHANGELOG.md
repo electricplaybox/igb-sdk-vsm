@@ -1,5 +1,9 @@
 ﻿# Change Log
 
+## [0.8.2-beta] - Dec 17, 2023
+- Fix for null StateMachine when attempting to fix a null statemachine. Stupid!
+- Removed the validation of connections from the StateMachine as it was removing valid connections. Will circle back to this.
+
 ## [0.8.1-beta] - Dec 14, 2023
 - Fix for null StateMachine in editor when exiting run time from a sub state machine
 
