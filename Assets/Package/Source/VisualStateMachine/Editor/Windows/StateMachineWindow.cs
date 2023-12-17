@@ -180,6 +180,9 @@ namespace VisualStateMachine.Editor.Windows
 		{
 			if (playMode == PlayModeStateChange.ExitingPlayMode)
 			{
+				if (_stateMachine == null) return;
+				if (_stateMachine.Base == null) return;
+				
 				_stateMachine = _stateMachine.Base;
 				Draw(_stateMachine);
 				Selection.activeObject = _stateMachine;
