@@ -407,18 +407,6 @@ namespace VisualStateMachine
 				_nodes.RemoveAt(i);
 			}
 
-			foreach (var node in _nodes)
-			{
-				if (node == null) continue;
-				
-				var connections = node.Connections.ToList();
-				foreach (var connection in connections)
-				{
-					var count = _nodes.Count(node => node.Id == connection.ToNodeId);
-					if (count == 0) node.RemoveConnection(connection);
-				}
-			}
-
 			AssetDatabase.SaveAssets();
 		}
 
