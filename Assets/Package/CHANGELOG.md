@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.8.2-beta] - Dec 17, 2023
+- Fix for null StateMachine in editor when exiting run time from a sub state machine
+
 ## [0.8.1-beta] - Dec 14, 2023
 - Merged in upstream
 
