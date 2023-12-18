@@ -13,6 +13,8 @@ namespace VisualStateMachine.Editor.Nodes
 
 		public override void Update(StateMachine stateMachine)
 		{
+			if (stateMachine == null) return;
+			
 			base.Update(stateMachine);
 			
 			if (Data == null) return;

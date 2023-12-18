@@ -134,6 +134,7 @@ namespace VisualStateMachine.Editor
 		
 		public void EnforceEntryNode()
 		{
+			if (_stateMachine == null) return;
 			if (_stateMachine.Nodes.Count > 0) return;
 
 			_stateMachine.AddEntryNode();
@@ -149,6 +150,7 @@ namespace VisualStateMachine.Editor
 
 		public void CreateEdges(List<Edge> edgesToCreate)
 		{
+			if (_stateMachine == null) return;
 			if (edgesToCreate == null) return;
 			
 			foreach (var edge in edgesToCreate)
@@ -161,6 +163,7 @@ namespace VisualStateMachine.Editor
 		
 		public void MoveNodes(List<GraphElement> nodesToMove)
 		{
+			if (_stateMachine == null) return;
 			if (nodesToMove == null) return;
 			
 			foreach (var node in nodesToMove)
@@ -173,6 +176,7 @@ namespace VisualStateMachine.Editor
 
 		public void RemoveEdges(List<GraphElement> edgesToRemove)
 		{
+			if (_stateMachine == null) return;
 			if (edgesToRemove == null) return;
 			
 			foreach (var edge in edgesToRemove)
@@ -185,6 +189,7 @@ namespace VisualStateMachine.Editor
 
 		public void RemoveNodes(List<GraphElement> nodesToRemove)
 		{
+			if (_stateMachine == null) return;
 			if (nodesToRemove == null) return;
 			
 			foreach (var node in nodesToRemove)
@@ -212,6 +217,7 @@ namespace VisualStateMachine.Editor
 
 		private void RemoveNode(GraphElement element)
 		{
+			if (_stateMachine == null) return;
 			if (element is not NodeView) return;
 			
 			var nodeView = element as NodeView;
@@ -220,6 +226,7 @@ namespace VisualStateMachine.Editor
 
 		private void RemoveEdge(GraphElement element)
 		{
+			if (_stateMachine == null) return;
 			if (element is not Edge && !element.GetType().IsSubclassOf(typeof(Edge))) return;
 			
 			var edge = element as Edge;

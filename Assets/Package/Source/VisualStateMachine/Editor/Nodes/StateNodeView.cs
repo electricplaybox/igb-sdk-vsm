@@ -76,6 +76,8 @@ namespace VisualStateMachine.Editor.Nodes
 		
 		public override void Update(StateMachine stateMachine)
 		{
+			if (stateMachine == null) return;
+			
 			base.Update(stateMachine);
 			
 			if (Data == null) return;
@@ -84,8 +86,6 @@ namespace VisualStateMachine.Editor.Nodes
 			DrawCustomNodeColor();
 			SetCustomLabelText();
 			CreateCustomIcon();
-
-			if (stateMachine == null) return;
 			
 			if (stateMachine.IsComplete)
 			{

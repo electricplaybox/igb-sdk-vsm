@@ -9,7 +9,7 @@ VisualStateMachine is a Unity package designed to simplify the creation and mana
 ## Features
 - **Visual Editor**: Design state machines using a user-friendly graphical interface.
 - **Unity Integration**: Seamlessly integrates with Unity, allowing for easy implementation in your game projects.
-- **Custom State Support**: Create your own states to handle specific game behaviors.
+- **Custom State Support**: Create your own states to handle specific game behaviors.[CHANGELOG.md](CHANGELOG.md)
 - **Transition Management**: Easily manage transitions between states with intuitive controls.
 
 ## Installation

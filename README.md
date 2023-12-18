@@ -11,9 +11,9 @@ VisualStateMachine is a Unity package designed to simplify the creation and mana
 - **Unity Integration**: Seamlessly integrates with Unity, allowing for easy implementation in your game projects.
 - **Custom State Support**: Create your own states to handle specific game behaviors.
 - **Transition Management**: Easily manage transitions between states with intuitive controls.
-
+[CHANGELOG.md](Assets%2FPackage%2FCHANGELOG.md)
 ## Installation
-To install VisualStateMachine in your Unity project, follow these steps:
+To install VisualStateMachine in your Unity project, follow these [package.json](Assets%2FPackage%2Fpackage.json)steps:
 1. Via package manager add a package from git url https://github.com/PaulNonatomic/VisualStateMachine.git?path=/Assets/Package#master
     - To work with a specific version use <b><i>#0.3.6-alpha</b><i> or similar
     - And for the lastest and greatest word in progress use <b><i>#develop</b><i> at your own risk
@@ -70,7 +70,7 @@ public class DelayState : State
 ## Jump Nodes
 
 Add JumpOutState state and set it's Id. Then create a JumpInState with the corresponding Id to jump from one node to another.
-![Unity_aEXhADhxUy](https://github.com/PaulNonatomic/VisualStateMachine/assets/4581647/8df2873c-070d-4ae9-a3a1-1abed9013c70)
+![Unity_aEXhADhxUy](https://github.com/electricplaybox/igb-sdk-vsm/assets/4581647/8df2873c-070d-4ae9-a3a1-1abed9013c70)
 
 ## Transition Delay
 
@@ -86,7 +86,8 @@ with caution as a frameDelay of 0 can cause a stack overflow.
 - No way to follow the progress of parallel sub state machines at run time.
 - The state selector window attempts to unfold the states in the namespace nearest to the stataemachine asset, but doesn't always get this right.
 
-## Roadmap
+## Roadmap]()
+
 - Support for sticky notes
 - Grouping of nodes
 - Visual cooldown feedback of state execution (a dissipating glow perhaps)
