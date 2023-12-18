@@ -39,6 +39,7 @@ namespace VisualStateMachine.Editor.Nodes
 
 		public virtual void Update(StateMachine stateMachine)
 		{
+			if (stateMachine == null) return;
 			if (!Application.isPlaying) return;
 			if (Data == null) return;
 			if (Data.LastActive == -1) return;

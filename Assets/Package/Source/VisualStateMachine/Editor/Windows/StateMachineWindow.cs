@@ -12,6 +12,7 @@ namespace VisualStateMachine.Editor.Windows
 		public const int WindowHeight = 400;
 		
 		private StateMachine _stateMachine;
+		private StateMachine _stateMachineBase;
 		private StateMachineGraphView _graphView;
 		private StateMachineWindow _openWindow;
 
@@ -126,9 +127,6 @@ namespace VisualStateMachine.Editor.Windows
 			return false;
 		}
 		
-		
-		
-		
 		/**
 		 * Instance
 		 */
@@ -151,6 +149,7 @@ namespace VisualStateMachine.Editor.Windows
 		private void Draw(StateMachine stateMachine)
 		{
 			_stateMachine = stateMachine;
+			_stateMachineBase = stateMachine?.Base;
 			
 			if (_graphView == null)
 			{
@@ -178,27 +177,37 @@ namespace VisualStateMachine.Editor.Windows
 
 		private void HandlePlayModeStateChanged(PlayModeStateChange playMode)
 		{
-			if (playMode == PlayModeStateChange.ExitingPlayMode)
+			if (playMode == PlayModeStateChange.ExitingEditMode)
 			{
 				if (_stateMachine == null) return;
 				if (_stateMachine.Base == null) return;
 				
-				_stateMachine = _stateMachine.Base;
-				Draw(_stateMachine);
-				Selection.activeObject = _stateMachine;
+				//.....
 			}
 		}
 
 		private void HandleEditorUpdate()
 		{
-			if (!TryGetStateMachine(out var stateMachine)) return;
-			
-			if (_stateMachine == null && stateMachine == null)
+			if (TryGetStateMachine(out var stateMachine))
 			{
-				_graphView?.StateManager.ClearGraph();
-			}
+				if (_stateMachine == null && stateMachine == null)
+				{
+					_graphView?.StateManager.ClearGraph();
+				}
 				
-			Draw(stateMachine);
+				Draw(stateMachine);
+			}
+			else
+			{
+				if (_stateMachine == null && _stateMachineBase == null)
+				{
+					Draw(null);
+				}
+				else if (_stateMachineBase != null)
+				{
+					Draw(_stateMachineBase);
+				}
+			}
 		}
 	}
 }
