@@ -36,11 +36,11 @@ namespace VisualStateMachine.Editor
 			var isEntryNode = graphView.nodes.ToList().Count == 0;
 		
 			var node = stateManager.AddNode(stateNode);
-			stateManager.StateMachine.AddNode(stateNode);
+			stateManager.StateMachine?.AddNode(stateNode);
 			
 			if (isEntryNode)
 			{
-				stateManager.StateMachine.SetEntryNode(stateNode);
+				stateManager.StateMachine?.SetEntryNode(stateNode);
 			}
 		
 			return node;
