@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.8.3-beta] - Dec 18, 2023
+Merged in PR from IGB for Added amends to stabilise the State Machine Editor and reduce the risk of accidental deletions and errors
+
 ## [0.8.2-beta] - Dec 17, 2023
 - Fix for null StateMachine when attempting to fix a null statemachine. Stupid!
 - Removed the validation of connections from the StateMachine as it was removing valid connections. Will circle back to this.
