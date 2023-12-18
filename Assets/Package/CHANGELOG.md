@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.8.4-beta] - Dec 18, 2023
+-  Added amends to stabilise the State Machine Editor and reduce the risk of accidental deletions and errors
+
 ## [0.8.3-beta] - Dec 17, 2023
 - merged upstream
 
