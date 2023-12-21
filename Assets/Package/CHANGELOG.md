@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.8.6-beta] - Dec 21, 2023
+- Fix for errors being supressed by not awaiting an async method
+
 ## [0.8.5-beta] - Dec 21, 2023
 - Merged in upstream: Added a scroll panel to the StateNodeView so nodes don't get too big when the property list expands. Also solves the issue of the node boundary growing bizarly large when a list is added to the property container
 
