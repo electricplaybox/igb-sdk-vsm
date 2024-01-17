@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.8.7-beta] - Jan 17, 2023
+- Hotfix for build failure
+- 
 ## [0.8.6-beta] - Dec 21, 2023
 - Fix for errors being supressed by not awaiting an async method
 
