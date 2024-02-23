@@ -40,6 +40,12 @@ namespace VisualStateMachine.States
 			_stateMachineCore.OnComplete -= SubStateMachineComplete;
 			SelectParentStateMachine();
 		}
+		
+		public override void DestroyState()
+		{
+			_stateMachineCore?.Dispose();
+			_stateMachineCore = null;
+		}
 
 		private void CreateCore()
 		{

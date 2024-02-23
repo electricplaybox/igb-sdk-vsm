@@ -1,5 +1,8 @@
 ﻿# Change Log
 
+## [0.8.8-beta] - Jan 17, 2023
+- Hotfix for SubStateMachine's not being disposed of when the StateMachine is destroyed
+
 ## [0.8.7-beta] - Jan 17, 2023
 - Hotfix for build failure
 - 
